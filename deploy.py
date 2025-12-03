@@ -422,9 +422,9 @@ async def chat(
             gcp_project=GCP_PROJECT,
             gcp_location=GCP_LOCATION,
             user_context={
-                "uid": user.uid,
-                "email": user.email,
-                "plan": user.plan
+                "uid": user.uid if user else "anonymous",
+                "email": user.email if user else None,
+                "plan": user.plan if user else "free"
             }
         )
         
@@ -520,7 +520,7 @@ async def get_usage(user: Optional[UserContext] = Depends(get_optional_user)):
     # In production, this would query Firestore or BigQuery
     return {
         "user_id": user.uid,
-        "plan": user.plan,
+        "plan": user.plan if user else "free",
         "period": "current_month",
         "usage": {
             "requests": 0,
