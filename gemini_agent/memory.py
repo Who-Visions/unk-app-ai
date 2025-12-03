@@ -15,10 +15,19 @@ from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
 
-from google.cloud import firestore
-from google.cloud.firestore_v1.vector import Vector
-from google.cloud.firestore_v1.base_vector_query import DistanceMeasure
-from google import genai
+try:
+    from google.cloud import firestore
+    from google.cloud.firestore_v1.vector import Vector
+    from google.cloud.firestore_v1.base_vector_query import DistanceMeasure
+    from google import genai
+    IMPORTS_AVAILABLE = True
+except ImportError:
+    IMPORTS_AVAILABLE = False
+    # Dummy classes/functions to prevent NameError on module load
+    firestore = None
+    Vector = None
+    DistanceMeasure = None
+    genai = None
 
 
 class MemoryType(str, Enum):
@@ -71,6 +80,9 @@ class VectorMemory:
             collection_name: Firestore collection for memories
             embedding_model: Model for generating embeddings
         """
+        if not IMPORTS_AVAILABLE:
+            raise ImportError("Required dependencies (google-cloud-firestore, google-genai) not available")
+
         self.project_id = project_id or os.environ.get("GOOGLE_CLOUD_PROJECT")
         self.collection_name = collection_name
         self.embedding_model = embedding_model

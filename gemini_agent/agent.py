@@ -12,7 +12,7 @@ import os
 import asyncio
 import json
 from datetime import datetime
-from typing import List, Dict, Any, Optional, Union, Callable
+from typing import List, Dict, Any, Optional, Union, Callable, AsyncGenerator
 from dataclasses import dataclass, field
 from enum import Enum
 from pydantic import BaseModel, Field
@@ -364,7 +364,8 @@ class UnkAgent:
         force_structured: bool = False,
         include_reasoning: bool = True,
         stream: bool = False
-    ) -> Union[AgentResponse, str, AsyncGenerator]:        """
+    ) -> Union[AgentResponse, str, AsyncGenerator]:
+        """
         Execute a single conversational turn.
         
         Args:
