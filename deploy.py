@@ -343,7 +343,7 @@ async def list_models(user: Optional[UserContext] = Depends(get_optional_user)):
 @app.get("/models/{mode}")
 async def get_model_info(
     mode: str,
-    user: UserContext = Depends(verify_token)
+    user: Optional[UserContext] = Depends(get_optional_user)
 ):
     """Get detailed information about a specific mode."""
     if mode not in GEMINI_MODELS:
@@ -375,7 +375,7 @@ async def get_model_info(
 @app.post("/chat", response_model=ChatResponse)
 async def chat(
     request: ChatRequest,
-    user: UserContext = Depends(verify_token)
+    user: Optional[UserContext] = Depends(get_optional_user)
 ):
     """
     Primary chat endpoint.
@@ -466,7 +466,7 @@ async def chat(
 @app.post("/chat/route")
 async def routed_chat(
     request: ChatRequest,
-    user: UserContext = Depends(verify_token)
+    user: Optional[UserContext] = Depends(get_optional_user)
 ):
     """
     Auto-routed chat endpoint.
@@ -515,7 +515,7 @@ async def routed_chat(
 
 
 @app.get("/usage")
-async def get_usage(user: UserContext = Depends(verify_token)):
+async def get_usage(user: Optional[UserContext] = Depends(get_optional_user)):
     """Get usage statistics for the current user."""
     # In production, this would query Firestore or BigQuery
     return {
