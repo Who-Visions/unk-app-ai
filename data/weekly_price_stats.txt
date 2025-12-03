@@ -1,0 +1,110 @@
+================================================================================
+📊 WEEKLY PRICING STATISTICS
+================================================================================
+Generated: 2025-12-03 03:08:21
+
+📈 OVERVIEW
+--------------------------------------------------------------------------------
+Total SKUs Tracked: 35
+Services: 1
+
+🏢 SERVICES BREAKDOWN
+--------------------------------------------------------------------------------
+  GCP: 35 SKUs
+    Price Range: $0.000400 - $120.000000
+    Average Price: $6.126863
+
+🤖 VERTEX AI MODEL PRICING
+--------------------------------------------------------------------------------
+  Gemini 2.5 Flash:
+    Input: $0.300000 per 1M tokens
+    Output: $2.500000 per 1M tokens
+    Caching Input: $0.030000 per 1M tokens
+    💰 Caching Savings: 90.0%
+
+  Gemini 2.5 Pro:
+    Input: $1.250000 per 1M tokens
+    Output: $10.000000 per 1M tokens
+    Caching Input: $0.125000 per 1M tokens
+    💰 Caching Savings: 90.0%
+
+  Gemini 3.0 Pro:
+    Input: $2.000000 per 1M tokens
+    Output: $120.000000 per 1M tokens
+
+💰 PRICE TYPE DISTRIBUTION
+--------------------------------------------------------------------------------
+  Input: 9 SKUs
+  Output: 8 SKUs
+  Unknown: 4 SKUs
+  Operations: 4 SKUs
+  Storage: 4 SKUs
+  Egress: 2 SKUs
+  Cpu: 2 SKUs
+  Memory: 2 SKUs
+
+🔝 TOP 5 HIGHEST PRICES
+--------------------------------------------------------------------------------
+  1. Gemini 3.0 Pro Image Output - Predictions
+     $120.000000 per count
+     Service: GCP
+
+  2. Gemini 3.0 Pro Text Output - Predictions
+     $12.000000 per count
+     Service: GCP
+
+  3. Gemini 2.5 Pro Text Output - Predictions
+     $10.000000 per count
+     Service: GCP
+
+  4. Gemini 2.5 Pro Thinking Text Output - Predictions
+     $10.000000 per count
+     Service: GCP
+
+  5. Gemini 2.5 Flash GA Text Output (Thinking On) - Predictions
+     $2.500000 per count
+     Service: GCP
+
+🆓 FREE TIERS
+--------------------------------------------------------------------------------
+  Download Worldwide Destinations (excluding Asia & Australia)
+     Free up to: 0.0 gibibyte
+     Service: GCP
+
+  Regional Standard Class A Operations
+     Free up to: 0.0 count
+     Service: GCP
+
+  Regional Standard Class B Operations
+     Free up to: 0.0 count
+     Service: GCP
+
+  Network Data Transfer GCP Inter Region within Northern Ameri
+     Free up to: 0.0 gibibyte
+     Service: GCP
+
+  Standard Storage US Regional
+     Free up to: 0.0 gibibyte month
+     Service: GCP
+
+  Vertex AI: ReasoningEngine management fee on CPU
+     Free up to: 0.0 second
+     Service: GCP
+
+  Vertex AI: ReasoningEngine management fee on Memory
+     Free up to: 0.0 gibibyte second
+     Service: GCP
+
+  Log Storage cost
+     Free up to: 0.0 gibibyte
+     Service: GCP
+
+💡 COST OPTIMIZATION INSIGHTS
+--------------------------------------------------------------------------------
+  Caching Discounts Available:
+    Gemini 2.5 Flash: 90.0% off ($0.270000 per 1M tokens)
+    Gemini 2.5 Pro: 90.0% off ($1.125000 per 1M tokens)
+
+  1 SKUs have tiered pricing (volume discounts available)
+
+================================================================================

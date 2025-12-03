@@ -1,0 +1,123 @@
+================================================================================
+🎨 IMAGE GENERATION COST ANALYSIS (Yuki Stress Tests)
+================================================================================
+
+💰 CURRENT CREDIT STATUS
+--------------------------------------------------------------------------------
+  Total Available: $1268.50
+
+📊 IMAGE GENERATION PRICING
+--------------------------------------------------------------------------------
+  Imagen 3 Generation: $0.0400 per image
+    → 25 images per $1
+
+  Imagen 4 Generation: $0.0400 per image
+    → 25 images per $1
+
+  Gemini 3.0 Pro Image Output (very expensive!): $0.000120 per image
+    → 8,333 images per $1
+    ⚠️  VERY EXPENSIVE - Avoid for stress tests!
+
+📈 COST ANALYSIS FOR 300 IMAGES (IMAGEN3)
+--------------------------------------------------------------------------------
+  Images to generate: 300
+  Cost per image: $0.040000
+  Total cost: $12.00
+  Images per $1: 25.0
+  Credits remaining: $1256.50
+  % of credits used: 0.95%
+
+🎯 STRESS TEST SCENARIOS
+--------------------------------------------------------------------------------
+
+  📌 Small Test:
+     IMAGEN 3:
+       100 images = $4.00
+       Remaining credits: $1264.50
+       Credit usage: 0.32%
+     IMAGEN 4:
+       100 images = $4.00
+       Remaining credits: $1264.50
+       Credit usage: 0.32%
+
+  📌 Medium Test:
+     IMAGEN 3:
+       500 images = $20.00
+       Remaining credits: $1248.50
+       Credit usage: 1.58%
+     IMAGEN 4:
+       500 images = $20.00
+       Remaining credits: $1248.50
+       Credit usage: 1.58%
+
+  📌 Large Test:
+     IMAGEN 3:
+       1,000 images = $40.00
+       Remaining credits: $1228.50
+       Credit usage: 3.15%
+     IMAGEN 4:
+       1,000 images = $40.00
+       Remaining credits: $1228.50
+       Credit usage: 3.15%
+
+  📌 Stress Test:
+     IMAGEN 3:
+       5,000 images = $200.00
+       Remaining credits: $1068.50
+       Credit usage: 15.77%
+     IMAGEN 4:
+       5,000 images = $200.00
+       Remaining credits: $1068.50
+       Credit usage: 15.77%
+
+  📌 Extreme Stress Test:
+     IMAGEN 3:
+       10,000 images = $400.00
+       Remaining credits: $868.50
+       Credit usage: 31.53%
+     IMAGEN 4:
+       10,000 images = $400.00
+       Remaining credits: $868.50
+       Credit usage: 31.53%
+
+  📌 Maximum Burn Test:
+     IMAGEN 3:
+       30,000 images = $1200.00
+       Remaining credits: $68.50
+       Credit usage: 94.60%
+     IMAGEN 4:
+       30,000 images = $1200.00
+       Remaining credits: $68.50
+       Credit usage: 94.60%
+
+🚀 MAXIMUM IMAGES POSSIBLE
+--------------------------------------------------------------------------------
+  Imagen 3 Generation:
+    Maximum images: 31,712
+    Cost: $1268.50
+
+  Imagen 4 Generation:
+    Maximum images: 31,712
+    Cost: $1268.50
+
+💡 RECOMMENDATIONS FOR STRESS TESTING
+--------------------------------------------------------------------------------
+
+  1. ✅ Use Imagen 3 or 4 for stress tests ($0.04/image)
+  2. ✅ Start with small batches (100-500 images)
+  3. ✅ Monitor credit burn rate after each test
+  4. ⚠️  Avoid Gemini 3.0 Pro for image generation ($120/1M images)
+  5. 💰 At $0.04/image, you can generate:
+     • 31,712 images total
+     • 1,057 images/day for 30 days
+     • 4,530 images/day for 7 days
+
+📅 DAILY BURN RATE ANALYSIS
+--------------------------------------------------------------------------------
+  If generating 300 images/day:
+  Daily cost: $12.00
+  Weekly cost: $84.00
+  Monthly cost: $360.00
+  ⏰ Credits will last: 3.5 months (106 days)
+
+================================================================================

@@ -1,0 +1,92 @@
+[
+    {
+        "term": "standing on business",
+        "definition": "Fully committing to one's responsibilities, decisions, or words; not backing down.",
+        "unk_translation": "Keeping your word; having integrity; walking the walk, not just talking the talk.",
+        "example_usage": "He said he'd finish the project by Friday, and he did. He's really standing on business.",
+        "category": "behavior",
+        "origin_era": "2020s",
+        "target_audience_relevance": "High"
+    },
+    {
+        "term": "crash out",
+        "definition": "To lose control, act recklessly, or engage in self-destructive behavior, often due to anger or frustration.",
+        "unk_translation": "Flying off the handle; losing your cool; going postal; reckless abandonment.",
+        "example_usage": "Don't crash out just because you didn't get the promotion. Stay composed.",
+        "category": "emotional_state",
+        "origin_era": "2020s",
+        "target_audience_relevance": "Medium"
+    },
+    {
+        "term": "glazing",
+        "definition": "Over-complimenting or praising someone to the point of it being annoying or disingenuous; sucking up.",
+        "unk_translation": "Brown-nosing; sucking up; being a teacher's pet; overly flattering.",
+        "example_usage": "Stop glazing him just because he has a nice car.",
+        "category": "social_interaction",
+        "origin_era": "2020s",
+        "target_audience_relevance": "High"
+    },
+    {
+        "term": "motion",
+        "definition": "Having money, success, momentum, or things happening in your life.",
+        "unk_translation": "Making moves; having irons in the fire; being a mover and shaker.",
+        "example_usage": "Since he started that business, he's really having motion.",
+        "category": "success",
+        "origin_era": "2020s",
+        "target_audience_relevance": "High"
+    },
+    {
+        "term": "cooked",
+        "definition": "In a bad situation; finished; doomed; exhausted.",
+        "unk_translation": "Done for; toast; up a creek without a paddle.",
+        "example_usage": "If I don't finish this report in an hour, I'm cooked.",
+        "category": "status",
+        "origin_era": "2020s",
+        "target_audience_relevance": "Medium"
+    },
+    {
+        "term": "lock in",
+        "definition": "To focus intensely on a task or goal; to get serious.",
+        "unk_translation": "Buckle down; put your nose to the grindstone; get in the zone.",
+        "example_usage": "It's finals week, I need to lock in.",
+        "category": "productivity",
+        "origin_era": "2020s",
+        "target_audience_relevance": "High"
+    },
+    {
+        "term": "opp",
+        "definition": "Opposition; enemy; someone you have a conflict with.",
+        "unk_translation": "Adversary; rival; nemesis; the competition.",
+        "example_usage": "Keep your circle tight, don't let the opps know your next move.",
+        "category": "social_conflict",
+        "origin_era": "2010s",
+        "target_audience_relevance": "Medium"
+    },
+     {
+        "term": "cap / no cap",
+        "definition": "Lying / Not lying; telling the truth.",
+        "unk_translation": "Baloney / Straight shooter; honest truth; word is bond.",
+        "example_usage": "That story sounds like cap. / I saw it happen, no cap.",
+        "category": "truthfulness",
+        "origin_era": "2010s",
+        "target_audience_relevance": "High"
+    },
+    {
+        "term": "bet",
+        "definition": "Agreement; yes; okay; confirmation.",
+        "unk_translation": "You got it; roger that; done deal; sounds good.",
+        "example_usage": "Meet me at 5? Bet.",
+        "category": "agreement",
+        "origin_era": "1990s",
+        "target_audience_relevance": "High"
+    },
+    {
+        "term": "fanum tax",
+        "definition": "Taking a portion of someone's food.",
+        "unk_translation": "The 'dad tax' (eating your kids' fries); mooching a bite.",
+        "example_usage": "He just took half my fries, calling it the Fanum tax.",
+        "category": "humor",
+        "origin_era": "2020s",
+        "target_audience_relevance": "Low"
+    }
+]

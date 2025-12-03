@@ -1,0 +1,110 @@
+================================================================================
+💰 GCP CREDIT BURN RATE ANALYSIS
+================================================================================
+
+📊 CURRENT CREDIT STATUS
+--------------------------------------------------------------------------------
+  GenAI App Builder Trial:
+    Remaining: $1000.00 / $1000.00
+    Used: 0.0%
+
+  Free Trial 1:
+    Remaining: $268.50 / $300.00
+    Used: 10.5%
+
+  💵 TOTAL AVAILABLE: $1268.50
+  📉 TOTAL USED THIS WEEK: $31.50
+
+🎯 USAGE SCENARIOS & CREDIT LIFESPAN
+--------------------------------------------------------------------------------
+
+  📌 Light Usage (Flash, No Caching):
+     Requests/day: 1,000
+     Avg tokens: 500 input + 200 output
+     Cost/request: $0.000650
+     Daily cost: $0.65
+     Requests per $1: 1,538.46
+     ⏰ Credits will last: 5.3 years (1952 days)
+
+  📌 Light Usage (Flash, With Caching):
+     Requests/day: 1,000
+     Avg tokens: 500 input + 200 output
+     Cost/request: $0.000515
+     Daily cost: $0.52
+     Requests per $1: 1,941.75
+     ⏰ Credits will last: 6.7 years (2463 days)
+     💡 Using caching: 90% savings on input tokens
+
+  📌 Moderate Usage (Flash, No Caching):
+     Requests/day: 5,000
+     Avg tokens: 1,000 input + 500 output
+     Cost/request: $0.001550
+     Daily cost: $7.75
+     Requests per $1: 645.16
+     ⏰ Credits will last: 5.5 months (164 days)
+
+  📌 Moderate Usage (Flash, With Caching):
+     Requests/day: 5,000
+     Avg tokens: 1,000 input + 500 output
+     Cost/request: $0.001280
+     Daily cost: $6.40
+     Requests per $1: 781.25
+     ⏰ Credits will last: 6.6 months (198 days)
+     💡 Using caching: 90% savings on input tokens
+
+  📌 Heavy Usage (Pro, No Caching):
+     Requests/day: 1,000
+     Avg tokens: 2,000 input + 1,000 output
+     Cost/request: $0.012500
+     Daily cost: $12.50
+     Requests per $1: 80.0
+     ⏰ Credits will last: 3.4 months (102 days)
+
+  📌 Heavy Usage (Pro, With Caching):
+     Requests/day: 1,000
+     Avg tokens: 2,000 input + 1,000 output
+     Cost/request: $0.010250
+     Daily cost: $10.25
+     Requests per $1: 97.56
+     ⏰ Credits will last: 4.1 months (124 days)
+     💡 Using caching: 90% savings on input tokens
+
+  📌 Ultra Heavy (3.0 Pro):
+     Requests/day: 500
+     Avg tokens: 3,000 input + 2,000 output
+     Cost/request: $0.030000
+     Daily cost: $15.00
+     Requests per $1: 33.33
+     ⏰ Credits will last: 2.8 months (85 days)
+
+💵 COST BREAKDOWN BY MODEL
+--------------------------------------------------------------------------------
+
+  Gemini 2.5 Flash (1M input + 500K output tokens):
+    Without caching: $1.5500
+    With caching: $1.2800 (save 17.4%)
+
+  Gemini 2.5 Pro (1M input + 500K output tokens):
+    Without caching: $6.2500
+    With caching: $5.1250 (save 18.0%)
+
+  Gemini 3.0 Pro (1M input + 500K output tokens):
+    Without caching: $8.0000
+
+💡 RECOMMENDATIONS
+--------------------------------------------------------------------------------
+
+  1. ✅ Use Gemini 2.5 Flash for 90%+ of requests (cost-efficient)
+  2. ✅ Enable caching for repeated queries (90% discount on input)
+  3. ✅ Reserve Pro models for complex tasks only
+  4. ✅ Monitor daily spend to track burn rate
+  5. ⚠️  Avoid Gemini 3.0 Pro unless absolutely necessary (2x cost)
+
+📈 WEEKLY BURN RATE ANALYSIS
+--------------------------------------------------------------------------------
+  Credits used this week: $31.50
+  Daily average: $4.50
+  Projected monthly burn: $135.00
+  ⏰ At current rate, credits will last: 281.9 days
+
+================================================================================

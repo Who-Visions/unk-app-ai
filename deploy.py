@@ -44,6 +44,9 @@ from gemini_agent import (
     get_current_timestamp
 )
 
+# Import price tracking
+from gemini_agent.price_tracker import get_tracker
+
 # ═══════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════════════
@@ -533,6 +536,184 @@ async def get_usage(user: Optional[UserContext] = Depends(get_optional_user)):
             "unk_mode_enabled": user.plan in ["pro", "enterprise"],
             "ultrathink_enabled": user.plan == "enterprise"
         }
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# PRICE TRACKING ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════
+
+@app.get("/pricing/spikes")
+async def get_price_spikes(
+    threshold: float = 10.0,
+    service: Optional[str] = None,
+    days: int = 30,
+    user: Optional[UserContext] = Depends(get_optional_user)
+):
+    """
+    Get detected price spikes.
+    
+    Args:
+        threshold: Minimum percentage increase to consider a spike (default: 10%)
+        service: Filter by service name (e.g., 'GCP')
+        days: Days to look back for comparison (default: 30)
+    """
+    tracker = get_tracker()
+    spikes = tracker.detect_spikes(
+        service=service,
+        threshold_percentage=threshold,
+        days_lookback=days
+    )
+    
+    return {
+        "success": True,
+        "count": len(spikes),
+        "threshold": threshold,
+        "lookback_days": days,
+        "spikes": [
+            {
+                "timestamp": spike.timestamp,
+                "service": spike.service,
+                "sku_id": spike.sku_id,
+                "sku_description": spike.sku_description,
+                "price_type": spike.price_type,
+                "previous_price": spike.previous_price,
+                "current_price": spike.current_price,
+                "percentage_increase": spike.percentage_increase,
+                "absolute_increase": spike.absolute_increase,
+                "severity": spike.severity,
+                "days_since_last_check": spike.days_since_last_check
+            }
+            for spike in spikes
+        ]
+    }
+
+
+@app.get("/pricing/history")
+async def get_price_history(
+    service: Optional[str] = None,
+    sku_id: Optional[str] = None,
+    price_type: Optional[str] = None,
+    days: Optional[int] = None,
+    user: Optional[UserContext] = Depends(get_optional_user)
+):
+    """
+    Get price history for tracked SKUs.
+    
+    Args:
+        service: Filter by service name
+        sku_id: Filter by SKU ID
+        price_type: Filter by price type (input, output, storage, etc.)
+        days: Limit to last N days
+    """
+    tracker = get_tracker()
+    history = tracker.get_price_history(
+        service=service,
+        sku_id=sku_id,
+        price_type=price_type,
+        days=days
+    )
+    
+    return {
+        "success": True,
+        "count": len(history),
+        "history": [
+            {
+                "timestamp": snapshot.timestamp,
+                "service": snapshot.service,
+                "sku_id": snapshot.sku_id,
+                "sku_description": snapshot.sku_description,
+                "price_type": snapshot.price_type,
+                "price_per_unit": snapshot.price_per_unit,
+                "unit": snapshot.unit,
+                "tier_start": snapshot.tier_start,
+                "metadata": snapshot.metadata
+            }
+            for snapshot in history
+        ]
+    }
+
+
+@app.get("/pricing/trends")
+async def get_price_trends(
+    service: Optional[str] = None,
+    sku_id: Optional[str] = None,
+    price_type: Optional[str] = None,
+    days: int = 30,
+    user: Optional[UserContext] = Depends(get_optional_user)
+):
+    """
+    Get price trend analysis for tracked SKUs.
+    
+    Args:
+        service: Filter by service name
+        sku_id: Filter by SKU ID
+        price_type: Filter by price type
+        days: Number of days to analyze (default: 30)
+    """
+    tracker = get_tracker()
+    
+    # Get unique combinations
+    seen = set()
+    trends = []
+    
+    for snapshot in tracker.history:
+        if service and snapshot.service != service:
+            continue
+        if sku_id and snapshot.sku_id != sku_id:
+            continue
+        if price_type and snapshot.price_type != price_type:
+            continue
+        
+        key = (snapshot.service, snapshot.sku_id, snapshot.price_type)
+        if key not in seen:
+            seen.add(key)
+            trend = tracker.get_price_trend(
+                service=snapshot.service,
+                sku_id=snapshot.sku_id,
+                price_type=snapshot.price_type,
+                days=days
+            )
+            if trend["data_points"] >= 2:
+                trends.append(trend)
+    
+    return {
+        "success": True,
+        "count": len(trends),
+        "trends": trends
+    }
+
+
+@app.post("/pricing/record")
+async def record_price(
+    service: str,
+    sku_id: str,
+    sku_description: str,
+    price_type: str,
+    price_per_unit: float,
+    unit: str,
+    tier_start: Optional[float] = None,
+    user: Optional[UserContext] = Depends(get_optional_user)
+):
+    """
+    Record a price snapshot manually.
+    
+    Note: In production, this should be restricted to admin users.
+    """
+    tracker = get_tracker()
+    tracker.record_price(
+        service=service,
+        sku_id=sku_id,
+        sku_description=sku_description,
+        price_type=price_type,
+        price_per_unit=price_per_unit,
+        unit=unit,
+        tier_start=tier_start
+    )
+    
+    return {
+        "success": True,
+        "message": "Price recorded successfully"
     }
 
 

@@ -23,11 +23,11 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: FLASH - High-throughput, cost-efficient operations
     # ═══════════════════════════════════════════════════════════════
     "default": {
-        "model_id": "gemini-2.0-flash-001",
+        "model_id": "gemini-2.5-flash",
         "tier": "flash",
-        "release_date": "2025-02-05",
-        "context_window": 1_000_000,
-        "capabilities": ["multimodal", "tools", "fast"],
+        "release_date": "2025-06-17",
+        "context_window": 1_048_576,
+        "capabilities": ["multimodal", "tools", "fast", "thinking_tokens"],
         "pricing": {
             "input_per_1m": 0.10,
             "output_per_1m": 0.40
@@ -36,8 +36,12 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
             "rpm": 1000,
             "tpm": 4_000_000
         },
-        "description": "High-throughput driver. Default for standard interactions.",
-        "use_cases": ["greetings", "simple_qa", "classification", "routing"]
+        "description": "High-throughput driver with thinking capabilities. Default for standard interactions.",
+        "use_cases": ["greetings", "simple_qa", "classification", "routing", "reasoning"],
+        "flags": {
+            "enable_thinking_budget": True,
+            "default_thinking_tokens": 2048
+        }
     },
     
     "flash_thinking": {
@@ -62,10 +66,10 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: PRO - Deep reasoning, complex problem solving
     # ═══════════════════════════════════════════════════════════════
     "unk_mode": {
-        "model_id": "gemini-2.5-pro-preview-06-05",
+        "model_id": "gemini-2.5-pro-001",
         "tier": "pro",
-        "release_date": "2025-06-05",
-        "context_window": 2_000_000,
+        "release_date": "2025-06-17",
+        "context_window": 1_048_576,
         "capabilities": ["complex_reasoning", "coding", "thinking_tokens", "multimodal"],
         "pricing": {
             "input_per_1m": 2.50,
@@ -85,10 +89,10 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
     
     "ultrathink": {
-        "model_id": "gemini-2.5-pro-preview-06-05",
+        "model_id": "gemini-2.5-pro-001",
         "tier": "ultra",
-        "release_date": "2025-06-05",
-        "context_window": 2_000_000,
+        "release_date": "2025-06-17",
+        "context_window": 1_048_576,
         "capabilities": ["complex_reasoning", "coding", "thinking_tokens", "multimodal"],
         "pricing": {
             "input_per_1m": 2.50,
@@ -111,29 +115,30 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # ═══════════════════════════════════════════════════════════════
     # TIER: SPECIALIST - Domain-specific optimizations
     # ═══════════════════════════════════════════════════════════════
-    "vision_specialist": {
+    "agentic_flash": {
         "model_id": "gemini-2.0-flash-001",
         "tier": "flash",
         "release_date": "2025-02-05",
-        "context_window": 1_000_000,
-        "capabilities": ["vision", "ocr", "video_analysis", "multimodal"],
+        "context_window": 1_048_576,
+        "capabilities": ["tools", "multimodal", "fast", "agentic"],
         "pricing": {
             "input_per_1m": 0.10,
             "output_per_1m": 0.40
         },
         "rate_limits": {
-            "rpm": 500,
-            "tpm": 2_000_000
+            "rpm": 1000,
+            "tpm": 4_000_000
         },
-        "description": "Optimized for image/video understanding tasks.",
-        "use_cases": ["image_analysis", "document_ocr", "video_processing"]
+        "max_output_tokens": 8192,
+        "description": "Agentic workhorse. Optimized for fast tool execution and multimodal tasks.",
+        "use_cases": ["tool_calling", "agentic_loops", "multimodal_processing"]
     },
     
     "code_specialist": {
-        "model_id": "gemini-2.5-pro-preview-06-05",
+        "model_id": "gemini-2.5-pro-001",
         "tier": "pro",
-        "release_date": "2025-06-05",
-        "context_window": 2_000_000,
+        "release_date": "2025-06-17",
+        "context_window": 1_048_576,
         "capabilities": ["coding", "reasoning", "tools"],
         "pricing": {
             "input_per_1m": 2.50,
@@ -152,14 +157,42 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
 
     # ═══════════════════════════════════════════════════════════════
+    # TIER: NEXT - Future capabilities
+    # ═══════════════════════════════════════════════════════════════
+    "yn_mode": {
+        "model_id": "gemini-3-pro-preview",
+        "tier": "ultra",
+        "location": "global",
+        "release_date": "2025-11-18",
+        "context_window": 1_048_576,
+        "capabilities": ["complex_reasoning", "coding", "thinking", "multimodal", "pdf_input", "media_resolution_control"],
+        "pricing": {
+            "input_per_1m": 5.00,
+            "output_per_1m": 20.00
+        },
+        "rate_limits": {
+            "rpm": 60,
+            "tpm": 500_000
+        },
+        "description": "Gemini 3 Pro (Preview) - Young Nigga Mode. Advanced reasoning with thinking_level control and media resolution settings.",
+        "use_cases": ["complex_reasoning", "multimodal_analysis", "experimental"],
+        "flags": {
+            "requires_pro_subscription": True,
+            "use_thinking_level": True,
+            "default_thinking_level": "high",
+            "system_prompt_override": "yn_mode"
+        }
+    },
+
+    # ═══════════════════════════════════════════════════════════════
     # TIER: LITE - Maximum cost efficiency
     # ═══════════════════════════════════════════════════════════════
     "cost_saver": {
-        "model_id": "gemini-2.0-flash-lite-001",
+        "model_id": "gemini-2.5-flash-lite",
         "tier": "lite",
-        "release_date": "2025-02-05",
-        "context_window": 1_000_000,
-        "capabilities": ["text_generation", "fast"],
+        "release_date": "2025-07-22",
+        "context_window": 1_048_576,
+        "capabilities": ["text_generation", "fast", "thinking", "tools", "multimodal"],
         "pricing": {
             "input_per_1m": 0.02,
             "output_per_1m": 0.08
@@ -168,8 +201,8 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
             "rpm": 2000,
             "tpm": 8_000_000
         },
-        "description": "Lowest cost. Simple summarization/classification only.",
-        "use_cases": ["classification", "extraction", "simple_summarization"]
+        "description": "Fastest, most balanced. Optimized for low latency classification and routing.",
+        "use_cases": ["classification", "routing", "extraction", "simple_summarization"]
     },
 
     # ═══════════════════════════════════════════════════════════════
@@ -234,6 +267,16 @@ def get_thinking_budget(mode: str) -> int:
     return 0
 
 
+def get_thinking_level(mode: str) -> str:
+    """Get thinking level for a mode (Gemini 3+)."""
+    spec = get_model(mode)
+    flags = spec.get("flags", {})
+    if flags.get("use_thinking_level"):
+        return flags.get("default_thinking_level", "high")
+    return None
+
+
+
 def list_modes_by_tier(tier: str) -> List[str]:
     """List all modes in a specific tier."""
     return [k for k, v in GEMINI_MODELS.items() if v.get("tier") == tier]
@@ -243,14 +286,20 @@ def get_routing_recommendation(task_complexity: str) -> str:
     """
     Recommend a mode based on task complexity.
     
+    Escalation path:
+    1. Trivial/Simple -> gemini-2.5-flash-lite (cost_saver)
+    2. Moderate -> gemini-2.5-flash (default)
+    3. Complex -> gemini-2.5-pro (unk_mode)
+    4. Extreme -> gemini-3-pro-preview (next_gen)
+    
     Args:
         task_complexity: One of 'trivial', 'simple', 'moderate', 'complex', 'extreme'
     """
     routing_map = {
         "trivial": "cost_saver",
-        "simple": "default",
-        "moderate": "flash_thinking",
+        "simple": "cost_saver",
+        "moderate": "default",
         "complex": "unk_mode",
-        "extreme": "ultrathink"
+        "extreme": "yn_mode"
     }
     return routing_map.get(task_complexity, "default")
