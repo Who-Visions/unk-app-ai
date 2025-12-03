@@ -1,0 +1,28 @@
+steps:
+  # 1. Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/unk-agent-repo/unk-agent:latest', '.']
+
+  # 2. Push the container image to Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/unk-agent-repo/unk-agent:latest']
+
+  # 3. Deploy container to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'unk-agent'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/unk-agent-repo/unk-agent:latest'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--service-account'
+      - 'unk-agent-sa@unk-app-480102.iam.gserviceaccount.com'
+
+# This block fixes the "invalid argument" error you saw
+options:
+  logging: CLOUD_LOGGING_ONLY
