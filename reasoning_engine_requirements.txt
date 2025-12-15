@@ -1,0 +1,13 @@
+# Unk Agent - Reasoning Engine Requirements
+# Vertex AI Reasoning Engine deployment dependencies
+
+# Core Vertex AI
+google-cloud-aiplatform>=1.79.0
+
+# LangChain for Reasoning Engine
+langchain>=0.3.13
+langchain-core>=0.3.29
+langchain-google-vertexai>=2.0.11
+
+# Data handling
+pydantic>=2.9.0
