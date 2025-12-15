@@ -118,6 +118,32 @@ Who-Tester can discover Unk Agent by fetching the identity card:
 curl https://unk-agent-url/.well-known/agent.json
 ```
 
+### Reasoning Engine Integration
+
+**Status:** ✅ **DEPLOYED**
+
+**Resource Name:**
+```
+projects/574321322006/locations/us-central1/reasoningEngines/5608320741238898688
+```
+
+**Usage:**
+```python
+from vertexai.preview import reasoning_engines
+from google.cloud import aiplatform
+
+aiplatform.init(project="unk-app-480102", location="us-central1")
+
+# Load Unk Agent Reasoning Engine
+unk = reasoning_engines.ReasoningEngine(
+    "projects/574321322006/locations/us-central1/reasoningEngines/5608320741238898688"
+)
+
+# Query the agent
+response = unk.query(prompt="Analyze this system architecture", mode="default")
+print(response["response"])
+```
+
 ### Agent-to-Agent Communication
 
 Other agents in the fleet can:
@@ -125,6 +151,7 @@ Other agents in the fleet can:
 2. **Route complex tasks** to Unk Agent's `ultrathink` tier
 3. **Leverage cost optimization** for high-volume inference
 4. **Access vector memory** for shared knowledge retrieval
+5. **Call the Reasoning Engine** directly for cognitive orchestration
 
 ---
 

@@ -551,6 +551,35 @@ def estimate_cost(mode: str, input_tokens: int, output_tokens: int) -> float:
 
 ---
 
+## Troubleshooting & Self-Correction
+
+### Lessons from Cloud Run Deployment (Dec 2025)
+
+#### 1. Environment-Agnostic Imports
+**Issue:** `google-cloud-firestore` and `google-genai` imports caused module-level crashes during build/verification steps where credentials or dependencies were missing.
+**Fix:** Guard optional or environment-specific imports in utility modules (`memory.py`) with `try-except` blocks.
+```python
+try:
+    from google.cloud import firestore
+    IMPORTS_AVAILABLE = True
+except ImportError:
+    IMPORTS_AVAILABLE = False
+    firestore = None
+```
+**Lesson:** Utility modules should be importable even if their external dependencies are missing (e.g., for unit testing or lightweight CI checks).
+
+#### 2. Docker Entrypoints
+**Issue:** Using `CMD ["uvicorn", ...]` directly bypassed the environment setup and path handling in `deploy.py`, leading to port binding failures.
+**Fix:** Use the Python script as the entrypoint: `CMD ["python", "deploy.py"]`.
+**Lesson:** Route container startup through a Python script to ensure consistent environment configuration (logging, ports, middleware) before handing off to the ASGI server.
+
+#### 3. Static Analysis & Syntax
+**Issue:** `IndentationError` and missing imports (`AsyncGenerator`) slipped through to production code.
+**Fix:** Rigorous pre-commit checks or local verification scripts.
+**Lesson:** Always verify code syntax locally before pushing, even for "small" edits.
+
+---
+
 ## Resources
 
 - [Google GenAI SDK Docs](https://ai.google.dev/gemini-api/docs)

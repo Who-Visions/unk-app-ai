@@ -1,5 +1,58 @@
 # CLAUDE.md
 
+## 🚀 Quick Context (Read This First)
+
+**Project**: Unk Agent - Multi-Model Cognitive Agent System
+**Owner**: Who Visions LLC (Dave Meralus - superdavewho@LIVE.COM)
+**Status**: ✅ **Phase 2 Complete - LIVE on Cloud Run**
+**Deployment**: us-central1, service name: `unk-agent`
+**CI/CD**: Cloud Build auto-deploys on push to main
+
+### What This Is
+
+Production FastAPI service that intelligently routes user requests to appropriate Gemini models:
+- **9 cognitive modes** from Flash ($0.10/1M) → Pro ($2.50/1M) → Ultra → YN Mode (Gemini 3)
+- **Dynamic routing** based on task complexity
+- **Vector memory** via Firestore RAG
+- **Firebase Auth** with OIDC
+- **Price tracking** with spike detection
+
+### Key Files
+
+**Core:**
+- `deploy.py` - FastAPI server (764 lines) - 8 endpoints, auth, CORS
+- `gemini_agent/models_spec.py` - 9 mode definitions with pricing
+- `gemini_agent/agent.py` - UnkAgent class, system prompts, tools
+- `gemini_agent/memory.py` - Vector memory system
+- `gemini_agent/price_tracker.py` - Price spike detection
+
+**Infrastructure:**
+- `Dockerfile` - Multi-stage prod build
+- `cloudbuild.yaml` - CI/CD pipeline
+- `requirements.txt` - Production deps
+
+**Docs:**
+- `docs/ROADMAP.md` - 4-phase plan (Phase 1 & 2 ✅)
+- `docs/ARCHITECTURE.md` - System architecture
+- `docs/PRICING_BREAKDOWN.md` - GCP contract pricing
+
+### Known Issues
+
+1. **Pricing mismatch** - models_spec.py has outdated prices vs CSV
+2. **YouTube analysis** - Placeholder, needs real implementation
+3. **Context caching** - Not implemented (90% cost savings available)
+4. **Memory tools** - Not default in `/chat` endpoint
+
+### When User Says "Read the Files"
+
+1. `git status` - Check what's modified
+2. Read README.md + ROADMAP.md for overview
+3. Read models_spec.py for cognitive tiers
+4. Read deploy.py for API endpoints
+5. Ask what they want to work on
+
+---
+
 ## Claude as Master Orchestrator
 
 This document defines Claude's role as the primary orchestrator in the Who Visions AI ecosystem, coordinating between specialized Gemini agents and maintaining strategic oversight.

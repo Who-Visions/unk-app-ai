@@ -30,6 +30,8 @@ Unk Agent is a production-ready multi-model AI agent system that dynamically rou
 - **OIDC Authentication**: Firebase Auth integration for secure access
 - **Structured Output**: Pydantic-enforced JSON responses
 - **Cost Optimization**: Smart routing to minimize API costs
+- **Reasoning Engine**: ✅ Deployed to Vertex AI for agent-to-agent coordination
+- **A2A Integration**: Agent-to-Agent discovery via `/.well-known/agent.json`
 
 ## Architecture
 

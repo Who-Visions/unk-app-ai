@@ -380,6 +380,15 @@ async def agent_identity_card():
             "social": {
                 "instagram": "@aiwithdav3",
                 "youtube": "youtube.com/aiwithdav3"
+            },
+            "reasoning_engine": {
+                "enabled": True,
+                "resource_name": "projects/574321322006/locations/us-central1/reasoningEngines/5608320741238898688",
+                "location": "us-central1",
+                "project_id": "unk-app-480102",
+                "project_number": "574321322006",
+                "display_name": "unk-agent",
+                "description": "Unk Agent - Cognitive Orchestrator (Who Visions Fleet)"
             }
         }
     })
