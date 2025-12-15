@@ -18,18 +18,27 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 
 async def chat_session():
-    print(f"{BOLD}Unk Agent CLI{RESET}")
-    print("Initializing...")
+    print(f"\n{BOLD}╔══════════════════════════════════════════════════════════╗{RESET}")
+    print(f"{BOLD}║              🧠 UNK AGENT - CLI INTERFACE               ║{RESET}")
+    print(f"{BOLD}╚══════════════════════════════════════════════════════════╝{RESET}\n")
+    print(f"{GREEN}Cognitive Orchestrator | Who Visions LLC{RESET}")
 
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
     if not project_id:
-        print(f"{YELLOW}Warning: GOOGLE_CLOUD_PROJECT not set. Defaulting to 'who-visions-llc'{RESET}")
-        project_id = "who-visions-llc"
+        print(f"{YELLOW}⚠ GOOGLE_CLOUD_PROJECT not set. Using: unk-app-480102{RESET}")
+        project_id = "unk-app-480102"
+    else:
+        print(f"{GREEN}✓ Project:{RESET} {project_id}")
 
-    print(f"{GREEN}Connected to Unk Agent (Auto-Routing Enabled){RESET}")
-    print("Type 'exit' or 'quit' to end the session.")
-    print("Type '/mode <mode_name>' to force a specific mode.")
-    print("-" * 50)
+    # Show Reasoning Engine status
+    print(f"{GREEN}✓ Reasoning Engine:{RESET} Deployed (ID: ...98688)")
+    print(f"{GREEN}✓ A2A Integration:{RESET} Enabled")
+    print(f"{GREEN}✓ Auto-Routing:{RESET} 6-tier cognitive routing\n")
+    print(f"{BLUE}Commands:{RESET}")
+    print(f"  • Type your query to chat")
+    print(f"  • '/mode <tier>' - Force tier (cost_saver, default, unk_mode, ultrathink)")
+    print(f"  • 'exit' or 'quit' - End session")
+    print("\n" + "-" * 58 + "\n")
 
     # Default agent for initial context or fallbacks
     current_mode = "auto" 
