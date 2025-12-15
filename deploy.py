@@ -320,6 +320,71 @@ async def health_check():
     )
 
 
+@app.get("/.well-known/agent.json")
+async def agent_identity_card():
+    """
+    A2A Identity Card - Agent-to-Agent Discovery.
+    
+    Exposes standardized agent capabilities for the Who Visions Fleet.
+    This endpoint allows other agents (Who-Tester, Dav1d, Rhea, etc.) 
+    to dynamically discover Unk Agent's capabilities and endpoints.
+    """
+    return JSONResponse({
+        "name": "Unk Agent",
+        "version": "1.0.0",
+        "description": "Enterprise-grade multi-model cognitive agent with dynamic tier routing. Specialist in intelligent task complexity analysis, cost optimization, and scalable AI orchestration across Gemini 2.0/2.5 models.",
+        "capabilities": [
+            "text-generation",
+            "code-generation",
+            "code-analysis",
+            "reasoning",
+            "deep-research",
+            "vector-memory",
+            "rag-search",
+            "cost-optimization",
+            "cognitive-routing",
+            "structured-output",
+            "tool-execution"
+        ],
+        "endpoints": {
+            "chat": "/chat",
+            "chat_routed": "/chat/route",
+            "health": "/health",
+            "models": "/models",
+            "usage": "/usage",
+            "pricing_spikes": "/pricing/spikes",
+            "pricing_history": "/pricing/history",
+            "pricing_trends": "/pricing/trends"
+        },
+        "models": {
+            "tiers": [
+                "cost_saver",
+                "default",
+                "flash_thinking",
+                "unk_mode",
+                "ultrathink",
+                "code_specialist"
+            ],
+            "primary": "gemini-2.5-pro",
+            "routing": "automatic"
+        },
+        "extensions": {
+            "color": "bold magenta",
+            "role": "Cognitive Orchestrator",
+            "tier_system": "6-tier cognitive routing",
+            "memory_type": "Firestore Vector Store",
+            "auth_method": "Firebase OIDC",
+            "deployment": "Cloud Run",
+            "project": "Who Visions LLC",
+            "brand": "AI with Dav3",
+            "social": {
+                "instagram": "@aiwithdav3",
+                "youtube": "youtube.com/aiwithdav3"
+            }
+        }
+    })
+
+
 @app.get("/models", response_model=List[ModelInfo])
 async def list_models(user: Optional[UserContext] = Depends(get_optional_user)):
     """
