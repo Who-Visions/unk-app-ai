@@ -43,6 +43,7 @@ COPY gemini_agent/ ./gemini_agent/
 COPY routers/ ./routers/
 COPY services/ ./services/
 COPY tools/ ./tools/
+COPY skills/ ./skills/
 # Optional: Copy scripts if needed for debugging, but usually omit from prod
 # COPY scripts/ ./scripts/
 
