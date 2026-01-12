@@ -5,7 +5,18 @@ from pydantic import BaseModel
 
 from .config import NOTION_WHO_VISIONS_SECRET, NOTION_OBSERVATORY_SECRET
 
-@router.post("/sync")
+from .dependencies import get_optional_user, UserContext
+
+router = APIRouter(tags=["lore"])
+
+class NotionWebhookPayload(BaseModel):
+    source: str
+    data: Dict[str, Any]
+
+class SyncRequest(BaseModel):
+    world_id: str
+    force: bool = False
+
 async def trigger_sync(
     request: SyncRequest,
     user: Optional[UserContext] = Depends(get_optional_user)
@@ -21,18 +32,9 @@ async def trigger_sync(
     return {
         "status": "sync_started",
         "world": request.world_id,
-        "used_token_preview": token[:10] + "..."
+        "used_token_preview": token[:10] + "..." if token else "None"
     }
 
-router = APIRouter()
-
-class NotionWebhookPayload(BaseModel):
-    source: str
-    data: Dict[str, Any]
-
-class SyncRequest(BaseModel):
-    world_id: str
-    force: bool = False
 
 @router.post("/webhook/notion")
 async def notion_webhook(payload: NotionWebhookPayload):
