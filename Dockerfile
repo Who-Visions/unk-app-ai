@@ -5,7 +5,7 @@
 # ═══════════════════════════════════════════════════════════════════════════
 # BUILD STAGE
 # ═══════════════════════════════════════════════════════════════════════════
-FROM python:3.11-slim as builder
+FROM python:3.12-slim as builder
 
 WORKDIR /app
 
@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # ═══════════════════════════════════════════════════════════════════════════
 # PRODUCTION STAGE
 # ═══════════════════════════════════════════════════════════════════════════
-FROM python:3.11-slim as production
+FROM python:3.12-slim as production
 
 # Security: Run as non-root user
 RUN groupadd -r unk && useradd -r -g unk unk
@@ -36,10 +36,15 @@ WORKDIR /app
 # Copy virtual environment from builder
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONPATH=/app
 
 # Copy application code
 COPY gemini_agent/ ./gemini_agent/
-COPY deploy.py .
+COPY routers/ ./routers/
+COPY services/ ./services/
+COPY tools/ ./tools/
+# Optional: Copy scripts if needed for debugging, but usually omit from prod
+# COPY scripts/ ./scripts/
 
 # Set ownership
 RUN chown -R unk:unk /app
@@ -60,5 +65,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
 
-# Run with uvicorn
-CMD ["python", "deploy.py"]
+# Run with python -m to ensure imports work from root
+CMD ["python", "services/deploy.py"]

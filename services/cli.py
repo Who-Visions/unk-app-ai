@@ -6,8 +6,16 @@ Interactive terminal interface for the Unk Agent.
 
 import asyncio
 import os
+
 import sys
-from gemini_agent import UnkAgent, calculate_growth_metrics, get_current_timestamp
+
+# Add project root to sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# pylint: disable=wrong-import-position
+from gemini_agent import (UnkAgent, calculate_growth_metrics,
+                          get_current_timestamp)
+# pylint: enable=wrong-import-position
 
 # ANSI colors for better CLI experience
 BLUE = "\033[94m"
@@ -17,7 +25,9 @@ RED = "\033[91m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
 
+
 async def chat_session():
+    """Run the interactive chat session."""
     print(f"\n{BOLD}╔══════════════════════════════════════════════════════════╗{RESET}")
     print(f"{BOLD}║              🧠 UNK AGENT - CLI INTERFACE               ║{RESET}")
     print(f"{BOLD}╚══════════════════════════════════════════════════════════╝{RESET}\n")
@@ -35,25 +45,25 @@ async def chat_session():
     print(f"{GREEN}✓ A2A Integration:{RESET} Enabled")
     print(f"{GREEN}✓ Auto-Routing:{RESET} 6-tier cognitive routing\n")
     print(f"{BLUE}Commands:{RESET}")
-    print(f"  • Type your query to chat")
-    print(f"  • '/mode <tier>' - Force tier (cost_saver, default, unk_mode, ultrathink)")
-    print(f"  • 'exit' or 'quit' - End session")
+    print("  • Type your query to chat")
+    print("  • '/mode <tier>' - Force tier (cost_saver, default, unk_mode, ultrathink)")
+    print("  • 'exit' or 'quit' - End session")
     print("\n" + "-" * 58 + "\n")
 
     # Default agent for initial context or fallbacks
-    current_mode = "auto" 
+    current_mode = "auto"
 
     while True:
         try:
             user_input = input(f"{BLUE}You:{RESET} ").strip()
-            
+
             if not user_input:
                 continue
-                
+
             if user_input.lower() in ["exit", "quit"]:
                 print("Goodbye!")
                 break
-            
+
             if user_input.startswith("/mode"):
                 parts = user_input.split()
                 if len(parts) > 1:
@@ -65,19 +75,18 @@ async def chat_session():
                 continue
 
             print(f"{YELLOW}Unk:{RESET} ", end="", flush=True)
-            
+
             # logic to choose agent
             if current_mode == "auto":
-                from gemini_agent import AgentFactory
+                from gemini_agent import \
+                    AgentFactory  # pylint: disable=import-outside-toplevel
+
                 # Create a routed agent for this specific turn
-                # In a real app, we'd pass history here to maintain context
                 agent = await AgentFactory.create_routed(
                     user_input=user_input,
                     gcp_project=project_id,
-                    # Assuming 'pro' tier for CLI user to access all models
-                    user_tier="enterprise" 
+                    user_tier="enterprise"
                 )
-                # print(f"(Routing to: {agent.mode})... ", end="", flush=True)
             else:
                 # Manual override
                 agent = UnkAgent(
@@ -85,29 +94,28 @@ async def chat_session():
                     tools=[calculate_growth_metrics, get_current_timestamp],
                     gcp_project=project_id
                 )
-            
+
             # Execute turn with streaming
-            response_stream = await agent.execute_turn(user_input, force_structured=False, stream=True)
-            
-            if hasattr(response_stream, '__aiter__'): # Check if it's an async generator
+            # pylint: disable=protected-access
+            response_stream = await agent.execute_turn(
+                user_input,
+                force_structured=False,
+                stream=True
+            )
+
+            if hasattr(response_stream, '__aiter__'):  # Check if it's an async generator
                 print(f"\n{BOLD}Unk:{RESET} ", end="", flush=True)
-                
-                thought_buffer = ""
+
                 is_thinking = False
-                
+
                 async for chunk in response_stream:
                     # Check for thought parts
-                    # Note: Structure depends on SDK. Usually chunk.candidates[0].content.parts[0]
-                    # The SDK wrapper might yield simpler objects if not raw.
-                    # Assuming standard SDK response chunks.
-                    
                     for part in chunk.candidates[0].content.parts:
                         if hasattr(part, 'thought') and part.thought:
                             if not is_thinking:
                                 print(f"\n{YELLOW}Thinking{RESET}", end="", flush=True)
                                 is_thinking = True
                             print(f"{YELLOW}.{RESET}", end="", flush=True)
-                            # thought_buffer += part.text
                         elif hasattr(part, 'text') and part.text:
                             if is_thinking:
                                 print(f"\n{BOLD}Answer:{RESET} ", end="", flush=True)
@@ -119,13 +127,13 @@ async def chat_session():
                     print(response_stream.final_answer)
                 else:
                     print(response_stream)
-                
-            print() # Newline
+
+            print()  # Newline
 
         except KeyboardInterrupt:
             print("\nGoodbye!")
             break
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             print(f"\n{RED}Error: {e}{RESET}")
 
 if __name__ == "__main__":

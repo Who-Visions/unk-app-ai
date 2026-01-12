@@ -1,0 +1,67 @@
+# Ralph Agent Configuration
+# Who Visions LLC | AI with Dav3
+
+# Default settings for Ralph autonomous loops
+defaults:
+  model: "gemini-2.5-pro"
+  max_iterations: 50
+  max_cost_usd: 10.00
+  commit_after_each_change: true
+  sandbox_mode: false
+
+# Safety limits
+safety:
+  # Maximum runtime in seconds (default: 1 hour)
+  max_runtime_seconds: 3600
+  
+  # Paths the agent is allowed to modify
+  allowed_paths:
+    - "routers/"
+    - "services/"
+    - "skills/"
+    - "gemini_agent/"
+    - "scripts/"
+    - "tests/"
+    - ".agent/"
+  
+  # Paths the agent must NEVER modify
+  forbidden_paths:
+    - ".env"
+    - ".git/"
+    - "venv/"
+    - "*.key"
+    - "*.pem"
+    - "*credentials*"
+
+# Task presets
+presets:
+  pylint_refactor:
+    description: "Fix pylint violations until score >= 9.0"
+    max_iterations: 100
+    max_cost_usd: 25.00
+    validation_command: "pylint routers services skills gemini_agent scripts"
+    
+  add_docstrings:
+    description: "Add docstrings to all functions and classes"
+    max_iterations: 50
+    max_cost_usd: 10.00
+    validation_command: "pylint --disable=all --enable=missing-docstring routers services skills"
+    
+  add_type_hints:
+    description: "Add type hints to all function signatures"
+    max_iterations: 50
+    max_cost_usd: 10.00
+    validation_command: "mypy routers services skills"
+    
+  write_tests:
+    description: "Write unit tests for uncovered code paths"
+    max_iterations: 75
+    max_cost_usd: 20.00
+    validation_command: "pytest tests/"
+
+# Logging
+logging:
+  level: INFO
+  log_file: ".agent/ralph.log"
+  log_prompts: false
+  log_responses: true

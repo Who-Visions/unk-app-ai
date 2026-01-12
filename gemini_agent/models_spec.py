@@ -8,217 +8,274 @@ All agents reference this spec for model selection.
 Who Visions LLC - Unk Agent System
 """
 
-from typing import Dict, Any, Literal, List
+from typing import Any, Dict, List, Literal
 
 # Type definitions for static analysis
 ModelTier = Literal["flash", "pro", "ultra", "lite"]
 Capability = Literal[
-    "multimodal", "tools", "reasoning", "coding", 
-    "thinking_tokens", "vision", "fast", "video_analysis",
-    "complex_reasoning", "text_generation", "ocr"
+    "multimodal", "tools", "reasoning", "coding",
+    "thinking_tokens", "thinking", "vision", "fast", "video_analysis",
+    "complex_reasoning", "text_generation", "ocr", "search_grounding",
+    "structured_outputs", "url_context", "grounding_google_maps",
+    "audio_live", "affective_dialog", "proactive_audio"
 ]
 
 GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # ═══════════════════════════════════════════════════════════════
-    # TIER: FLASH - High-throughput, cost-efficient operations
+    # TIER: GEMINI 3 - NEXT GEN INTELLIGENCE
     # ═══════════════════════════════════════════════════════════════
     "default": {
-        "model_id": "gemini-2.5-flash",
+        "model_id": "gemini-3-flash-preview",
         "tier": "flash",
-        "release_date": "2025-06-17",
+        "release_date": "2025-12-01",
         "context_window": 1_048_576,
-        "capabilities": ["multimodal", "tools", "fast", "thinking_tokens"],
+        "capabilities": [
+            "multimodal", "tools", "fast", "thinking",
+            "search_grounding", "structured_outputs", "url_context"
+        ],
         "pricing": {
-            "input_per_1m": 0.10,
-            "output_per_1m": 0.40
+            "input_per_1m": 0.50,
+            "output_per_1m": 3.00
         },
-        "rate_limits": {
-            "rpm": 1000,
-            "tpm": 4_000_000
-        },
-        "description": "High-throughput driver with thinking capabilities. Default for standard interactions.",
-        "use_cases": ["greetings", "simple_qa", "classification", "routing", "reasoning"],
+        "description": "Gemini 3 Flash. Pro-level intelligence at Flash speeds. Default driver.",
+        "use_cases": ["general", "agentic_loops", "fast_reasoning", "high_throughput"],
         "flags": {
-            "enable_thinking_budget": True,
-            "default_thinking_tokens": 2048
-        }
-    },
-    
-    "flash_thinking": {
-        "model_id": "gemini-2.0-flash-thinking-exp",
-        "tier": "flash",
-        "release_date": "2025-01-21",
-        "context_window": 1_000_000,
-        "capabilities": ["reasoning", "tools", "thinking_tokens"],
-        "pricing": {
-            "input_per_1m": 0.10,
-            "output_per_1m": 0.40
-        },
-        "rate_limits": {
-            "rpm": 500,
-            "tpm": 2_000_000
-        },
-        "description": "Flash with native chain-of-thought. Bridge between speed and reasoning.",
-        "use_cases": ["moderate_reasoning", "step_by_step", "planning"]
-    },
-
-    # ═══════════════════════════════════════════════════════════════
-    # TIER: PRO - Deep reasoning, complex problem solving
-    # ═══════════════════════════════════════════════════════════════
-    "unk_mode": {
-        "model_id": "gemini-2.5-pro-001",
-        "tier": "pro",
-        "release_date": "2025-06-17",
-        "context_window": 1_048_576,
-        "capabilities": ["complex_reasoning", "coding", "thinking_tokens", "multimodal"],
-        "pricing": {
-            "input_per_1m": 2.50,
-            "output_per_1m": 10.00
-        },
-        "rate_limits": {
-            "rpm": 150,
-            "tpm": 1_000_000
-        },
-        "description": "THE BRAIN. Maximum intelligence. Uses thinking tokens for deep reasoning.",
-        "use_cases": ["architecture", "complex_analysis", "code_generation", "research"],
-        "flags": {
-            "requires_pro_subscription": True,
-            "enable_thinking_budget": True,
-            "default_thinking_tokens": 8192
-        }
-    },
-    
-    "ultrathink": {
-        "model_id": "gemini-2.5-pro-001",
-        "tier": "ultra",
-        "release_date": "2025-06-17",
-        "context_window": 1_048_576,
-        "capabilities": ["complex_reasoning", "coding", "thinking_tokens", "multimodal"],
-        "pricing": {
-            "input_per_1m": 2.50,
-            "output_per_1m": 10.00
-        },
-        "rate_limits": {
-            "rpm": 60,
-            "tpm": 500_000
-        },
-        "description": "ULTRATHINK. Extended thinking budget. Maximum cognitive depth.",
-        "use_cases": ["system_design", "research_synthesis", "complex_debugging"],
-        "flags": {
-            "requires_pro_subscription": True,
-            "enable_thinking_budget": True,
-            "default_thinking_tokens": 32768,
-            "max_thinking_tokens": 65536
+             "use_thinking_level": True,
+             "default_thinking_level": "high"
         }
     },
 
-    # ═══════════════════════════════════════════════════════════════
-    # TIER: SPECIALIST - Domain-specific optimizations
-    # ═══════════════════════════════════════════════════════════════
-    "agentic_flash": {
-        "model_id": "gemini-2.0-flash-001",
+    "gemini_3_flash": {
+        "model_id": "gemini-3-flash-preview",
         "tier": "flash",
-        "release_date": "2025-02-05",
+        "release_date": "2025-12-01",
         "context_window": 1_048_576,
-        "capabilities": ["tools", "multimodal", "fast", "agentic"],
+        "capabilities": [
+            "multimodal", "tools", "fast", "thinking",
+            "search_grounding", "structured_outputs", "url_context"
+        ],
         "pricing": {
-            "input_per_1m": 0.10,
-            "output_per_1m": 0.40
+            "input_per_1m": 0.50,
+            "output_per_1m": 3.00
         },
-        "rate_limits": {
-            "rpm": 1000,
-            "tpm": 4_000_000
-        },
-        "max_output_tokens": 8192,
-        "description": "Agentic workhorse. Optimized for fast tool execution and multimodal tasks.",
-        "use_cases": ["tool_calling", "agentic_loops", "multimodal_processing"]
-    },
-    
-    "code_specialist": {
-        "model_id": "gemini-2.5-pro-001",
-        "tier": "pro",
-        "release_date": "2025-06-17",
-        "context_window": 1_048_576,
-        "capabilities": ["coding", "reasoning", "tools"],
-        "pricing": {
-            "input_per_1m": 2.50,
-            "output_per_1m": 10.00
-        },
-        "rate_limits": {
-            "rpm": 150,
-            "tpm": 1_000_000
-        },
-        "description": "Code generation and review specialist.",
-        "use_cases": ["code_generation", "code_review", "refactoring", "debugging"],
+        "description": "Gemini 3 Flash (Preview). Speed + Intelligence.",
+        "use_cases": ["high_volume", "low_latency"],
         "flags": {
-            "requires_pro_subscription": True,
-            "system_prompt_override": "code_expert"
+             "use_thinking_level": True,
+             "default_thinking_level": "high"
         }
     },
 
-    # ═══════════════════════════════════════════════════════════════
-    # TIER: NEXT - Future capabilities
-    # ═══════════════════════════════════════════════════════════════
-    "yn_mode": {
+    "gemini_3_pro": {
         "model_id": "gemini-3-pro-preview",
         "tier": "ultra",
-        "location": "global",
-        "release_date": "2025-11-18",
-        "context_window": 1_048_576,
-        "capabilities": ["complex_reasoning", "coding", "thinking", "multimodal", "pdf_input", "media_resolution_control"],
+        "release_date": "2025-11-01",
+        "context_window": 1_048_576, # 1M input / 64k output
+        "capabilities": [
+            "complex_reasoning", "coding", "thinking", "multimodal",
+            "pdf_input", "search_grounding", "url_context"
+        ],
         "pricing": {
-            "input_per_1m": 5.00,
-            "output_per_1m": 20.00
+            "input_per_1m": 2.00, # < 200k tokens
+            "output_per_1m": 12.00
         },
-        "rate_limits": {
-            "rpm": 60,
-            "tpm": 500_000
-        },
-        "description": "Gemini 3 Pro (Preview) - Young Nigga Mode. Advanced reasoning with thinking_level control and media resolution settings.",
-        "use_cases": ["complex_reasoning", "multimodal_analysis", "experimental"],
+        "description": "Gemini 3 Pro. Best model for complex tasks and broad world knowledge.",
+        "use_cases": ["complex_reasoning", "multimodal_analysis", "coding", "research"],
         "flags": {
             "requires_pro_subscription": True,
             "use_thinking_level": True,
-            "default_thinking_level": "high",
-            "system_prompt_override": "yn_mode"
+            "default_thinking_level": "high"
         }
     },
 
+    "nano_banana_pro": {
+        "model_id": "gemini-3-pro-image-preview",
+        "tier": "pro",
+        "release_date": "2025-11-01",
+        "context_window": 65_536,
+        "capabilities": [
+            "image_generation", "structured_outputs", "thinking", "search_grounding"
+        ],
+        "description": "Nano Banana Pro (Gemini 3 Image). Highest quality image generation.",
+        "use_cases": ["image_generation", "visual_design", "multimodal_creation"],
+        "flags": {
+             "use_thinking_level": True
+        }
+    },
+
+    "gemini_3_pro_image": {
+        "model_id": "gemini-3-pro-image-preview",
+        "tier": "pro",
+        "description": "Alias for Nano Banana Pro."
+    },
+
+    "nano_banana": {
+        "model_id": "gemini-2.5-flash-image",
+        "tier": "flash",
+        "release_date": "2025-08-01",
+        "context_window": 1_048_576,
+        "capabilities": ["image_generation", "fast"],
+        "description": "Nano Banana (Gemini 2.5 Flash Image). Fast image generation.",
+        "use_cases": ["thumbnails", "stickers", "fast_visuals"]
+    },
+
+    "veo_3_1": {
+        "model_id": "veo-3.1-generate-preview",
+        "tier": "pro",
+        "release_date": "2025-09-01",
+        "capabilities": ["video_generation", "audio_generation"],
+        "description": "Veo 3.1 Preview. High-fidelity video with native audio.",
+        "use_cases": ["cinematic_video", "marketing_assets"],
+        "limits": {"duration_seconds": [4, 6, 8]}
+    },
+
     # ═══════════════════════════════════════════════════════════════
-    # TIER: LITE - Maximum cost efficiency
+    # TIER: GEMINI 2.5 - LEGACY WORKHORSE
     # ═══════════════════════════════════════════════════════════════
+    "gemini_2_5_flash": {
+        "model_id": "gemini-2.5-flash",
+        "tier": "flash",
+        "release_date": "2025-06-01",
+        "context_window": 1_048_576,
+        "capabilities": ["multimodal", "tools", "thinking", "grounding_google_maps"],
+        "pricing": {
+             "input_per_1m": 0.10,
+             "output_per_1m": 0.40
+        },
+        "description": "Gemini 2.5 Flash. Best price-performance.",
+        "use_cases": ["scaling", "processing"]
+    },
+
+    "live_preview": {
+        "model_id": "gemini-2.5-flash-native-audio-preview-12-2025",
+        "tier": "flash",
+        "release_date": "2025-12-20",
+        "context_window": 131_072,
+        "capabilities": [
+            "audio_live", "search_grounding", "tools", "thinking",
+            "affective_dialog", "proactive_audio"
+        ],
+        "pricing": {
+             "input_per_1m": 0.10,
+             "output_per_1m": 0.40
+        },
+        "description": "Gemini 2.5 Flash Native Audio. Real-time voice/video interaction.",
+        "use_cases": ["realtime_voice", "assistant", "live_interaction"],
+        "flags": {
+             "use_thinking_level": False,
+             "enable_thinking_budget": True,
+             "default_thinking_tokens": 1024
+        }
+    },
+
+    "gemini_2_5_pro": {
+        "model_id": "gemini-2.5-pro",
+        "tier": "pro",
+        "release_date": "2025-06-01",
+        "context_window": 1_048_576,
+        "capabilities": ["reasoning", "coding", "thinking", "multimodal"],
+        "pricing": {
+             "input_per_1m": 2.50,
+             "output_per_1m": 10.00
+        },
+         "description": "Gemini 2.5 Pro. State-of-the-art thinking model.",
+         "use_cases": ["math", "stem", "complex_analysis"]
+    },
+
     "cost_saver": {
         "model_id": "gemini-2.5-flash-lite",
         "tier": "lite",
-        "release_date": "2025-07-22",
+        "release_date": "2025-07-01",
         "context_window": 1_048_576,
-        "capabilities": ["text_generation", "fast", "thinking", "tools", "multimodal"],
+        "capabilities": ["fast", "tools", "thinking", "multimodal"],
         "pricing": {
             "input_per_1m": 0.02,
             "output_per_1m": 0.08
         },
-        "rate_limits": {
-            "rpm": 2000,
-            "tpm": 8_000_000
-        },
-        "description": "Fastest, most balanced. Optimized for low latency classification and routing.",
-        "use_cases": ["classification", "routing", "extraction", "simple_summarization"]
+        "description": "Gemini 2.5 Flash-Lite. Ultra fast and cost efficient.",
+        "use_cases": ["classification", "routing", "simple_tasks"]
     },
 
     # ═══════════════════════════════════════════════════════════════
-    # EMBEDDING MODELS
+    # TIER: SPECIALIST / ALIASES
+    # ═══════════════════════════════════════════════════════════════
+    "code_specialist": {
+        "model_id": "gemini-3-pro-preview",
+        "tier": "pro",
+        "context_window": 1_048_576,
+        "capabilities": ["coding", "reasoning", "tools", "thinking"],
+        "description": "Code generation and review specialist (Gemini 3 Pro).",
+        "flags": {
+            "requires_pro_subscription": True,
+            "system_prompt_override": "code_expert",
+            "use_thinking_level": True
+        }
+    },
+
+    "flash_thinking": {
+         "model_id": "gemini-3-flash-preview",
+         "tier": "flash",
+         "description": "Alias for Flash with thinking enabled."
+    },
+
+    "gemini_2_5_flash_tts": {
+         "model_id": "gemini-2.5-flash-native-audio-preview-12-2025",
+         "tier": "flash",
+         "description": "Alias for Native Audio model (best for TTS)."
+    },
+
+    "gemini-2.0-flash-thinking-exp": {
+        "model_id": "gemini-2.0-flash-thinking-exp-1219",
+        "tier": "flash_thinking",
+        "capabilities": ["thinking", "multimodal"],
+        "pricing": {"input": 0.0, "output": 0.0},
+        "flags": {"system_prompt_override": "ultrathink"}
+    },
+
+    "yn_mode": {
+        "model_id": "gemini-3-pro-preview",
+        "tier": "ultra",
+        "description": "Gemini 3 Pro - Young Nigga Mode.",
+        "flags": {
+            "requires_pro_subscription": True,
+            "system_prompt_override": "yn_mode",
+            "use_thinking_level": True,
+            "default_thinking_level": "high"
+        }
+    },
+
+    "unk_mode": {
+        "model_id": "gemini-3-pro-preview",
+        "tier": "pro",
+        "description": "Unk Mode - Deep reasoning.",
+        "flags": {
+            "requires_pro_subscription": True,
+            "system_prompt_override": "unk_mode",
+            "use_thinking_level": True
+        }
+    },
+
+    "ultrathink": {
+        "model_id": "gemini-3-pro-preview",
+        "tier": "ultra",
+        "description": "Ultrathink - Maximum cognitive depth with Gemini 3 Pro.",
+        "flags": {
+             "requires_pro_subscription": True,
+             "system_prompt_override": "ultrathink",
+             "use_thinking_level": True
+        }
+    },
+
+    # ═══════════════════════════════════════════════════════════════
+    # UTILITY
     # ═══════════════════════════════════════════════════════════════
     "embedder": {
         "model_id": "text-embedding-004",
         "tier": "utility",
-        "release_date": "2024-05-14",
-        "dimensions": 768,
-        "capabilities": ["embedding"],
+        "description": "Vector embedding generation.",
         "pricing": {
             "input_per_1m": 0.00025
-        },
-        "description": "Vector embedding generation for RAG.",
-        "use_cases": ["semantic_search", "rag", "similarity"]
+        }
     }
 }
 
@@ -259,7 +316,7 @@ def estimate_cost(mode: str, input_tokens: int, output_tokens: int) -> float:
 
 
 def get_thinking_budget(mode: str) -> int:
-    """Get thinking token budget for a mode."""
+    """Get thinking token budget for a mode (Gemini 2.5/Legacy)."""
     spec = get_model(mode)
     flags = spec.get("flags", {})
     if flags.get("enable_thinking_budget"):
@@ -285,13 +342,13 @@ def list_modes_by_tier(tier: str) -> List[str]:
 def get_routing_recommendation(task_complexity: str) -> str:
     """
     Recommend a mode based on task complexity.
-    
+
     Escalation path:
     1. Trivial/Simple -> gemini-2.5-flash-lite (cost_saver)
-    2. Moderate -> gemini-2.5-flash (default)
-    3. Complex -> gemini-2.5-pro (unk_mode)
-    4. Extreme -> gemini-3-pro-preview (next_gen)
-    
+    2. Moderate -> gemini-3-flash-preview (default)
+    3. Complex -> gemini-3-pro-preview (gemini_3_pro)
+    4. Extreme -> gemini-3-pro-preview (ultrathink)
+
     Args:
         task_complexity: One of 'trivial', 'simple', 'moderate', 'complex', 'extreme'
     """
@@ -299,7 +356,7 @@ def get_routing_recommendation(task_complexity: str) -> str:
         "trivial": "cost_saver",
         "simple": "cost_saver",
         "moderate": "default",
-        "complex": "unk_mode",
-        "extreme": "yn_mode"
+        "complex": "gemini_3_pro",
+        "extreme": "ultrathink"
     }
     return routing_map.get(task_complexity, "default")

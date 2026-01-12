@@ -8,18 +8,18 @@ Enables RAG and long-term memory for the Unk Agent.
 Who Visions LLC - AI with Dav3
 """
 
-import os
 import asyncio
-from datetime import datetime
-from typing import List, Dict, Any, Optional
+import os
 from dataclasses import dataclass
+from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
 try:
-    from google.cloud import firestore
-    from google.cloud.firestore_v1.vector import Vector
-    from google.cloud.firestore_v1.base_vector_query import DistanceMeasure
     from google import genai
+    from google.cloud import firestore
+    from google.cloud.firestore_v1.base_vector_query import DistanceMeasure
+    from google.cloud.firestore_v1.vector import Vector
     IMPORTS_AVAILABLE = True
 except ImportError:
     IMPORTS_AVAILABLE = False
@@ -55,17 +55,17 @@ class MemoryEntry:
 class VectorMemory:
     """
     Firestore-backed vector memory system.
-    
+
     Features:
     - Semantic search with cosine similarity
     - Memory type filtering
     - User-scoped memories
     - Batch operations
     """
-    
+
     # Firestore vector dimensionality limit
     MAX_DIMENSIONS = 2048
-    
+
     def __init__(
         self,
         project_id: Optional[str] = None,
@@ -74,7 +74,7 @@ class VectorMemory:
     ):
         """
         Initialize the vector memory system.
-        
+
         Args:
             project_id: GCP project ID
             collection_name: Firestore collection for memories
@@ -86,24 +86,24 @@ class VectorMemory:
         self.project_id = project_id or os.environ.get("GOOGLE_CLOUD_PROJECT")
         self.collection_name = collection_name
         self.embedding_model = embedding_model
-        
+
         # Initialize Firestore client
         self.db = firestore.Client(project=self.project_id)
-        
+
         # Initialize GenAI client for embeddings
         self.genai_client = genai.Client(
             vertexai=True,
             project=self.project_id,
             location="us-central1"
         )
-        
+
     def _generate_embedding(self, text: str) -> List[float]:
         """
         Generate vector embedding for text.
-        
+
         Args:
             text: Text to embed
-            
+
         Returns:
             List of floats representing the embedding vector
         """
@@ -111,27 +111,27 @@ class VectorMemory:
             model=self.embedding_model,
             contents=text
         )
-        
+
         embedding = result.embeddings[0].values
-        
+
         # Validate dimensions
         if len(embedding) > self.MAX_DIMENSIONS:
             raise ValueError(
                 f"Embedding dimensions ({len(embedding)}) exceed "
                 f"Firestore limit ({self.MAX_DIMENSIONS})"
             )
-            
+
         return embedding
-        
+
     async def _generate_embedding_async(self, text: str) -> List[float]:
         """Async wrapper for embedding generation."""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
-            None, 
-            self._generate_embedding, 
+            None,
+            self._generate_embedding,
             text
         )
-        
+
     def store_memory(
         self,
         content: str,
@@ -141,18 +141,18 @@ class VectorMemory:
     ) -> str:
         """
         Store a memory with its vector embedding.
-        
+
         Args:
             content: The text content to store
             memory_type: Category of this memory
             metadata: Additional metadata to store
             user_id: Optional user scope
-            
+
         Returns:
             Document ID of the stored memory
         """
         embedding = self._generate_embedding(content)
-        
+
         doc_data = {
             "content": content,
             "embedding": Vector(embedding),
@@ -162,10 +162,10 @@ class VectorMemory:
             "created_at": firestore.SERVER_TIMESTAMP,
             "updated_at": firestore.SERVER_TIMESTAMP
         }
-        
+
         doc_ref = self.db.collection(self.collection_name).add(doc_data)
         return doc_ref[1].id
-        
+
     async def store_memory_async(
         self,
         content: str,
@@ -179,7 +179,7 @@ class VectorMemory:
             None,
             lambda: self.store_memory(content, memory_type, metadata, user_id)
         )
-        
+
     def store_batch(
         self,
         entries: List[MemoryEntry],
@@ -187,23 +187,23 @@ class VectorMemory:
     ) -> List[str]:
         """
         Store multiple memories in a batch.
-        
+
         Args:
             entries: List of MemoryEntry objects
             user_id: Optional user scope for all entries
-            
+
         Returns:
             List of document IDs
         """
         batch = self.db.batch()
         doc_ids = []
-        
+
         for entry in entries:
             embedding = self._generate_embedding(entry.content)
-            
+
             doc_ref = self.db.collection(self.collection_name).document()
             doc_ids.append(doc_ref.id)
-            
+
             batch.set(doc_ref, {
                 "content": entry.content,
                 "embedding": Vector(embedding),
@@ -213,10 +213,10 @@ class VectorMemory:
                 "created_at": firestore.SERVER_TIMESTAMP,
                 "updated_at": firestore.SERVER_TIMESTAMP
             })
-            
+
         batch.commit()
         return doc_ids
-        
+
     def retrieve_relevant(
         self,
         query: str,
@@ -227,21 +227,21 @@ class VectorMemory:
     ) -> List[MemoryEntry]:
         """
         Retrieve memories most relevant to the query.
-        
+
         Args:
             query: Search query
             limit: Maximum number of results
             memory_type: Filter by memory type
             user_id: Filter by user scope
             min_similarity: Minimum similarity threshold
-            
+
         Returns:
             List of relevant MemoryEntry objects
         """
         query_vector = self._generate_embedding(query)
-        
+
         collection_ref = self.db.collection(self.collection_name)
-        
+
         # Build the vector query
         vector_query = collection_ref.find_nearest(
             vector_field="embedding",
@@ -250,24 +250,24 @@ class VectorMemory:
             limit=limit,
             distance_result_field="similarity_score"
         )
-        
+
         results = vector_query.get()
-        
+
         memories = []
         for doc in results:
             data = doc.to_dict()
-            
+
             # Apply filters
             if memory_type and data.get("memory_type") != memory_type.value:
                 continue
             if user_id and data.get("user_id") != user_id:
                 continue
-                
+
             # Convert cosine distance to similarity (1 - distance)
             similarity = 1 - data.get("similarity_score", 1)
             if similarity < min_similarity:
                 continue
-                
+
             memories.append(MemoryEntry(
                 content=data.get("content", ""),
                 memory_type=MemoryType(data.get("memory_type", "fact")),
@@ -276,9 +276,9 @@ class VectorMemory:
                 similarity_score=similarity,
                 document_id=doc.id
             ))
-            
+
         return memories
-        
+
     async def retrieve_relevant_async(
         self,
         query: str,
@@ -295,14 +295,14 @@ class VectorMemory:
                 query, limit, memory_type, user_id, min_similarity
             )
         )
-        
+
     def delete_memory(self, document_id: str) -> bool:
         """
         Delete a specific memory.
-        
+
         Args:
             document_id: The Firestore document ID
-            
+
         Returns:
             True if successful
         """
@@ -311,28 +311,28 @@ class VectorMemory:
             return True
         except Exception:
             return False
-            
+
     def clear_user_memories(self, user_id: str) -> int:
         """
         Delete all memories for a specific user.
-        
+
         Args:
             user_id: The user ID to clear
-            
+
         Returns:
             Number of deleted documents
         """
         query = self.db.collection(self.collection_name).where(
             "user_id", "==", user_id
         )
-        
+
         docs = query.stream()
         count = 0
-        
+
         for doc in docs:
             doc.reference.delete()
             count += 1
-            
+
         return count
 
 
@@ -346,42 +346,42 @@ def create_memory_search_tool(
 ) -> callable:
     """
     Create a memory search tool for agent registration.
-    
+
     Args:
         project_id: GCP project ID
         collection_name: Firestore collection name
-        
+
     Returns:
         Callable tool function
     """
     memory = VectorMemory(project_id, collection_name)
-    
+
     def search_knowledge_base(query: str, limit: int = 5) -> str:
         """
         Search the internal knowledge base for relevant information.
         Use this when the user asks about specific policies, past data,
         or stored knowledge.
-        
+
         Args:
             query: The search query
             limit: Maximum number of results to return
-            
+
         Returns:
             Formatted string of search results
         """
         results = memory.retrieve_relevant(query, limit=limit)
-        
+
         if not results:
             return "No relevant information found in the knowledge base."
-            
+
         output = "Found the following relevant information:\n\n"
         for i, entry in enumerate(results, 1):
             output += f"{i}. [{entry.memory_type.value.upper()}] "
             output += f"(Score: {entry.similarity_score:.2f})\n"
             output += f"   {entry.content}\n\n"
-            
+
         return output
-        
+
     return search_knowledge_base
 
 
@@ -391,27 +391,27 @@ def create_memory_store_tool(
 ) -> callable:
     """
     Create a memory storage tool for agent registration.
-    
+
     Args:
         project_id: GCP project ID
         collection_name: Firestore collection name
-        
+
     Returns:
         Callable tool function
     """
     memory = VectorMemory(project_id, collection_name)
-    
+
     def store_information(
         content: str,
         category: str = "fact"
     ) -> str:
         """
         Store new information in the knowledge base for future reference.
-        
+
         Args:
             content: The information to store
             category: Type of information (fact, procedure, preference)
-            
+
         Returns:
             Confirmation message
         """
@@ -421,10 +421,10 @@ def create_memory_store_tool(
             "preference": MemoryType.USER_PREFERENCE,
             "knowledge": MemoryType.SYSTEM_KNOWLEDGE
         }
-        
+
         memory_type = type_map.get(category.lower(), MemoryType.FACT)
         doc_id = memory.store_memory(content, memory_type)
-        
+
         return f"Successfully stored information (ID: {doc_id})"
-        
+
     return store_information
