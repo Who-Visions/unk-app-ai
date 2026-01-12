@@ -20,8 +20,18 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from firebase_admin import credentials
 
-from routers import a2a, auth, chat, core, lore, models, orchestrator, tools
-from routers.config import ENV, PORT, logger
+
+# Import Routers - Wrapped in try/except to catch import errors early
+try:
+    from routers import a2a, auth, chat, core, lore, models, orchestrator, tools
+    from routers.config import ENV, PORT, logger
+    from routers import threads  # Imported separately in original code, consolidating here if possible
+except Exception as e:
+    import logging
+    logging.error(f"CRITICAL STARTUP ERROR: Failed to import routers. {e}")
+    # We re-raise so the app still fails, but now we have a log entry that Cloud Run will definitely capture
+    raise e
+
 
 # Firebase Initialization
 if not firebase_admin._apps: # pylint: disable=protected-access
@@ -93,7 +103,6 @@ app.include_router(lore.router, prefix="/lore")
 app.include_router(orchestrator.router)
 app.include_router(auth.router)
 
-from routers import threads
 app.include_router(threads.router)
 
 if __name__ == "__main__":
