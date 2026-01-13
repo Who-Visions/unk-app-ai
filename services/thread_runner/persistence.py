@@ -9,6 +9,7 @@ import json
 import logging
 import os
 from typing import Optional
+
 from .models import Thread
 
 logger = logging.getLogger("thread_runner.persistence")
@@ -18,12 +19,14 @@ firestore_client = None
 
 try:
     from google.cloud import firestore
+
     # Check if we should initialize (only if project ID is set)
     if os.environ.get("GOOGLE_CLOUD_PROJECT"):
-         # Lazy init in actual use usually, but here checking library availability
-         pass
+        # Lazy init in actual use usually, but here checking library availability
+        pass
 except ImportError:
     pass
+
 
 class ThreadStore:
     def __init__(self):
@@ -43,7 +46,8 @@ class ThreadStore:
                 self.collection = self.db.collection("threads")
                 logger.info("✅ ThreadStore: Using Firestore")
             except Exception as e:  # pylint: disable=W0718
-                logger.warning(f"⚠️ ThreadStore: Firestore init failed ({e}), falling back to local files.")
+                logger.warning(
+                    f"⚠️ ThreadStore: Firestore init failed ({e}), falling back to local files.")
         else:
             logger.info("ℹ️ ThreadStore: Using Local File Storage")
 
@@ -80,14 +84,15 @@ class ThreadStore:
                     data = doc.to_dict()
                     return Thread(**data)
             except Exception as e:  # pylint: disable=W0718
-                 logger.error(f"Firestore load error: {e}")
+                logger.error(f"Firestore load error: {e}")
 
         # Local Load
         path = os.path.join(self.local_dir, f"{thread_id}.json")
         if os.path.exists(path):
-             with open(path, "r") as f:
+            with open(path, "r") as f:
                 data = json.load(f)
                 return Thread(**data)
         return None
+
 
 store = ThreadStore()

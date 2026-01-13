@@ -7,6 +7,7 @@ from routers.dependencies import ENV, UserContext, get_optional_user
 
 router = APIRouter()
 
+
 class HealthResponse(BaseModel):
     """Health check response."""
     status: str
@@ -14,10 +15,12 @@ class HealthResponse(BaseModel):
     timestamp: str
     version: str
 
+
 @router.get("/", include_in_schema=False)
 async def root():
     """Root endpoint."""
     return {"message": "Unk Agent API", "docs": "/docs"}
+
 
 @router.get("/health", response_model=HealthResponse)
 async def health_check():
@@ -29,6 +32,7 @@ async def health_check():
         version="1.0.0"
     )
 
+
 @router.get("/health/detailed", response_model=HealthResponse)
 async def health_check_detailed():
     """Detailed health check."""
@@ -39,6 +43,7 @@ async def health_check_detailed():
         timestamp=datetime.utcnow().isoformat() + "Z",
         version="1.0.0"
     )
+
 
 @router.get("/config")
 async def get_config(user: UserContext = Depends(get_optional_user)):

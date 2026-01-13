@@ -16,10 +16,12 @@ logger = logging.getLogger(__name__)
 
 # --- Models ---
 
+
 class OrchestratorRequest(BaseModel):
     task_type: str
     parameters: Dict[str, Any] = {}
     context: Optional[str] = None
+
 
 class JobResponse(BaseModel):
     job_id: str
@@ -28,13 +30,14 @@ class JobResponse(BaseModel):
 
 # --- Endpoints ---
 
+
 @router.post("/jobs/queue", response_model=JobResponse)
 async def queue_job(request: OrchestratorRequest, background_tasks: BackgroundTasks):
     """
     Queue a background job for the orchestrator.
     Supports types: 'pull_inbox', 'sync_approvals', 'daily_brief', 'scan_updates'.
     """
-    job_id = f"job_{request.task_type}_{12345}" # Placeholder for actual ID generation
+    job_id = f"job_{request.task_type}_{12345}"  # Placeholder for actual ID generation
 
     # In a real implementation, we would persist this job to a DB/Queue
     logger.info(f"Queuing job {job_id}: {request.task_type}")
@@ -53,6 +56,7 @@ async def queue_job(request: OrchestratorRequest, background_tasks: BackgroundTa
         message=f"Job {request.task_type} queued successfully."
     )
 
+
 @router.get("/jobs/{job_id}", response_model=JobResponse)
 async def get_job_status(job_id: str):
     """Get the status of a specific job."""
@@ -62,6 +66,7 @@ async def get_job_status(job_id: str):
         status="processing",
         message="Job is currently processing (stub)."
     )
+
 
 @router.post("/morning-brief")
 async def trigger_morning_brief():
@@ -76,10 +81,12 @@ async def trigger_morning_brief():
 
 # --- Gmail Integration Stubs ---
 
+
 @router.get("/gmail/search")
 async def search_gmail(query: str, limit: int = 10):
     """Search emails (Stub)."""
     return {"results": f"Found 0 emails for query '{query}' (Gmail integration pending auth)."}
+
 
 @router.post("/gmail/draft")
 async def draft_email(to: str, subject: str, body: str):
@@ -88,6 +95,7 @@ async def draft_email(to: str, subject: str, body: str):
 
 # --- Drive Integration Stubs ---
 
+
 @router.post("/drive/create-folder")
 async def create_drive_folder(name: str, parent_id: Optional[str] = None):
     """Create a folder in Google Drive (Stub)."""
@@ -95,13 +103,16 @@ async def create_drive_folder(name: str, parent_id: Optional[str] = None):
 
 # --- Background Task Handlers ---
 
+
 async def process_inbox_pull(_params: Dict[str, Any]):
     logger.info("Processing inbox pull...")
     # Logic to fetch emails using Gmail API would go here
 
+
 async def generate_daily_brief(_params: Dict[str, Any]):
     logger.info("Generating daily brief...")
     # Logic to aggregate info and call Gemini would go here
+
 
 async def handle_generic_task(task_type: str, _params: Dict[str, Any]):
     logger.info(f"Processing generic task: {task_type}")

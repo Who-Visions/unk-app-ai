@@ -57,10 +57,10 @@ class Thread:
     nodes: List[ThreadNode] = field(default_factory=list)
     start_time: float = field(default_factory=time.time)
     end_time: Optional[float] = None
-    
+
     # Context management
     context: Dict[str, Any] = field(default_factory=dict)
-    
+
     def add_node(self, node_type: str, content: str, metadata: Optional[Dict[str, Any]] = None):
         """Add a progress node to the thread."""
         node = ThreadNode(node_type=node_type, content=content, metadata=metadata or {})
@@ -75,7 +75,7 @@ class Thread:
 
 class PThreadManager:
     """Manages parallel threads of work (P-Threads)."""
-    
+
     def __init__(self):
         self.active_threads: Dict[str, Thread] = {}
 
@@ -88,12 +88,12 @@ class PThreadManager:
 
 class FThreadManager:
     """Manages fusion threads (F-Threads)."""
-    
+
     @staticmethod
     def fuse_results(results: List[str], strategy: str = "best_of_n") -> str:
         """
         Merge or select results from multiple agents.
-        
+
         Strategies:
         - best_of_n: Choose the result with highest confidence (or first success).
         - consensus: Find commonality between results.
@@ -101,27 +101,27 @@ class FThreadManager:
         """
         if not results:
             return ""
-        
+
         if strategy == "best_of_n":
             # Simple heuristic for now: longest or non-empty
             return max(results, key=len)
-        
+
         if strategy == "aggregate":
             return "\n\n---\n\n".join(results)
-            
+
         return results[0]  # Fallback
 
 
 class LThreadManager:
     """Manages long-running autonomous threads (Ralph/L-Threads)."""
-    
+
     def __init__(self, validation_hook: Optional[Callable] = None):
         self.validation_hook = validation_hook
 
     async def run_with_validation(self, agent_loop: Callable):
         """
         Runs the agent loop with a validation "Stop Hook".
-        
+
         Pattern:
         1. Agent works.
         2. Agent attempts to stop.
@@ -130,4 +130,4 @@ class LThreadManager:
         5. Repeat until success or limit.
         """
         # Implementation logic for the ADW Loop
-        pass
+

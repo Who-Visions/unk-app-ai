@@ -1,12 +1,14 @@
 
 import os
 import sys
+
 from dotenv import load_dotenv
+
+from skills.notion_skill import NotionSkill
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 load_dotenv()
 
-from skills.notion_skill import NotionSkill
 
 def extract_text_recursive(block):
     """
@@ -27,6 +29,7 @@ def extract_text_recursive(block):
         content += "\n"
 
     return content
+
 
 def example_parse_text():
     notion = NotionSkill()
@@ -57,6 +60,7 @@ def example_parse_text():
     print("\n--- EXTRACTED TEXT ---")
     print(full_text)
     print("----------------------")
+
 
 if __name__ == "__main__":
     example_parse_text()

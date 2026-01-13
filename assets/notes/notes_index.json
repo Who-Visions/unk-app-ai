@@ -1,0 +1,45 @@
+{
+  "notes": [
+    {
+      "id": "strategy_20260112_214840",
+      "category": "strategy",
+      "title": "Global Endpoint for Gemini 3",
+      "content": "Always use location='global' for Gemini 3 models on Vertex AI.",
+      "context": "Unk Agent routing fix",
+      "keywords": [
+        "gemini",
+        "vertex",
+        "global",
+        "routing"
+      ],
+      "created_at": "2026-01-12T21:48:40.557604",
+      "relevance_score": 1.0
+    },
+    {
+      "id": "strategy_20260112_233235",
+      "category": "strategy",
+      "title": "Test Strategy Note",
+      "content": "This is a test note for validation.",
+      "context": "Integration test",
+      "keywords": [
+        "test",
+        "validation"
+      ],
+      "created_at": "2026-01-12T23:32:35.092555",
+      "relevance_score": 1.0
+    },
+    {
+      "id": "strategy_20260112_233529",
+      "category": "strategy",
+      "title": "Test Strategy Note",
+      "content": "This is a test note for validation.",
+      "context": "Integration test",
+      "keywords": [
+        "test",
+        "validation"
+      ],
+      "created_at": "2026-01-12T23:35:29.669460",
+      "relevance_score": 1.0
+    }
+  ]
+}

@@ -40,8 +40,8 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "description": "Gemini 3 Flash. Pro-level intelligence at Flash speeds. Default driver.",
         "use_cases": ["general", "agentic_loops", "fast_reasoning", "high_throughput"],
         "flags": {
-             "use_thinking_level": True,
-             "default_thinking_level": "high"
+            "use_thinking_level": True,
+            "default_thinking_level": "high"
         }
     },
 
@@ -61,8 +61,8 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "description": "Gemini 3 Flash (Preview). Speed + Intelligence.",
         "use_cases": ["high_volume", "low_latency"],
         "flags": {
-             "use_thinking_level": True,
-             "default_thinking_level": "high"
+            "use_thinking_level": True,
+            "default_thinking_level": "high"
         }
     },
 
@@ -70,13 +70,13 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "model_id": "gemini-3-pro-preview",
         "tier": "ultra",
         "release_date": "2025-11-01",
-        "context_window": 1_048_576, # 1M input / 64k output
+        "context_window": 1_048_576,  # 1M input / 64k output
         "capabilities": [
             "complex_reasoning", "coding", "thinking", "multimodal",
             "pdf_input", "search_grounding", "url_context"
         ],
         "pricing": {
-            "input_per_1m": 2.00, # < 200k tokens
+            "input_per_1m": 2.00,  # < 200k tokens
             "output_per_1m": 12.00
         },
         "description": "Gemini 3 Pro. Best model for complex tasks and broad world knowledge.",
@@ -99,7 +99,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "description": "Nano Banana Pro (Gemini 3 Image). Highest quality image generation.",
         "use_cases": ["image_generation", "visual_design", "multimodal_creation"],
         "flags": {
-             "use_thinking_level": True
+            "use_thinking_level": True
         }
     },
 
@@ -139,8 +139,8 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "context_window": 1_048_576,
         "capabilities": ["multimodal", "tools", "thinking", "grounding_google_maps"],
         "pricing": {
-             "input_per_1m": 0.10,
-             "output_per_1m": 0.40
+            "input_per_1m": 0.10,
+            "output_per_1m": 0.40
         },
         "description": "Gemini 2.5 Flash. Best price-performance.",
         "use_cases": ["scaling", "processing"]
@@ -156,15 +156,15 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
             "affective_dialog", "proactive_audio"
         ],
         "pricing": {
-             "input_per_1m": 0.10,
-             "output_per_1m": 0.40
+            "input_per_1m": 0.10,
+            "output_per_1m": 0.40
         },
         "description": "Gemini 2.5 Flash Native Audio. Real-time voice/video interaction.",
         "use_cases": ["realtime_voice", "assistant", "live_interaction"],
         "flags": {
-             "use_thinking_level": False,
-             "enable_thinking_budget": True,
-             "default_thinking_tokens": 1024
+            "use_thinking_level": False,
+            "enable_thinking_budget": True,
+            "default_thinking_tokens": 1024
         }
     },
 
@@ -175,11 +175,11 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "context_window": 1_048_576,
         "capabilities": ["reasoning", "coding", "thinking", "multimodal"],
         "pricing": {
-             "input_per_1m": 2.50,
-             "output_per_1m": 10.00
+            "input_per_1m": 2.50,
+            "output_per_1m": 10.00
         },
-         "description": "Gemini 2.5 Pro. State-of-the-art thinking model.",
-         "use_cases": ["math", "stem", "complex_analysis"]
+        "description": "Gemini 2.5 Pro. State-of-the-art thinking model.",
+        "use_cases": ["math", "stem", "complex_analysis"]
     },
 
     "cost_saver": {
@@ -213,15 +213,15 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
 
     "flash_thinking": {
-         "model_id": "gemini-3-flash-preview",
-         "tier": "flash",
-         "description": "Alias for Flash with thinking enabled."
+        "model_id": "gemini-3-flash-preview",
+        "tier": "flash",
+        "description": "Alias for Flash with thinking enabled."
     },
 
     "gemini_2_5_flash_tts": {
-         "model_id": "gemini-2.5-flash-native-audio-preview-12-2025",
-         "tier": "flash",
-         "description": "Alias for Native Audio model (best for TTS)."
+        "model_id": "gemini-2.5-flash-native-audio-preview-12-2025",
+        "tier": "flash",
+        "description": "Alias for Native Audio model (best for TTS)."
     },
 
     "gemini-2.0-flash-thinking-exp": {
@@ -260,9 +260,9 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
         "tier": "ultra",
         "description": "Ultrathink - Maximum cognitive depth with Gemini 3 Pro.",
         "flags": {
-             "requires_pro_subscription": True,
-             "system_prompt_override": "ultrathink",
-             "use_thinking_level": True
+            "requires_pro_subscription": True,
+            "system_prompt_override": "ultrathink",
+            "use_thinking_level": True
         }
     },
 
@@ -331,7 +331,6 @@ def get_thinking_level(mode: str) -> str:
     if flags.get("use_thinking_level"):
         return flags.get("default_thinking_level", "high")
     return None
-
 
 
 def list_modes_by_tier(tier: str) -> List[str]:

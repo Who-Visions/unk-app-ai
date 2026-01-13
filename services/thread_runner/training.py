@@ -7,10 +7,12 @@ and triggering of Vertex AI tuning jobs.
 
 import json
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from .models import Thread, ThreadStatus
 
 logger = logging.getLogger("thread_runner.training")
+
 
 class TrainingManager:
     def __init__(self):
@@ -65,6 +67,7 @@ class TrainingManager:
         logger.info(f"🚀 Triggering Tuning Job on {base_model}")
         logger.info(f"Dataset: {dataset_gcs_uri}")
         return "job-id-placeholder-123"
+
 
 # Singleton
 training_manager = TrainingManager()

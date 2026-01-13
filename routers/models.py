@@ -4,10 +4,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from google import genai
 from pydantic import BaseModel
 
-from gemini_agent.models_spec import (GEMINI_MODELS, requires_subscription)
+from gemini_agent.models_spec import GEMINI_MODELS, requires_subscription
 from routers.dependencies import UserContext, get_optional_user
 
 router = APIRouter()
+
 
 class ModelInfo(BaseModel):
     """Public model information."""
@@ -20,10 +21,12 @@ class ModelInfo(BaseModel):
 
 # pylint: disable=too-few-public-methods, duplicate-code
 
+
 class EmbeddingRequest(BaseModel):
     """Request model for embedding generation."""
     input: str | List[str]
     model: str = "text-embedding-004"
+
 
 @router.get("/models", response_model=List[ModelInfo])
 @router.get("/v1/models", response_model=List[ModelInfo])
@@ -48,6 +51,7 @@ async def list_models(_user: Optional[UserContext] = Depends(get_optional_user))
         ))
 
     return models
+
 
 @router.get("/models/{mode}")
 async def get_model_info(
@@ -79,6 +83,7 @@ async def get_model_info(
             else True
         )
     }
+
 
 @router.post("/embeddings")
 @router.post("/v1/embeddings")

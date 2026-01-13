@@ -7,7 +7,6 @@ Supports uploading audio files via the Files API or passing inline data.
 import asyncio
 import mimetypes
 
-
 from google.genai import types
 
 from gemini_agent.models_spec import get_model_id
@@ -36,7 +35,7 @@ async def describe_audio(
         # Determine mime type
         mime_type, _ = mimetypes.guess_type(audio_path)
         if not mime_type:
-             mime_type = "audio/mp3" # Fallback
+            mime_type = "audio/mp3"  # Fallback
 
         logger.info(f"Uploading {audio_path} ({mime_type})...")
         uploaded_file = client.files.upload(
@@ -71,6 +70,7 @@ async def describe_audio(
         logger.error(f"Audio analysis error: {e}")
         return f"Error processing audio: {e}"
 
+
 async def transcribe_audio(
     audio_path: str,
     timestamps: bool = True,
@@ -85,6 +85,7 @@ async def transcribe_audio(
 
     return await describe_audio(audio_path, prompt, model_alias)
 
+
 async def count_audio_tokens(audio_path: str, model_alias: str = "gemini_2_5_flash") -> int:
     """
     Counts tokens for an audio file.
@@ -93,7 +94,8 @@ async def count_audio_tokens(audio_path: str, model_alias: str = "gemini_2_5_fla
 
     def _run_count():
         mime_type, _ = mimetypes.guess_type(audio_path)
-        if not mime_type: mime_type = "audio/mp3"
+        if not mime_type:
+            mime_type = "audio/mp3"
 
         uploaded_file = client.files.upload(
             file=audio_path,

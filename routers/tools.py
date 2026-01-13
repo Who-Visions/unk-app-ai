@@ -10,20 +10,24 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
+
 class SearchRequest(BaseModel):
     """Request model for search tool."""
     query: str
+
 
 class CodeExecRequest(BaseModel):
     """Request model for code execution."""
     code: str
     language: str = "python"
 
+
 class ToolResponse(BaseModel):
     """Standardized tool response definition."""
     success: bool
     result: Any
     error: Optional[str] = None
+
 
 @router.post("/search", response_model=ToolResponse)
 async def search_tool(
@@ -39,9 +43,10 @@ async def search_tool(
         result={"summary": f"Search results for {request.query}"}
     )
 
+
 @router.post("/analyze-url", response_model=ToolResponse)
 async def analyze_url_tool(
-    request: SearchRequest, # Reuse SearchRequest for simplicity as it has 'query' -> url
+    request: SearchRequest,  # Reuse SearchRequest for simplicity as it has 'query' -> url
     user: Optional[UserContext] = Depends(get_optional_user)
 ):
     """
@@ -51,6 +56,7 @@ async def analyze_url_tool(
         success=True,
         result={"analysis": f"Analysis of {request.query} complete."}
     )
+
 
 @router.post("/execute-code", response_model=ToolResponse)
 async def execute_code_tool(

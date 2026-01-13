@@ -6,15 +6,15 @@ Interactive terminal interface for the Unk Agent.
 
 import asyncio
 import os
-
 import sys
+
+from gemini_agent import (UnkAgent, calculate_growth_metrics,
+                          get_current_timestamp)
 
 # Add project root to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # pylint: disable=wrong-import-position
-from gemini_agent import (UnkAgent, calculate_growth_metrics,
-                          get_current_timestamp)
 # pylint: enable=wrong-import-position
 
 # ANSI colors for better CLI experience

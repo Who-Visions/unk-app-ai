@@ -15,6 +15,7 @@ except ImportError:
 
 logger = logging.getLogger("thread_runner")
 
+
 class Telemetry:
     def __init__(self):
         self.notion = NotionSkill() if NotionSkill else None
@@ -37,5 +38,6 @@ class Telemetry:
                 logger.debug(f"Notion Log Skipped: {res}")
             elif "Failed" in res:
                 logger.warning(f"Notion Log Failed: {res}")
+
 
 telemetry = Telemetry()

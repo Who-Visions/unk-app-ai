@@ -6,22 +6,27 @@ Requires PyGithub (not installed), so we mock the GitHub part.
 """
 import os
 import sys
+
 from dotenv import load_dotenv
+
+from skills.notion_skill import NotionSkill
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 load_dotenv()
 
-from skills.notion_skill import NotionSkill
 
 # Mock Issue Data
 MOCK_ISSUES = [
-    {"id": 101, "title": "Fix Login Bug", "state": "open", "url": "https://github.com/org/repo/issues/101"},
-    {"id": 102, "title": "Add Dark Mode", "state": "closed", "url": "https://github.com/org/repo/issues/102"},
+    {"id": 101, "title": "Fix Login Bug", "state": "open",
+        "url": "https://github.com/org/repo/issues/101"},
+    {"id": 102, "title": "Add Dark Mode", "state": "closed",
+        "url": "https://github.com/org/repo/issues/102"},
 ]
+
 
 def example_github_sync():
     notion = NotionSkill()
-    db_id = "17b824015391800c8f12c9869150047d" # Project Tracker
+    db_id = "17b824015391800c8f12c9869150047d"  # Project Tracker
 
     print("🔄 Starting Mock GitHub Sync...")
 
@@ -61,6 +66,7 @@ def example_github_sync():
             )
 
     print("✅ Sync logic complete.")
+
 
 if __name__ == "__main__":
     example_github_sync()

@@ -81,7 +81,8 @@ class VectorMemory:
             embedding_model: Model for generating embeddings
         """
         if not IMPORTS_AVAILABLE:
-            raise ImportError("Required dependencies (google-cloud-firestore, google-genai) not available")
+            raise ImportError(
+                "Required dependencies (google-cloud-firestore, google-genai) not available")
 
         self.project_id = project_id or os.environ.get("GOOGLE_CLOUD_PROJECT")
         self.collection_name = collection_name

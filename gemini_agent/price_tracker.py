@@ -206,7 +206,8 @@ class PriceTracker:
 
                 if percentage_increase >= threshold_percentage:
                     absolute_increase = latest.price_per_unit - previous.price_per_unit
-                    days_diff = (latest_time - datetime.fromisoformat(previous.timestamp.replace('Z', '+00:00'))).days
+                    days_diff = (
+                        latest_time - datetime.fromisoformat(previous.timestamp.replace('Z', '+00:00'))).days
 
                     # Determine severity
                     if percentage_increase >= 50:
@@ -356,7 +357,8 @@ class PriceTracker:
                 except ValueError:
                     continue
 
-        print(f"Imported {len([s for s in self.history if s.metadata.get('source') == 'csv_import'])} price records from CSV")
+        print(
+            f"Imported {len([s for s in self.history if s.metadata.get('source') == 'csv_import'])} price records from CSV")
 
 
 # Global tracker instance
@@ -370,4 +372,3 @@ def get_tracker() -> PriceTracker:
         storage_path = os.environ.get("PRICE_HISTORY_PATH", "data/price_history.json")
         _tracker_instance = PriceTracker(storage_path=storage_path)
     return _tracker_instance
-

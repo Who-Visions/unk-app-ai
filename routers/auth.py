@@ -14,9 +14,11 @@ logger = logging.getLogger(__name__)
 
 # --- Models ---
 
+
 class AuthStartResponse(BaseModel):
     auth_url: str
     state: str
+
 
 class TokenResponse(BaseModel):
     access_token: str
@@ -24,13 +26,15 @@ class TokenResponse(BaseModel):
     expires_in: int
     token_type: str
 
+
 class ConnectedAccount(BaseModel):
-    provider: str # cleaning, branding, etc.
+    provider: str  # cleaning, branding, etc.
     account_id: str
     email: Optional[str] = None
     status: str
 
 # --- Endpoints ---
+
 
 @router.get("/start/{provider}", response_model=AuthStartResponse)
 async def start_auth(provider: str, redirect_uri: str):
@@ -51,6 +55,7 @@ async def start_auth(provider: str, redirect_uri: str):
         state="random_secure_state_string"
     )
 
+
 @router.get("/callback/{provider}")
 async def auth_callback(provider: str, code: str):
     """
@@ -64,6 +69,7 @@ async def auth_callback(provider: str, code: str):
         "access_token": f"mock_token_for_{provider}",
         "user_data": {"name": "Test User", "email": "test@example.com"}
     }
+
 
 @router.get("/accounts", response_model=List[ConnectedAccount])
 async def list_accounts():
@@ -82,6 +88,7 @@ async def list_accounts():
             status="expired"
         ),
     ]
+
 
 @router.post("/logout")
 async def logout():

@@ -1,12 +1,14 @@
 
 import os
 import sys
+
 from dotenv import load_dotenv
+
+from skills.notion_skill import NotionSkill
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 load_dotenv()
 
-from skills.notion_skill import NotionSkill
 
 def example_create_blocks():
     notion = NotionSkill()
@@ -16,7 +18,7 @@ def example_create_blocks():
 
     # User must provide a PAGE ID for this example to target.
     # In a real tool we'd ask, here we'll search for the MCP test page or creating a new one.
-    db_id = "17b824015391800c8f12c9869150047d" # Project Tracker
+    db_id = "17b824015391800c8f12c9869150047d"  # Project Tracker
 
     # Create a scratch page to hold blocks
     print("Creating scratch page for Block Examples...")
@@ -43,12 +45,13 @@ def example_create_blocks():
             "paragraph": {
                 "rich_text": [
                     {"type": "text", "text": {"content": "This is a basic text block created via "}},
-                    {"type": "text", "text": {"content": "Notion API", "link": {"url": "https://developers.notion.com"}}}
+                    {"type": "text", "text": {"content": "Notion API",
+                                              "link": {"url": "https://developers.notion.com"}}}
                 ]
             }
         },
         {
-             "object": "block",
+            "object": "block",
             "type": "to_do",
             "to_do": {
                 "rich_text": [{"type": "text", "text": {"content": "Review this example"}}],
@@ -60,6 +63,7 @@ def example_create_blocks():
     print("Appending blocks...")
     notion.client.blocks.children.append(page_id, children=blocks)
     print("✅ Blocks appended.")
+
 
 if __name__ == "__main__":
     example_create_blocks()

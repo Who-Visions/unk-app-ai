@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
+
 @router.get("/.well-known/agent.json")
 @router.get("/agent-card")
 @router.get("/a2a/card")

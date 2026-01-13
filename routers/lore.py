@@ -3,19 +3,29 @@ from typing import Any, Dict, Optional
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
-from .config import NOTION_WHO_VISIONS_SECRET, NOTION_OBSERVATORY_SECRET
+from services.loredb import loredb
 
-from .dependencies import get_optional_user, UserContext
+from .config import NOTION_OBSERVATORY_SECRET, NOTION_WHO_VISIONS_SECRET
+from .dependencies import UserContext, get_optional_user
 
 router = APIRouter(tags=["lore"])
+
 
 class NotionWebhookPayload(BaseModel):
     source: str
     data: Dict[str, Any]
 
+
 class SyncRequest(BaseModel):
     world_id: str
     force: bool = False
+
+
+class MemoryCreate(BaseModel):
+    content: str
+    source: str = "user"
+    metadata: Dict[str, Any] = {}
+
 
 async def trigger_sync(
     request: SyncRequest,
@@ -42,11 +52,11 @@ async def notion_webhook(payload: NotionWebhookPayload):
     return {"status": "received", "processing": True}
 
 
-
 @router.get("/sync/{world_id}")
 async def sync_status(world_id: str):
     """Check sync status."""
     return {"world_id": world_id, "status": "idle", "last_sync": "2024-01-01T00:00:00Z"}
+
 
 @router.get("/worlds")
 async def list_worlds(user: Optional[UserContext] = Depends(get_optional_user)):
@@ -58,10 +68,24 @@ async def list_worlds(user: Optional[UserContext] = Depends(get_optional_user)):
         ]
     }
 
+
 @router.get("/lore/feed")
 async def get_lore_feed(limit: int = 10):
-    """Get recent lore updates."""
-    return {"feed": []}
+    """Get recent lore updates from local SQLite."""
+    memories = await loredb.get_recent_memories(limit=limit)
+    return {"feed": memories}
+
+
+@router.post("/lore/memory")
+async def add_memory(memory: MemoryCreate):
+    """Add a new memory to LoreDB."""
+    memory_id = await loredb.add_memory(
+        content=memory.content,
+        source=memory.source,
+        metadata=memory.metadata
+    )
+    return {"id": memory_id, "status": "stored_locally"}
+
 
 @router.get("/lore/bible")
 async def get_world_bible(world_id: Optional[str] = None):

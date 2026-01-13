@@ -5,16 +5,18 @@ Handles messaging and event listening for Slack.
 Uses Socket Mode for "intelligent" real-time interaction.
 """
 
-import os
 import logging
-from typing import Optional, List
+import os
+from typing import List, Optional
+
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from slack_sdk.socket_mode import SocketModeClient
-from slack_sdk.socket_mode.response import SocketModeResponse
 from slack_sdk.socket_mode.request import SocketModeRequest
+from slack_sdk.socket_mode.response import SocketModeResponse
 
 logger = logging.getLogger("skills.slack")
+
 
 class SlackSkill:
     def __init__(self):

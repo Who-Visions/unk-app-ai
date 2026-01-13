@@ -1,0 +1,132 @@
+workspace_dir: .antigravity
+target_repo_path: .
+
+output:
+  reports_dir: reports
+  docs_dir: docs
+  services_dir: services
+  strategies_dir: services/strategies
+
+persona:
+  name: Unk
+  meaning: Uncle
+  target_audience: "35+ users"
+  doc_filename: unk_persona.md
+  prompt_search_terms:
+    - system prompt
+    - persona
+    - instructions
+    - developer message
+    - prompt
+
+repos:
+  - name: BeatTheBookie
+    url: https://github.com/Lisandro79/BeatTheBookie.git
+    role: Alpha
+  - name: sports-betting-ml
+    url: https://github.com/georgedouzas/sports-betting.git
+    role: Quant
+  - name: NBA-Machine-Learning-Sports-Betting
+    url: https://github.com/kyleskom/NBA-Machine-Learning-Sports-Betting.git
+    role: Specialist
+  - name: AlphaPy
+    url: https://github.com/ScottfreeLLC/AlphaPy.git
+    role: Pro
+  - name: ChatGPT_Sports_Betting_Bot
+    url: https://github.com/llSourcell/ChatGPT_Sports_Betting_Bot.git
+    role: Analyst
+  - name: sports-betting-hustler
+    url: https://github.com/pretrehr/Sports-betting.git
+    role: Hustler
+  - name: ProphitBet
+    url: https://github.com/kochlisGit/ProphitBet-Soccer-Bets-Predictor.git
+    role: Oracle
+  - name: ATPBetting
+    url: https://github.com/edouardthom/ATPBetting.git
+    role: Ace
+  - name: Polymarket-Copy-Trading-Bot
+    url: https://github.com/Trust412/polymarket-copy-trading-bot-v1.git
+    role: Shadow
+  - name: Solana-Prediction-Market
+    url: https://github.com/HyperBuildX/Solana-Prediction-Market.git
+    role: Architect
+  - name: Crypto-Fantasy-League
+    url: https://github.com/CryptomSol/crypto-fanduel-sports.git
+    role: Commissioner
+  - name: Online-Sports-Betting
+    url: https://github.com/jd5688/online-sports-betting.git
+    role: TheHouse
+  - name: Sportsbook-Betting
+    url: https://github.com/novustch/sportsbook-betting.git
+    role: TheSyndicate
+  - name: Flumine
+    url: https://github.com/betcode-org/flumine.git
+    role: Executor
+  - name: Sports-Betting-Arbitrage
+    url: https://github.com/ryankrumenacker/sports-betting-arbitrage-project.git
+    role: Scalper
+
+execution:
+  update_prompts: true
+  generate_services_layer: true
+  run_verify: true
+  open_pr_if_possible: false
+
+prompt_update:
+  enabled: true
+  managed_files:
+    - prompts/unk_system_prompt.md
+  exclude_globs:
+    - antigravity.yaml
+    - antigravity_runner.py
+    - README.md
+    - docs/ARCHITECTURE.md
+    - "**/.git/**"
+    - "**/reports/**"
+    - "**/.antigravity/**"
+    - "**/.venv/**"
+    - "**/venv/**"
+    - "**/node_modules/**"
+
+llm:
+  enabled: false
+  provider: vertex   # optional, see script
+  model: gemini-3-flash-preview
+  location: us-central1
+
+team:
+  - name: Design Lead
+    role: UI/UX Expert
+    focus: Visual beauty, Tailwind mastery, Glassmorphism
+    model: gemini-3-pro-image-preview
+    thinking_level: medium
+  - name: Builder
+    role: Senior Engineer
+    focus: Functionality, API integration, Clean Code
+    model: gemini-3-flash-preview
+    thinking_level: high
+  - name: Nerd
+    role: QA/Audit
+    focus: Testing, Bug hunting, Security, Rules compliance
+    model: gemini-3-pro-preview
+    thinking_level: high
+  - name: Researcher
+    role: Strategist
+    focus: Trend analysis, Data gathering, Market fit
+    model: gemini-3-pro-preview
+    thinking_level: high
+
+armory:
+  - name: Firecrawl
+    type: mcp
+    description: Web scraping and search
+    enabled: true
+  - name: Supabase
+    type: mcp
+    description: Structured SQL Database
+    enabled: true
+  - name: Pinecone
+    type: mcp
+    description: Long-term vector memory
+    enabled: true
+

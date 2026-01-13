@@ -4,8 +4,9 @@ Web Tools Skills
 Capabilities for Google Search Grounding and Web Retrieval.
 """
 import asyncio
-from typing import Dict, Any
+from typing import Any, Dict
 
+import httpx
 from google import genai
 from google.genai import types
 
@@ -24,7 +25,6 @@ async def search_grounding(
     """
     model_id = get_model_id(model_alias)
     client = genai.Client(api_key=GOOGLE_GENAI_API_KEY)
-
 
     def _run_search():
         return client.models.generate_content(
@@ -48,21 +48,25 @@ async def search_grounding(
         # Extract grounding metadata
         if response.candidates and response.candidates[0].grounding_metadata:
             gm = response.candidates[0].grounding_metadata
-            result["search_entry_point"] = gm.search_entry_point.rendered_content if gm.search_entry_point else None
+            if gm.search_entry_point:
+                result["search_entry_point"] = gm.search_entry_point.rendered_content
+            else:
+                result["search_entry_point"] = None
 
             if gm.grounding_chunks:
                 for chunk in gm.grounding_chunks:
                     if chunk.web:
-                         result["grounding_chunks"].append({
-                             "uri": chunk.web.uri,
-                             "title": chunk.web.title
-                         })
+                        result["grounding_chunks"].append({
+                            "uri": chunk.web.uri,
+                            "title": chunk.web.title
+                        })
 
         return result
 
     except Exception as e:  # pylint: disable=W0718
-        logger.error(f"Search grounding error: {e}")
+        logger.error(f"Search grounding error: {e}")  # pylint: disable=W1203
         return {"error": str(e)}
+
 
 async def vertex_search_grounding(
     prompt: str,
@@ -79,7 +83,8 @@ async def vertex_search_grounding(
     # Retrieval Tool Config
     # Uses google.genai types for Vertex Search
     # Note: Requires fully qualified datastore resource name usually
-    # projects/{project}/locations/{location}/collections/default_collection/dataStores/{datastore_id}
+    # projects/{project}/locations/{location}/collections/default_collection/
+    # dataStores/{datastore_id}
 
     # We construct the tool
     # Check SDK for exact helper, assuming standard retrieval config
@@ -88,11 +93,11 @@ async def vertex_search_grounding(
 
     # This is a placeholder for the exact SDK syntax for Vertex Grounding
     # which often involves:
-    # tools=[types.Tool(retrieval=types.Retrieval(vertex_ai_search=types.VertexAISearch(datastore=...)))]
+    # tools=[types.Tool(retrieval=types.Retrieval(
+    #    vertex_ai_search=types.VertexAISearch(datastore=...)))]
 
     return {"error": "Vertex Search implementation pending exact SDK verification."}
 
-import httpx
 
 async def fetch_url_content(url: str) -> str:
     """

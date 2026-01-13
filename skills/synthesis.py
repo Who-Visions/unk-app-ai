@@ -5,12 +5,16 @@ Capabilities for Text-to-Speech (TTS) using Gemini 2.5 Flash TTS.
 Supports Single and Multi-Speaker generation with configurable Voices and Styles.
 """
 import asyncio
-from typing import Optional, Dict
+from typing import Dict, Optional
+
 from google import genai
 from google.genai import types
 
 from gemini_agent.models_spec import get_model_id
 from routers.config import GOOGLE_GENAI_API_KEY, logger
+# Smart Router currently handles Text/Reasoning.
+# TTS Routing could be added to SmartRouter in the future (e.g. Flash TTS vs Pro TTS).
+from services.llm.smart_router import router
 
 # Client instantiated lazily
 
@@ -20,6 +24,7 @@ VOICE_PROFILES = {
     "Puck": "Puck", "Charon": "Charon", "Kore": "Kore", "Fenrir": "Fenrir",
     "Aoede": "Aoede", "Leda": "Leda", "Zephyr": "Zephyr", "Orus": "Orus"
 }
+
 
 async def text_to_speech(
     text: str,
@@ -46,14 +51,14 @@ async def text_to_speech(
             model=model_id,
             contents=[text],
             config=types.GenerateContentConfig(
-                 response_modalities=["AUDIO"],
-                 speech_config=types.SpeechConfig(
-                     voice_config=types.VoiceConfig(
-                         prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                             voice_name=voice_name
-                         )
-                     )
-                 )
+                response_modalities=["AUDIO"],
+                speech_config=types.SpeechConfig(
+                    voice_config=types.VoiceConfig(
+                        prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                            voice_name=voice_name
+                        )
+                    )
+                )
             )
         )
         return response
@@ -66,9 +71,10 @@ async def text_to_speech(
         logger.error(f"TTS error: {e}")
         return None
 
+
 async def multi_speaker_tts(
     prompt: str,
-    speakers: Dict[str, str], # Maps "SpeakerName" -> "VoiceName"
+    speakers: Dict[str, str],  # Maps "SpeakerName" -> "VoiceName"
     output_file: str,
     model_alias: str = "gemini_2_5_flash_tts"
 ) -> Optional[str]:
@@ -106,12 +112,12 @@ async def multi_speaker_tts(
             model=model_id,
             contents=[prompt],
             config=types.GenerateContentConfig(
-                 response_modalities=["AUDIO"],
-                 speech_config=types.SpeechConfig(
-                     multi_speaker_voice_config=types.MultiSpeakerVoiceConfig(
-                         speaker_voice_configs=speaker_configs
-                     )
-                 )
+                response_modalities=["AUDIO"],
+                speech_config=types.SpeechConfig(
+                    multi_speaker_voice_config=types.MultiSpeakerVoiceConfig(
+                        speaker_voice_configs=speaker_configs
+                    )
+                )
             )
         )
         return response
@@ -122,6 +128,7 @@ async def multi_speaker_tts(
     except Exception as e:  # pylint: disable=W0718
         logger.error(f"Multi-speaker TTS error: {e}")
         return None
+
 
 def _save_audio_response(response, output_file: str) -> Optional[str]:
     """Helper to extract and save audio from response."""
@@ -138,10 +145,10 @@ def _save_audio_response(response, output_file: str) -> Optional[str]:
             if part.inline_data:
                 # Mime type check if available, or just assume it's the audio
                 if hasattr(part.inline_data, 'data'):
-                     with open(output_file, "wb") as f:
+                    with open(output_file, "wb") as f:
                         f.write(part.inline_data.data)
-                     logger.info(f"Audio saved to {output_file}")
-                     return output_file
+                    logger.info(f"Audio saved to {output_file}")
+                    return output_file
 
         logger.error("No audio data found in response parts.")
         return None

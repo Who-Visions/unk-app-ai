@@ -1,12 +1,14 @@
 
 import os
 import sys
+
 from dotenv import load_dotenv
+
+from skills.notion_skill import NotionSkill
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 load_dotenv()
 
-from skills.notion_skill import NotionSkill
 
 def mock_web_form_submission():
     """Simulates receiving a JSON payload from a web form."""
@@ -17,11 +19,12 @@ def mock_web_form_submission():
         "message": "Interested in enterprise plan."
     }
 
+
 def example_web_form_handler():
     notion = NotionSkill()
     # Target: Lead Gen DB (Using constant if defined, or fallback to generic ID)
     # Using a generic ID here for the example, would be env var in production.
-    db_id = "17b82401539180769b55c27591605380" # Web Projects (using as Lead Gen proxy)
+    db_id = "17b82401539180769b55c27591605380"  # Web Projects (using as Lead Gen proxy)
 
     data = mock_web_form_submission()
     print(f"Received Form Data: {data}")
@@ -48,7 +51,7 @@ def example_web_form_handler():
             "type": "paragraph",
             "paragraph": {"rich_text": [{"text": {"content": data['message']}}]}
         },
-         {
+        {
             "object": "block",
             "type": "callout",
             "callout": {
@@ -69,6 +72,7 @@ def example_web_form_handler():
         print(f"✅ Lead Created: {result.get('url')}")
     else:
         print(f"❌ Failed: {result}")
+
 
 if __name__ == "__main__":
     example_web_form_handler()

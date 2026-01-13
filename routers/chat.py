@@ -22,6 +22,7 @@ router = APIRouter()
 
 # --- Request/Response Models ---
 
+
 class ChatRequest(BaseModel):
     """Chat endpoint request payload."""
     message: str = Field(..., min_length=1, max_length=32000)
@@ -29,6 +30,7 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = Field(None, description="Session ID for context")
     enable_memory: bool = Field(default=True, description="Enable RAG memory")
     force_structured: bool = Field(default=False, description="Force JSON output")
+
 
 class ChatResponse(BaseModel):
     """Chat endpoint response."""
@@ -39,6 +41,7 @@ class ChatResponse(BaseModel):
     request_id: str
     processing_time_ms: float
 
+
 class OpenAIChatCompletionRequest(BaseModel):
     """OpenAI-compatible request."""
     model: str
@@ -46,10 +49,12 @@ class OpenAIChatCompletionRequest(BaseModel):
     temperature: Optional[float] = 0.7
     stream: bool = False
 
+
 class GenerateRequest(BaseModel):
     """Generation request model."""
     prompt: str
     model: Optional[str] = "default"
+
 
 class ImageRequest(BaseModel):
     """Image generation request model."""
@@ -58,6 +63,7 @@ class ImageRequest(BaseModel):
     size: str = "1024x1024"
 
 # --- Endpoints ---
+
 
 @router.post("/chat", response_model=ChatResponse)
 @router.post("/v1/chat")
@@ -82,8 +88,8 @@ async def chat(
     # Check subscription requirements
     if requires_subscription(request.mode):
         if not user or user.plan not in ["pro", "enterprise"]:
-             # If no user in dev, allow if accessing dev_token
-             if not (ENV == "development" and user):
+            # If no user in dev, allow if accessing dev_token
+            if not (ENV == "development" and user):
                 raise HTTPException(
                     status_code=status.HTTP_403_FORBIDDEN,
                     detail=f"Mode '{request.mode}' requires a Pro subscription."
@@ -201,6 +207,7 @@ async def routed_chat(
             processing_time_ms=processing_time
         )
 
+
 @router.post("/v1/chat/completions")
 async def openai_chat_completions(
     request: OpenAIChatCompletionRequest,
@@ -216,7 +223,7 @@ async def openai_chat_completions(
         None
     )
     if not last_msg:
-         raise HTTPException(status_code=400, detail="No user message found")
+        raise HTTPException(status_code=400, detail="No user message found")
 
     # Map 'model' to our modes if possible, else default
     mode = "default"
@@ -247,11 +254,12 @@ async def openai_chat_completions(
             "finish_reason": "stop"
         }],
         "usage": {
-            "prompt_tokens": 0, # Placeholder
+            "prompt_tokens": 0,  # Placeholder
             "completion_tokens": 0,
             "total_tokens": 0
         }
     }
+
 
 @router.post("/generate")
 async def generate(
@@ -273,6 +281,7 @@ async def generate(
         "model": request.model
     }
 
+
 @router.post("/generate-image")
 async def generate_image(
     _request: ImageRequest,
@@ -285,6 +294,7 @@ async def generate_image(
             {"url": "https://placeholder.com/image.png"}
         ]
     }
+
 
 @router.post("/generate/video")
 async def generate_video(

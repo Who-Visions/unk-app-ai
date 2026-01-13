@@ -5,7 +5,7 @@ Capabilities for generating and steering music using Lyria RealTime.
 """
 import asyncio
 import os
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from google import genai
 from google.genai import types
@@ -15,11 +15,13 @@ from routers.config import GOOGLE_GENAI_API_KEY, logger
 # Constants
 LYRIA_MODEL_ID = "models/lyria-realtime-exp"
 
+
 class LyriaClient:
     """
     Client for interacting with Lyria RealTime Music Generation.
     Uses WebSockets for bidirectional communication.
     """
+
     def __init__(self, api_key: str = GOOGLE_GENAI_API_KEY):
         self.client = genai.Client(api_key=api_key, http_options={'api_version': 'v1alpha'})
         self.session = None
@@ -75,12 +77,13 @@ class LyriaClient:
                         logger.info("Duration reached. Stopping recording.")
                         break
 
-                    await asyncio.sleep(0.001) # Yield
+                    await asyncio.sleep(0.001)  # Yield
 
         try:
             async with asyncio.TaskGroup() as tg:
                 # Start receiver
-                receiver_task = tg.create_task(receive_audio(self.session, duration_seconds, output_file))
+                receiver_task = tg.create_task(receive_audio(
+                    self.session, duration_seconds, output_file))
 
                 # Send config
                 await self.session.set_music_generation_config(
@@ -106,6 +109,8 @@ class LyriaClient:
             logger.info("Lyria session finished.")
 
 # Example Usage Helper
+
+
 async def generate_track(prompt_text: str, duration: int = 15, output_path: str = "track.pcm"):
     """Simple wrapper for one-shot generation."""
     lyria = LyriaClient()

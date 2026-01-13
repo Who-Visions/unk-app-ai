@@ -414,3 +414,6 @@ Examples:
 
 *Who Visions LLC - AI with Dav3*
 *Last Updated: December 2025*
+
+Unk = Uncle
+Target: 35+ users

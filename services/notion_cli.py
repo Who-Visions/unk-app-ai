@@ -6,31 +6,34 @@ Interactive CLI for managing Notion integrations with rich UI elements.
 Features: Static prints, progress bars, spinners, rich text.
 """
 
-import sys
 import os
-import time
 import random
-from typing import List, Dict
+import sys
+import time
+from typing import Dict, List
+
+from rich.console import Console
+from rich.live import Live
+from rich.panel import Panel
+from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
+from rich.prompt import Prompt
+from rich.table import Table
+from rich.text import Text
 
 # Add project root to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from rich.console import Console
-from rich.live import Live
-from rich.table import Table
-from rich.panel import Panel
-from rich.text import Text
-from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
-from rich.prompt import Prompt
 
 # Import config (mocking if needed for standalone run)
 try:
-    from routers.config import NOTION_WHO_VISIONS_SECRET, NOTION_OBSERVATORY_SECRET
+    from routers.config import (NOTION_OBSERVATORY_SECRET,
+                                NOTION_WHO_VISIONS_SECRET)
 except ImportError:
     NOTION_WHO_VISIONS_SECRET = "ntn_mock_who_visions"
     NOTION_OBSERVATORY_SECRET = "ntn_mock_observatory"
 
 console = Console()
+
 
 class NotionCLI:
     def __init__(self):
@@ -39,7 +42,7 @@ class NotionCLI:
             "Who Visions": NOTION_WHO_VISIONS_SECRET,
             "The Observatory": NOTION_OBSERVATORY_SECRET
         }
-        self.selected_workspace = "The Observatory" # Default
+        self.selected_workspace = "The Observatory"  # Default
 
     def clear(self):
         self.console.clear()
@@ -56,24 +59,30 @@ class NotionCLI:
         self.console.print(grid)
 
     def select_workspace(self):
-        self.console.print(f"\n[bold]Configuration:[/bold] Using [cyan]{self.selected_workspace}[/cyan]")
+        self.console.print(
+            f"\n[bold]Configuration:[/bold] Using [cyan]{self.selected_workspace}[/cyan]")
         self.console.print(f"[dim]Token: {self.secrets[self.selected_workspace][:15]}...[/dim]\n")
 
     def show_spinner(self, text="Loading..."):
         """Displays a static-style spinner (rich status)."""
         with self.console.status(f"[bold green]{text}[/bold green]", spinner="dots"):
-            time.sleep(1.5) # Simulate work
+            time.sleep(1.5)  # Simulate work
         self.console.print(f"[bold green]✓ {text} Complete![/bold green]")
 
     def mock_fetch_pages(self) -> List[Dict]:
         """Simulate fetching pages from Notion."""
         time.sleep(0.5)
         pages = [
-            {"id": "page_1", "title": "Agent Manifesto", "status": "Live", "last_edited": "2 mins ago"},
-            {"id": "page_2", "title": "Memory Schema", "status": "Draft", "last_edited": "1 hour ago"},
-            {"id": "page_3", "title": "Observatory Layout", "status": "Review", "last_edited": "Yesterday"},
-            {"id": "page_4", "title": "Unk Protocol", "status": "Live", "last_edited": "Today"},
-            {"id": "page_5", "title": "Dav3 Biography", "status": "Archived", "last_edited": "Last Week"},
+            {"id": "page_1", "title": "Agent Manifesto",
+             "status": "Live", "last_edited": "2 mins ago"},
+            {"id": "page_2", "title": "Memory Schema",
+             "status": "Draft", "last_edited": "1 hour ago"},
+            {"id": "page_3", "title": "Observatory Layout",
+             "status": "Review", "last_edited": "Yesterday"},
+            {"id": "page_4", "title": "Unk Protocol",
+             "status": "Live", "last_edited": "Today"},
+            {"id": "page_5", "title": "Dav3 Biography",
+             "status": "Archived", "last_edited": "Last Week"},
         ]
         return pages
 
@@ -146,7 +155,7 @@ class NotionCLI:
 
         try:
             with Live(generate_content(), refresh_per_second=4) as live:
-                for _ in range(20): # Run for 5 seconds then exit demo
+                for _ in range(20):  # Run for 5 seconds then exit demo
                     time.sleep(0.25)
                     live.update(generate_content())
         except KeyboardInterrupt:
@@ -187,13 +196,15 @@ class NotionCLI:
                 Prompt.ask("\nPress Enter to continue")
 
             elif choice == "4":
-                new_ws = Prompt.ask("Choose Workspace", choices=["Who Visions", "The Observatory"], default="Who Visions")
+                new_ws = Prompt.ask("Choose Workspace", choices=[
+                                    "Who Visions", "The Observatory"], default="Who Visions")
                 self.selected_workspace = new_ws
                 self.show_spinner("Authing with new context")
 
             elif choice == "q":
                 self.console.print("[bold]Goodbye![/bold] 👋")
                 break
+
 
 if __name__ == "__main__":
     try:

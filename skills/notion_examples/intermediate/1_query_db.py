@@ -1,12 +1,14 @@
 
 import os
 import sys
+
 from dotenv import load_dotenv
+
+from skills.notion_skill import NotionSkill
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 load_dotenv()
 
-from skills.notion_skill import NotionSkill
 
 def example_query_db():
     notion = NotionSkill()
@@ -38,6 +40,7 @@ def example_query_db():
     for page in results:
         title = notion._extract_title(page)
         print(f" - {title} ({page['id']})")
+
 
 if __name__ == "__main__":
     example_query_db()

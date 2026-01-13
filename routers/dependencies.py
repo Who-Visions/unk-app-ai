@@ -15,6 +15,7 @@ GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT")
 
 logger = logging.getLogger(__name__)
 
+
 @dataclass
 class UserContext:
     """User context for the request."""
@@ -26,6 +27,7 @@ class UserContext:
     def __post_init__(self):
         if self.roles is None:
             self.roles = []
+
 
 async def verify_token(authorization: Optional[str] = Header(None)) -> UserContext:
     """
@@ -65,6 +67,7 @@ async def verify_token(authorization: Optional[str] = Header(None)) -> UserConte
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials"
         ) from e
+
 
 async def get_optional_user(authorization: Optional[str] = Header(None)) -> UserContext:
     """

@@ -20,13 +20,13 @@ logger = logging.getLogger("unk_agent")
 # Environment Configuration
 ENV = os.environ.get("ENV", "development")
 PORT = int(os.environ.get("PORT", 8080))
-GCP_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "who-visions-tester")
-os.environ["GOOGLE_CLOUD_PROJECT"] = GCP_PROJECT # Ensure set for SDKs
+GCP_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "unk-app-480102")
+os.environ["GOOGLE_CLOUD_PROJECT"] = GCP_PROJECT  # Ensure set for SDKs
 
 GCP_LOCATION = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
-os.environ["GOOGLE_CLOUD_LOCATION"] = GCP_LOCATION # Ensure set for SDKs
+os.environ["GOOGLE_CLOUD_LOCATION"] = GCP_LOCATION  # Ensure set for SDKs
 
-os.environ["GOOGLE_CLOUD_LOCATION"] = GCP_LOCATION # Ensure set for SDKs
+os.environ["GOOGLE_CLOUD_LOCATION"] = GCP_LOCATION  # Ensure set for SDKs
 
 GOOGLE_GENAI_API_KEY = os.environ.get("GOOGLE_GENAI_API_KEY")
 
@@ -40,6 +40,7 @@ NOTION_OBSERVATORY_SECRET = os.environ.get("NOTION_OBSERVATORY_SECRET")
 
 # Firebase Config
 FIREBASE_SERVICE_ACCOUNT_PATH = os.environ.get("FIREBASE_SERVICE_ACCOUNT_PATH")
+
 
 def get_env_bool(key: str, default: bool = False) -> bool:
     """Helper to get boolean env vars."""

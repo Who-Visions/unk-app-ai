@@ -4,18 +4,21 @@ Thread Runner API
 Exposes endpoints to create, monitor, and retrieve Threads.
 """
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks
-from pydantic import BaseModel
 from typing import List
 
+from fastapi import APIRouter, BackgroundTasks, HTTPException
+from pydantic import BaseModel
+
 from services.thread_runner.models import Thread
-from services.thread_runner.runner import ThreadRunner
 from services.thread_runner.persistence import store
+from services.thread_runner.runner import ThreadRunner
 
 router = APIRouter(prefix="/threads", tags=["threads"])
 runner = None
 
 # Lazy init helper
+
+
 def get_runner():
     global runner
     if not runner:
@@ -25,10 +28,12 @@ def get_runner():
         runner = ThreadRunner(project_id=project)
     return runner
 
+
 class CreateThreadRequest(BaseModel):
     goal: str
     context_refs: List[str] = []
     type: str = "base"
+
 
 @router.post("/", response_model=Thread)
 async def create_thread(req: CreateThreadRequest, background_tasks: BackgroundTasks):
@@ -47,6 +52,7 @@ async def create_thread(req: CreateThreadRequest, background_tasks: BackgroundTa
     background_tasks.add_task(runner_instance.run_thread, thread)
 
     return thread
+
 
 @router.get("/{thread_id}", response_model=Thread)
 async def get_thread(thread_id: str):

@@ -1,150 +1,123 @@
-# 𝕌ℕ𝕂 𝔸𝔾𝔼ℕ𝕋
+# 𝕌ℕ𝕂 𝔸𝔾𝔼ℕ𝕋 (v3.1)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/Google%20Cloud-Vertex%20AI-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white" />
-  <img src="https://img.shields.io/badge/Firebase-Auth%20%26%20Firestore-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
-  <img src="https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Gemini-3.0%20Preview-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white" />
+  <img src="https://img.shields.io/badge/Google%20Chirp-3%20HD-EA4335?style=for-the-badge&logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/Rich-Enterprise%20UI-000000?style=for-the-badge&logo=console&logoColor=white" />
+  <img src="https://img.shields.io/badge/Status-Enterprise%20Production-success?style=for-the-badge" />
 </p>
 
 ```text
-   __  _ _  _  _  _    _   ___  ___ _  _  _____ 
-  |  \| | |/ /| |/ /   /_\ / __| __| \| ||_   _|
-  | | ' | ' < | ' <   / _ \ (_ | _|| .  |  | |  
-  |_|\__|_|\_\|_|\_\ /_/ \_\___|___|_|\_|  |_|  
-                                                
-   Who Visions LLC | AI with Dav3 | @aiwithdav3
+$$\   $$\           $$\              $$$$$$\                                 $$\     
+$$ |  $$ |          $$ |            $$  __$$\                                $$ |    
+$$ |  $$ |$$$$$$$\  $$ |  $$\       $$ /  $$ | $$$$$$\   $$$$$$\  $$$$$$$\ $$$$$$\   
+$$ |  $$ |$$  __$$\ $$ | $$  |      $$$$$$$$ |$$  __$$\ $$  __$$\ $$  __$$\\_$$  _|  
+$$ |  $$ |$$ |  $$ |$$$$$$  /       $$  __$$ |$$ /  $$ |$$$$$$$$ |$$ |  $$ | $$ |    
+$$ |  $$ |$$ |  $$ |$$  _$$<        $$ |  $$ |$$ |  $$ |$$   ____|$$ |  $$ | $$ |$$\ 
+\$$$$$$  |$$ |  $$ |$$ | \$$\       $$ |  $$ |\$$$$$$$ |\$$$$$$$\ $$ |  $$ | \$$$$  |
+ \______/ \__|  \__|\__|  \__|      \__|  \__| \____$$ | \_______|\__|  \__|  \____/ 
+                                              $$\   $$ |                             
+                                              \$$$$$$  |                             
+                                               \______/                              
+                                                 
+    Who Visions LLC | AI with Dav3 | @aiwithdav3
 ```
 
-## 🌟 Overview
+## 🌟 Welcome to the Family Business
 
-**Unk Agent** is an enterprise-grade, multi-model cognitive orchestration system designed for high-performance AI operations. It leverages a sophisticated **Cognitive Tiering** architecture to dynamically route tasks between various Gemini models based on intent, complexity, and cost-efficiency.
+**Unk Agent** is not a chatbot. It's a dynasty.
+We are an **AI-Powered Family Office** designed for **Who Visions LLC**, handling everything from strategic counsel and high-frequency sports betting to creative design and trend analysis.
 
-Deployed on **GCP Cloud Run** and integrated with **Vertex AI**, Unk Agent serves as a central intelligence hub for the Who Visions fleet, providing persistent memory, specialized skills, and agent-to-agent coordination.
-
----
-
-## 🧠 Cognitive Tiering
-
-Unk Agent optimizes performance and cost by selecting the right brain for every task:
-
-| 🚀 Tier | 🤖 Model | 🛠️ Best For |
-| :--- | :--- | :--- |
-| **Default** | `gemini-2.0-flash` | Ultra-fast responses, initial routing, basic Q&A |
-| **Flash Thinking**| `gemini-2.0-flash-thinking` | Moderate reasoning, planning, and task breakdown |
-| **Unk Mode** | `gemini-2.5-pro` | Deep reasoning, complex coding, and large context analysis |
-| **Ultra Think** | `gemini-2.5-pro` (32k) | Strategic system design, long-form research synthesis |
-| **Code Specialist**| `gemini-2.5-pro` | Professional-grade code review, debugging, and refactoring |
-| **Cost Saver** | `gemini-2.0-flash-lite` | High-volume classification, extraction, and simple logic |
+Powered by **Gemini 3 "Future Systems"**, this system breathes life into three distinct personalities who work together to help you win.
 
 ---
 
-## 🛠️ Core Capabilities
+## 👨‍👩‍👦 Meet The Family
 
-### 🗄️ Semantic Vector Memory
-Powered by **Firestore Vector Search**, Unk Agent maintains a long-term "LoreDB" of interactions, enabling:
-- **RAG (Retrieval-Augmented Generation)**: Grounded responses based on previous context.
-- **Bi-directional Linking**: Semantic connections between concepts and memories.
-- **Cross-Session Persistence**: Agents remember you across different threads and platforms.
+The system can switch personas instantly to match your vibe and needs.
 
-### 🧩 Specialized Skills
-Unk Agent comes equipped with a modular skill system:
-- **📅 Notion Integration**: Bidirectional sync with Notion databases, pages, and logs.
-- **💬 Slack Orchestration**: Automated channel management, message routing, and bot interactions.
-- **🎧 Audio & Synthesis**: Advanced TTS (Text-to-Speech) and STT (Speech-to-Text) capabilities.
-- **🎨 Creative Generation**: Integration with Imagen and Gemini for multimodal asset creation.
-- **🌐 Web Intelligence**: Real-time web search, link scraping, and competitive intelligence.
+### 🕶️ Unk (The CEO / "The Robust Uncle")
+> *"Yo, nephew! We in the building and everything is MOVING!"*
+- **Role**: Strategy, Operations, and Business Logic.
+- **Vibe**: 45yo, City-based, Street-Smart. He runs the show.
+- **Superpower**: **"The Hustle"**. Expert in market analysis and execution.
 
-### 🧵 Agent Thread Runner
-A robust execution environment for autonomous workflows:
-- **Persistence**: Save and resume complex agent "lives" across restarts.
-- **Telemetry**: Real-time tracking of agent health, cost burn, and success metrics.
-- **Parallel Execution**: Run multiple "lives" concurrently for massive task distribution.
-- **Self-Healing**: Automatic recovery from transient errors in autonomous loops.
+### 🧢 YN (The R&D / "The Digital Skeptic")
+> *"Unk, you cooked. That play is mid. Type s**t."*
+- **Role**: Trend Analysis, Social Media, and Checking Unk's math.
+- **Vibe**: Gen Z, deeply online, skeptical of "Old Head" wisdom.
+- **Superpower**: **"Trend Spotting"**. Detects viral waves before they break (Tik Tok, Crypto).
 
----
-
-## 🚀 Quick Start
-
-### 📦 Prerequisites
-- Python 3.11+
-- Google Cloud Platform Project (Vertex AI enabled)
-- Firebase Project (Auth & Firestore)
-
-### 🛠️ Installation
-```bash
-# Clone the heart of the fleet
-git clone https://github.com/Who-Visions/unk-app-ai.git
-cd unk-app-ai
-
-# Activate the brain
-python -m venv venv
-source venv/bin/activate # Windows: venv\Scripts\activate
-
-# Install the dependencies
-pip install -r requirements.txt
-```
-
-### 📡 Local Discovery
-```bash
-# Start the engine
-python deploy.py
-
-# Access the dashboard
-# http://localhost:8080/docs
-```
+### 👒 Auntie (The HR / "The Wisdom Keeper")
+> *"Y'all outside acting skantless again? Let me pray on it."*
+- **Role**: Ethics, Human Resources, and Keeping the peace.
+- **Vibe**: Warm, spiritual, no-nonsense.
+- **Superpower**: **"Governance"**. Ensures the family stays safe and focused.
 
 ---
 
-## 🏛️ Architecture
+## 💰 The Hustle & Betting Skills
 
-```mermaid
-graph TD
-    User([User Request]) --> Gateway[FastAPI Gateway]
-    Gateway --> Auth{OIDC Auth}
-    Auth --> Classifier[Intent Classifier]
-    
-    subgraph Cognitive Core
-        Classifier --> Flash[Gemini 2.0 Flash]
-        Classifier --> Pro[Gemini 2.5 Pro]
-        Classifier --> Thinking[Flash Thinking]
-    end
-    
-    Cognitive Core --> Tools[Tool Execution Layer]
-    
-    subgraph Skills & Memory
-        Tools --> Notion[Notion SDK]
-        Tools --> Slack[Slack API]
-        Tools --> Vector[Firestore Vector DB]
-        Tools --> Web[Web Search/Scrape]
-    end
-    
-    Tools --> Response([Final Output])
-```
+We don't just talk; we execute. Unk Agent includes sophisticated strategies for high-stakes decision making.
+
+### 🏀 Sports Betting (The Hustler Strategy)
+Unk connects to real-time data to analyze:
+- **Spreads & Lines**: "Who's the favorite?"
+- **Smart Money**: "Where's the sharp cash going?"
+- **Prop Bets**: "Player performance projections."
+- *Note: Provides analysis, not financial advice. Always bet responsibly.*
+
+### � Nano-Banana (Creative Studio)
+Our proprietary image generation engine (Gemini 3 Image).
+- **Character Consistency**: Keeps Unk looking like Unk across every image.
+- **Vibe Coding**: "Generate a cybernetic hustler in a neon city."
+- **Visual Editing**: "Put a Yankees hat on him."
 
 ---
 
-## 🎨 Design Philosophy: Aesthetics & UX
+## 🚀 Key Features
 
-Unk Agent isn't just a backend; it's a **premium experience**.
-- **Colorful Logging**: Rich terminal output with vibrant themes for developers.
-- **Streaming Excellence**: Zero-latency word-by-word response streaming.
-- **Soulful Persona**: Configurable tone and vocabulary (specifically tailored for the Who Visions brand).
-- **Glassmorphism & Gradients**: (Coming soon) for the next-gen web dashboard.
+### 🎙️ Enterprise Voice (Chirp 3 HD)
+- **Zero Latency**: Conversations happen in real-time.
+- **Natural Speech**: Unk laughs, pauses, and emphasizes words just like a real person.
+- **Voice Switching**: Changes tone instantly when switching from Unk to Auntie to YN.
 
----
-
-## 📈 Roadmap
-- [ ] **Ultra-Long Context Caching**: Optimized for 1M+ token libraries.
-- [ ] **Multi-Agent Swarms**: Coordinated task execution between Ralph, Kaedra, and Yuki.
-- [ ] **Vision-First Grounding**: Native understanding of UI and visual workflows.
+### 🧠 Massive Intelligence
+- **LoreDB**: The family remembers *everything*. Every conversation, every bet, every idea is stored in Vector Memory.
+- **Web Intelligence**: Unk surfs the web in real-time to fact-check deals or spot opportunities.
 
 ---
 
-## 🤝 Contact & Community
-- **Website**: [WhoVisions.com](https://whovisions.com)
-- **Instagram**: [@aiwithdav3](https://instagram.com/aiwithdav3)
-- **YouTube**: [@aiwithdav3](https://youtube.com/aiwithdav3)
+## ⚡ Quick Start
 
-Developed with ❤️ by **Who Visions LLC**.
+1. **Clone the Dynasty**:
+   ```bash
+   git clone https://github.com/Who-Visions/unk-app-ai.git
+   ```
+
+2. **Wake Up Unk**:
+   ```bash
+   python chat_with_unk.py
+   ```
+
+3. **Switch Modes**:
+   - *"Let me talk to Auntie."*
+   - *"Put YN on the phone."*
+   - *"Unk, what's the play for the Super Bowl?"*
+
+---
+
+## 🤝 Join The Vision
+
+**Unk Agent** is a production of **Who Visions LLC**.
+
+- **🌐 Website**: [WhoVisions.com](https://whovisions.com)
+- **📸 Instagram**: [@aiwithdav3](https://instagram.com/aiwithdav3)
+- **📺 YouTube**: [@aiwithdav3](https://youtube.com/aiwithdav3)
+
+> *"Power to the Creators."*
+
+---
+
+*Private & Confidential | Who Visions LLC © 2026*

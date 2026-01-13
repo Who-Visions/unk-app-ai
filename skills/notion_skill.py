@@ -6,7 +6,7 @@ Handles interactions with Notion API for project management and observablity.
 
 import os
 from datetime import datetime
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
 from notion_client import Client
 from notion_client.errors import APIResponseError
@@ -24,15 +24,15 @@ DB_METRICS_LOG = "d17006d5c557416688cfd3a7df1f8d8c"
 DB_CONTENT_LIBRARY = "d23d02a7bec54167b6179111c5a48e05"
 DB_MARKETING = "ad8ed25d26f04c4c93f7683c8c472cf2"
 DB_CLIENT_DIRECTORY = "b584e60fb3cf460cbd3f2b18c573a655"
-DB_BRAND_ASSETS = "fd6384b95615444c81024027afb75416" # Corrected from hierarchy
-DB_SOCIAL_CONTENT = "bd1713b0042c435abe19365b0eb60752" # Corrected from hierarchy
-DB_LEARNING = "856d411b9a2245bab498a6d9204f8f59" # Corrected
-DB_EMAIL_CAMPAIGNS = "ab753e27f8774a17aee5ac2b9b9f39e3" # Corrected
-DB_COMPETITIVE_ANALYSIS = "4a4fa457b88042d48929af19aa2fdbb5" # Corrected
-DB_KPI_GOALS = "ece92262d9ab433783c4271a484a0875" # Corrected
-DB_LEAD_GEN = "be3a6bdbf8524dca9d23ed69b66c8f52" # Corrected
-DB_TEAM_CONTRACTORS = "17f6d28c684c4edf8aa045f4c114230e" # New mapped
-DB_EQUIPMENT = "6bf3b73a9a2d40be9c5e0a90d8ea03f7" # New mapped
+DB_BRAND_ASSETS = "fd6384b95615444c81024027afb75416"  # Corrected from hierarchy
+DB_SOCIAL_CONTENT = "bd1713b0042c435abe19365b0eb60752"  # Corrected from hierarchy
+DB_LEARNING = "856d411b9a2245bab498a6d9204f8f59"  # Corrected
+DB_EMAIL_CAMPAIGNS = "ab753e27f8774a17aee5ac2b9b9f39e3"  # Corrected
+DB_COMPETITIVE_ANALYSIS = "4a4fa457b88042d48929af19aa2fdbb5"  # Corrected
+DB_KPI_GOALS = "ece92262d9ab433783c4271a484a0875"  # Corrected
+DB_LEAD_GEN = "be3a6bdbf8524dca9d23ed69b66c8f52"  # Corrected
+DB_TEAM_CONTRACTORS = "17f6d28c684c4edf8aa045f4c114230e"  # New mapped
+DB_EQUIPMENT = "6bf3b73a9a2d40be9c5e0a90d8ea03f7"  # New mapped
 
 # User Provided Pages (Potential Parents or DBs)
 PAGE_COMPANY_INFO = "316ef0a11a7346dfa13510c5572f154e"
@@ -246,7 +246,8 @@ class NotionSkill:
     # --- MCP: Content Tools ---
     def fetch_page(self, page_id: str) -> Dict[str, Any]:
         """Retrieves content from a Notion page (notion-fetch)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             page = self.client.pages.retrieve(page_id)
             blocks = self.client.blocks.children.list(page_id)
@@ -262,7 +263,8 @@ class NotionSkill:
         children: List[Dict] = None
     ) -> Dict[str, Any]:
         """Creates a new Notion page (notion-create-pages)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             # Determine parent type (database or page)
             # Simple heuristic: if parent_id has dashes, assume page/db ID.
@@ -282,12 +284,12 @@ class NotionSkill:
             # Helper for title if generic properties passed
             if not properties and title:
                 payload["properties"] = {"title": [{"text": {"content": title}}]}
-            elif title and "Name" in (properties or {}): # Common CSV case
-                 pass # User handled it
+            elif title and "Name" in (properties or {}):  # Common CSV case
+                pass  # User handled it
             elif title:
-                 # Try to guess title property name? usually "title" or "Name"
-                 # For page parent, title property is 'title'.
-                 payload["properties"]["title"] = [{"text": {"content": title}}]
+                # Try to guess title property name? usually "title" or "Name"
+                # For page parent, title property is 'title'.
+                payload["properties"]["title"] = [{"text": {"content": title}}]
 
             return self.client.pages.create(**payload)
         except Exception as e:  # pylint: disable=W0718
@@ -302,18 +304,22 @@ class NotionSkill:
         self, page_id: str, properties: Dict[str, Any] = None, archived: bool = False
     ) -> Dict[str, Any]:
         """Updates a page's properties or status (notion-update-page)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             kwargs = {}
-            if properties: kwargs["properties"] = properties
-            if archived: kwargs["archived"] = True
+            if properties:
+                kwargs["properties"] = properties
+            if archived:
+                kwargs["archived"] = True
             return self.client.pages.update(page_id, **kwargs)
         except Exception as e:  # pylint: disable=W0718
             return {"error": str(e)}
 
     def move_page(self, page_id: str, new_parent_id: str) -> Dict[str, Any]:
         """Moves a page to a new parent (notion-move-pages)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             # Moving is just updating the parent, but API restricts moving via update endpoint sometimes?
             # Actually, API allows updating `parent` property? No, it's restricted.
@@ -331,7 +337,8 @@ class NotionSkill:
         self, parent_page_id: str, title: str, properties: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Creates a new database (notion-create-database)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             return self.client.databases.create(
                 parent={"page_id": parent_page_id},
@@ -348,11 +355,14 @@ class NotionSkill:
         properties: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Updates a database schema (notion-update-database)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             kwargs = {}
-            if title: kwargs["title"] = [{"text": {"content": title}}]
-            if properties: kwargs["properties"] = properties
+            if title:
+                kwargs["title"] = [{"text": {"content": title}}]
+            if properties:
+                kwargs["properties"] = properties
             return self.client.databases.update(database_id, **kwargs)
         except Exception as e:  # pylint: disable=W0718
             return {"error": str(e)}
@@ -361,11 +371,14 @@ class NotionSkill:
         self, database_id: str, filter: Dict = None, sort: List = None
     ) -> List[Dict]:
         """Queries a database (notion-query-data-sources)."""
-        if not self.client: return []
+        if not self.client:
+            return []
         try:
             kwargs = {"database_id": database_id}
-            if filter: kwargs["filter"] = filter
-            if sort: kwargs["sorts"] = sort
+            if filter:
+                kwargs["filter"] = filter
+            if sort:
+                kwargs["sorts"] = sort
 
             res = self.client.databases.query(**kwargs)
             return res.get("results", [])
@@ -376,7 +389,8 @@ class NotionSkill:
     # --- MCP: Collaboration Tools ---
     def create_comment(self, page_id: str, text: str) -> Dict[str, Any]:
         """Adds a comment to a page (notion-create-comment)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             return self.client.comments.create(
                 parent={"page_id": page_id},
@@ -387,7 +401,8 @@ class NotionSkill:
 
     def get_comments(self, page_id: str) -> List[Dict]:
         """Lists comments for a page (notion-get-comments)."""
-        if not self.client: return []
+        if not self.client:
+            return []
         try:
             res = self.client.comments.list(block_id=page_id)
             return res.get("results", [])
@@ -396,7 +411,8 @@ class NotionSkill:
 
     def get_users(self) -> List[Dict]:
         """Lists all users (notion-get-users)."""
-        if not self.client: return []
+        if not self.client:
+            return []
         try:
             res = self.client.users.list()
             return res.get("results", [])
@@ -405,7 +421,8 @@ class NotionSkill:
 
     def get_me(self) -> Dict[str, Any]:
         """Get bot user info (notion-get-self)."""
-        if not self.client: return {}
+        if not self.client:
+            return {}
         try:
             return self.client.users.me()
         except Exception as e:  # pylint: disable=W0718
@@ -414,7 +431,8 @@ class NotionSkill:
     # --- MCP: Advanced / Deep Dive ---
     def duplicate_page(self, page_id: str) -> Dict[str, Any]:
         """Duplicates a page (notion-duplicate-page) by copying properties and content."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             # 1. Fetch source
             original = self.client.pages.retrieve(page_id)
@@ -443,16 +461,23 @@ class NotionSkill:
             # Need to clean blocks (remove IDs).
             clean_blocks = []
             for b in blocks:
-                if "id" in b: del b["id"]
-                if "parent" in b: del b["parent"]
-                if "created_time" in b: del b["created_time"]
-                if "last_edited_time" in b: del b["last_edited_time"]
-                if "created_by" in b: del b["created_by"]
-                if "last_edited_by" in b: del b["last_edited_by"]
+                if "id" in b:
+                    del b["id"]
+                if "parent" in b:
+                    del b["parent"]
+                if "created_time" in b:
+                    del b["created_time"]
+                if "last_edited_time" in b:
+                    del b["last_edited_time"]
+                if "created_by" in b:
+                    del b["created_by"]
+                if "last_edited_by" in b:
+                    del b["last_edited_by"]
                 # Can't copy nested children easily
                 if "has_children" in b:
                     del b["has_children"]
-                if "archived" in b: del b["archived"]
+                if "archived" in b:
+                    del b["archived"]
                 if "type" in b:
                     clean_blocks.append(b)
 
@@ -465,7 +490,8 @@ class NotionSkill:
 
     def get_user(self, user_id: str) -> Dict[str, Any]:
         """Retrieves a specific user (notion-get-user)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             return self.client.users.retrieve(user_id)
         except Exception as e:  # pylint: disable=W0718
@@ -479,7 +505,8 @@ class NotionSkill:
     # Update move_page with attempt logic
     def move_page_advanced(self, page_id: str, new_parent_page_id: str) -> Dict[str, Any]:
         """Attempts to move a page via update (notion-move-pages)."""
-        if not self.client: return {"error": "Client not initialized"}
+        if not self.client:
+            return {"error": "Client not initialized"}
         try:
             return self.client.pages.update(
                 page_id,
@@ -487,6 +514,7 @@ class NotionSkill:
             )
         except APIResponseError as e:
             return {"error": f"Move failed (API Limitation?): {e}"}
+
     def _extract_title(self, page: Dict[str, Any]) -> str:
         """Helper to safely extract page title."""
         props = page.get("properties", {})
