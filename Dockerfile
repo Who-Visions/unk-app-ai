@@ -44,6 +44,7 @@ COPY routers/ ./routers/
 COPY services/ ./services/
 COPY tools/ ./tools/
 COPY skills/ ./skills/
+COPY deploy.py .
 # Optional: Copy scripts if needed for debugging, but usually omit from prod
 # COPY scripts/ ./scripts/
 
@@ -67,4 +68,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
 
 # Run with python -m to ensure imports work from root
-CMD ["python", "services/deploy.py"]
+CMD ["python", "deploy.py"]
