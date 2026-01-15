@@ -1,0 +1,130 @@
+# Trading System Configuration
+# ============================
+# Configurable thresholds for strategies, indicators, and API behavior.
+
+strategies:
+  DayTrader:
+    risk_per_trade: 0.02      # 2% risk per trade
+    reward_ratio: 2.0          # 2:1 reward/risk
+    atr_multiplier: 1.5        # ATR multiplier for stop placement
+    min_score_buy: 3           # Minimum combined score to trigger buy
+    min_score_sell: -3         # Maximum combined score to trigger sell
+
+  SwingTrader:
+    risk_per_trade: 0.03       # 3% risk for longer holds
+    reward_ratio: 3.0          # 3:1 reward/risk
+    atr_multiplier: 2.0        # Wider stops for swings
+    min_score_buy: 2
+    min_score_sell: -2
+
+  Scalper:
+    risk_per_trade: 0.01       # 1% risk for quick trades
+    reward_ratio: 1.5          # 1.5:1 quick exits
+    atr_multiplier: 1.0        # Tight stops
+    min_volume_ratio: 1.5      # Require high volume for scalps
+    min_score_buy: 2
+    min_score_sell: -2
+
+  # YouTube Strategy: Ross Cameron Momentum
+  Momentum:
+    # 5 Pillars thresholds
+    price_min: 2.0
+    price_max: 20.0
+    price_sweet_min: 3.0
+    price_sweet_max: 8.0
+    gap_percent_min: 10.0
+    gap_percent_target: 25.0
+    relative_volume_min: 5.0
+    relative_volume_target: 80.0
+    float_max: 20000000
+    float_target: 5000000
+    # Trading window (Eastern)
+    trading_start_hour: 7
+    trading_end_hour: 10
+    # Risk
+    min_rr_ratio: 2.0
+    max_pullback_bars: 7
+
+  # YouTube Strategy: Continuation (LIFO)
+  Continuation:
+    sma_length: 200
+    trailing_percent: 0.03     # 3% trailing stop
+    initial_stop_percent: 0.05 # 5% initial stop
+    min_distance_from_sma: 10.0  # % above 200 SMA
+
+  # YouTube Strategy: Reversal (Dip Buying)
+  Reversal:
+    rsi_length: 14
+    rsi_buy_level: 40          # Buy when RSI drops below this
+    profit_target_percent: 0.02  # 2% quick target
+    stop_loss_percent: 0.025   # 2.5% stop
+    scale_levels: [0.0, 0.01, 0.02, 0.03]  # % drops for scaling in
+
+# Small Account Mode (Ross Cameron's rules)
+small_account:
+  enabled: true
+  starting_balance: 2000
+  daily_goal: 200
+  max_daily_loss_percent: 0.05  # 5% of account
+  max_consecutive_losses: 3
+  risk_per_trade: 50           # Risk $50 to make $100
+  # Tighter scanner criteria
+  price_max: 6.0
+  gap_percent_min: 25.0
+  float_max: 5000000
+
+
+indicators:
+  rsi:
+    oversold: 30
+    overbought: 70
+    extreme_oversold: 25
+    extreme_overbought: 75
+  
+  macd:
+    fast: 12
+    slow: 26
+    signal: 9
+  
+  bollinger:
+    period: 20
+    std_dev: 2
+    squeeze_threshold: 0.05
+  
+  volume:
+    high_threshold: 1.5
+    very_high_threshold: 2.0
+    low_threshold: 0.8
+
+  moving_averages:
+    sma_short: 20
+    sma_long: 50
+    ema_fast: 12
+
+api:
+  yfinance:
+    max_retries: 3
+    retry_delay_seconds: 2
+    timeout_seconds: 30
+  
+  gemini:
+    fallback_enabled: true
+    model_alias: "gemini_3_flash"
+
+rate_limit:
+  yfinance_min_interval_seconds: 0.8
+  gemini_min_interval_seconds: 2.0
+
+retry:
+  attempts: 5
+  base_wait_seconds: 0.75
+  max_wait_seconds: 8.0
+
+logging:
+  level: INFO
+
+backtesting:
+  default_starting_equity: 10000
+  default_risk_pct: 0.02
+  commission_per_trade: 0.0    # Set to broker commission if needed
+  slippage_pct: 0.001          # 0.1% slippage estimate

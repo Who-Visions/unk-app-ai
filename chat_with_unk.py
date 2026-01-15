@@ -22,6 +22,8 @@ from services.audio.voice_service import UnkVoiceService
 from services.llm.gemini_agent import GeminiAgent
 from services.betting import BettingService
 from services.betting_types import BettingRequest
+from services.trading import TradingService
+from services.trading_types import TradingRequest
 from skills.generation import generate_image
 
 # --- Configuration ---
@@ -268,6 +270,7 @@ class UnkAgentApp:
         self.audio_engine = None
         self.ui = ChatUI()
         self.betting_service = BettingService()
+        self.trading_service = TradingService()
         self.tools = []
 
     async def initialize(self):
@@ -290,6 +293,7 @@ class UnkAgentApp:
             self.tools = [
                 self.tool_betting,
                 self.tool_image,
+                self.tool_trading,
                 types.Tool(google_search=types.GoogleSearch())
             ]
 
@@ -323,6 +327,34 @@ class UnkAgentApp:
                 os.system(f'start {path}')
             return f"Image created: {path}"
         except Exception as e: # pylint: disable=broad-exception-caught
+            return f"Error: {e}"
+
+    def tool_trading(
+        self,
+        symbol: str,
+        strategy: str = "DayTrader",
+        portfolio_value: float = 10000.0
+    ) -> str:
+        """Get Unk's stock trading advice."""
+        try:
+            req = TradingRequest(
+                strategy=strategy,
+                symbol=symbol.upper(),
+                market="stocks",
+                portfolio_value=portfolio_value,
+                inputs={}
+            )
+            decision = self.trading_service.analyze(req)
+            explanation = decision.metadata.get("unk_explanation", "")
+            return (
+                f"[{decision.action.upper()}] {decision.symbol}\n"
+                f"Position: ${decision.position_size:.2f}\n"
+                f"Entry: ${decision.entry_price:.2f if decision.entry_price else 0}\n"
+                f"Stop: ${decision.stop_loss:.2f if decision.stop_loss else 0}\n"
+                f"Target: ${decision.take_profit:.2f if decision.take_profit else 0}\n\n"
+                f"{explanation}"
+            )
+        except Exception as e:  # pylint: disable=broad-exception-caught
             return f"Error: {e}"
 
     async def run_loop(self):
