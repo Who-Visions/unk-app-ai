@@ -1,0 +1,55 @@
+﻿venv\Scripts\python.exe : Could not find 
+platform independent libraries <prefix>
+At line:1 char:1
++ venv\Scripts\python.exe 
+scripts\deep_dive.py 2>&1 | Out-File 
+-Encodin ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo          : NotSpecified 
+   : (Could not find ...raries <prefix>:S  
+  tring) [], RemoteException
+    + FullyQualifiedErrorId : NativeComman 
+   dError
+ 
+============================================================
+DEEP DIVE: ROBINHOOD CRYPTO ACCOUNT
+============================================================
+
+>>> 1. ACCOUNT INFO
+----------------------------------------
+Account Number: 311244824314
+Buying Power: $0.0300
+Currency: USD
+Status: active
+
+>>> 2. ALL CRYPTO HOLDINGS
+----------------------------------------
+  (No holdings with quantity > 0)
+
+>>> 3. ORDER HISTORY (Last 20)
+----------------------------------------
+Total orders in history: 35
+
+Error: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+
+>>> 4. SUMMARY
+----------------------------------------
+  Filled Buys: 1
+  Filled Sells: 0
+  Total Bought: ~$0.11
+  Total Sold: ~$0.00
+  Net: ~$-0.11
+
+>>> 5. BOT STATE vs REALITY
+----------------------------------------
+Bot thinks:
+  Cash: $0.03
+  Positions: ['DOGE-USD', 'BTC-USD', 'SHIB-USD']
+    DOGE-USD: qty=10.9, entry=$0.146654
+    BTC-USD: qty=4e-06, entry=$97091.724474
+    SHIB-USD: qty=12178, entry=$0.000009
+
+============================================================
+DEEP DIVE COMPLETE
+============================================================

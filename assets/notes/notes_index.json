@@ -40,6 +40,51 @@
       ],
       "created_at": "2026-01-12T23:35:29.669460",
       "relevance_score": 1.0
+    },
+    {
+      "id": "strategy_20260118_123350",
+      "category": "strategy",
+      "title": "Global Endpoint for Gemini 3",
+      "content": "Always use location='global' for Gemini 3 models on Vertex AI.",
+      "context": "Unk Agent routing fix",
+      "keywords": [
+        "gemini",
+        "vertex",
+        "global",
+        "routing"
+      ],
+      "created_at": "2026-01-18T12:33:50.435170",
+      "relevance_score": 1.0
+    },
+    {
+      "id": "strategy_20260118_123649",
+      "category": "strategy",
+      "title": "Global Endpoint for Gemini 3",
+      "content": "Always use location='global' for Gemini 3 models on Vertex AI.",
+      "context": "Unk Agent routing fix",
+      "keywords": [
+        "gemini",
+        "vertex",
+        "global",
+        "routing"
+      ],
+      "created_at": "2026-01-18T12:36:49.791137",
+      "relevance_score": 1.0
+    },
+    {
+      "id": "strategy_20260118_123902",
+      "category": "strategy",
+      "title": "Global Endpoint for Gemini 3",
+      "content": "Always use location='global' for Gemini 3 models on Vertex AI.",
+      "context": "Unk Agent routing fix",
+      "keywords": [
+        "gemini",
+        "vertex",
+        "global",
+        "routing"
+      ],
+      "created_at": "2026-01-18T12:39:02.816523",
+      "relevance_score": 1.0
     }
   ]
 }

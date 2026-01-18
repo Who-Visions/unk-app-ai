@@ -1,0 +1,52 @@
+{
+    "governor": {
+        "mode": "SAFE_SNIPER",
+        "version": "2.0"
+    },
+    "rate_gate": {
+        "min_time_between_any_orders_ms_global": 1000,
+        "min_time_between_orders_ms_per_symbol": 2000
+    },
+    "risk_gate": {
+        "max_daily_loss_pct": 5.0,
+        "max_consecutive_losses": 10,
+        "lockout_minutes_after_streak": 15
+    },
+    "churn_gate": {
+        "enabled": false,
+        "min_hold_minutes": 0,
+        "allowed_exceptions": [
+            "*"
+        ]
+    },
+    "hard_floor": {
+        "enabled": true,
+        "mode": "COST_BASIS",
+        "required_reversal_pct": 5.0
+    },
+    "liquidity_gate": {
+        "allowed_tiers": [
+            "tier_1_majors",
+            "tier_2_mid"
+        ],
+        "tier_1_majors": [
+            "BTC-USD",
+            "ETH-USD",
+            "SOL-USD",
+            "LTC-USD",
+            "DOGE-USD"
+        ],
+        "tier_2_mid": [
+            "XTZ-USD",
+            "AAVE-USD",
+            "UNI-USD",
+            "LINK-USD",
+            "BCH-USD",
+            "AVAX-USD"
+        ]
+    },
+    "market_gate": {
+        "max_spread_bps_majors": 25,
+        "max_spread_bps_alts": 50
+    }
+}

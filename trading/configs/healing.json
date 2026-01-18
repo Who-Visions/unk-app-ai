@@ -1,0 +1,27 @@
+{
+    "strategies": {
+        "healing": {
+            "BONK-USD": {
+                "anchor_price": 0.00001081,
+                "sell_target_pct": 0.07,
+                "buy_reset_pct": -0.03,
+                "sell_amount_pct": 0.40,
+                "active": true
+            },
+            "AERO-USD": {
+                "anchor_price": 0.5722,
+                "sell_target_pct": 0.07,
+                "buy_reset_pct": -0.03,
+                "sell_amount_pct": 0.40,
+                "active": true
+            },
+            "SHIB-USD": {
+                "anchor_price": 0.00000860,
+                "sell_target_pct": 0.07,
+                "buy_reset_pct": -0.03,
+                "sell_amount_pct": 0.40,
+                "active": true
+            }
+        }
+    }
+}

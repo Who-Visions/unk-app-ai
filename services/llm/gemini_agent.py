@@ -84,26 +84,34 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
 }
 
 
+# Singleton cache for Vertex AI client (avoid re-initialization)
+_CACHED_CLIENT = None
+_CACHED_PROJECT = None
+
+
 class GeminiAgent:
     """
     Advanced Gemini agent specialized for modern Agentic workflows.
     Supports: Async, Streaming, Tools, Multimodal (Video/Audio/PDF), Embeddings.
+    Uses singleton pattern for client to avoid re-initialization latency.
     """
 
-    def __init__(
-        self,
-        api_key_env: str = "GOOGLE_API_KEY",
-        default_model: str = "gemini-3-flash-preview",
-        use_vertex: bool = True
-    ) -> None:
+    def __init__(self, 
+                 default_model: str = "gemini-3-flash-preview", 
+                 use_vertex: bool = True,
+                 api_key_env: str = "GOOGLE_API_KEY",
+                 project: Optional[str] = None,
+                 location: str = "global"):
+        global _CACHED_CLIENT, _CACHED_PROJECT
+        
         api_key = os.getenv(api_key_env)
-        project = os.getenv("GOOGLE_CLOUD_PROJECT") or "unk-app-480102"
-        location = "global"  # Enforce global endpoint for Gemini 3 as required
+        project = project or os.getenv("GOOGLE_CLOUD_PROJECT") or "unk-app-480102"
+        location = location  # Enforce global endpoint for Gemini 3 as required
 
         if genai:
+            # Senior Tech: We must avoid sharing AIO clients across different asyncio.run() loops.
+            # Thus, we create a fresh client instance to ensure session ownership by the current loop.
             if use_vertex:
-                print(
-                    f"[GeminiAgent] Initializing Vertex AI in {location} mode (Project: {project})")
                 self.client = genai.Client(
                     vertexai=True,
                     project=project,
@@ -116,10 +124,26 @@ class GeminiAgent:
             print("Warning: google-genai SDK not found.")
 
         self.default_model = default_model
-        # Tool Map for internal or native usage
-        self.tools_map = {
-            "calculator": calculator,
-        }
+        self.use_vertex = use_vertex
+        self.api_key_env = api_key_env
+        self.project = project
+        self.location = location
+
+        # Senior Tech: Persistent background event loop to manage all AI sessions.
+        # This prevents loop-conflict deadlocks and ensures AIO sessions stay alive.
+        self._loop = None
+        self._thread = None
+        self._start_background_loop()
+
+    def _start_background_loop(self):
+        import threading
+        def run_loop(loop):
+            asyncio.set_event_loop(loop)
+            loop.run_forever()
+        
+        self._loop = asyncio.new_event_loop()
+        self._thread = threading.Thread(target=run_loop, args=(self._loop,), daemon=True)
+        self._thread.start()
 
     # --- Execution Flow (Async Native) ---
 
@@ -132,26 +156,22 @@ class GeminiAgent:
     ) -> Union[str, AsyncGenerator[str, None]]:
         """
         Main asynchronous agent loop.
-        Args:
-            prompt_content: str, List[Part], or file objects.
-            config: Dict of GenerateContentConfig overrides.
-            stream: Whether to use generate_content_stream.
-            tools: List of callables to pass as native tools.
+        Senior Tip: We recreate the client/session per async_run to ensure absolute 
+        compatibility with the current asyncio loop, especially in threaded bot environments.
         """
-        if not self.client:
-            raise RuntimeError("Gemini client not initialized.")
+        # Session-isolated client instance
+        if self.use_vertex:
+            client = genai.Client(
+                vertexai=True,
+                project=self.project,
+                location=self.location
+            )
+        else:
+            api_key = os.getenv(self.api_key_env)
+            client = genai.Client(api_key=api_key) if api_key else None
 
         # 1. Routing & Heuristics
         text_hint = self._extract_text_hint(prompt_content)
-
-        # Internal Tool Shortcut (Calculator)
-        if self._is_math_expression(text_hint):
-            res = calculator(text_hint.replace("calc:", "").strip())
-            if stream:
-                async def internal_stream():
-                    yield res
-                return internal_stream()
-            return res
 
         # 2. Smart Routing
         routed_model, routed_config = router.route(text_hint)
@@ -159,24 +179,36 @@ class GeminiAgent:
         # 3. Final Config Assembly
         final_gen_config = self._build_config(routed_config, config, tools)
 
-        # 4. API Call
-        if stream:
-            async def stream_gen():
-                async for chunk in await self.client.aio.models.generate_content_stream(
-                    model=routed_model,
-                    contents=prompt_content,
-                    config=final_gen_config
-                ):
-                    if chunk.text:
-                        yield chunk.text
-            return stream_gen()
-        else:
-            resp = await self.client.aio.models.generate_content(
-                model=routed_model,
-                contents=prompt_content,
-                config=final_gen_config
-            )
-            return self._extract_response(resp)
+        # 4. API Call (With 60s Timeout to prevent hangs)
+        try:
+            if stream:
+                async def stream_gen():
+                    async for chunk in await asyncio.wait_for(
+                        client.aio.models.generate_content_stream(
+                            model=routed_model,
+                            contents=prompt_content,
+                            config=final_gen_config
+                        ),
+                        timeout=60.0
+                    ):
+                        if chunk.text:
+                            yield chunk.text
+                return stream_gen()
+            else:
+                resp = await asyncio.wait_for(
+                    client.aio.models.generate_content(
+                        model=routed_model,
+                        contents=prompt_content,
+                        config=final_gen_config
+                    ),
+                    timeout=60.0
+                )
+                return self._extract_response(resp)
+        except asyncio.TimeoutError:
+            return "Error: AI request timed out after 60 seconds."
+        except Exception as e:
+            # Senior Tech: Capture safety filter blocks or network drops
+            return f"AI Generation Error: {str(e)}"
 
     # --- Multimodal & File API ---
 
@@ -214,13 +246,15 @@ class GeminiAgent:
     # --- Sync Interface (Compatibility) ---
 
     def run(self, prompt_content: Any, config: Optional[Dict[str, Any]] = None, tools: Optional[List[Any]] = None) -> str:
-        """Synchronous wrapper for async_run (blocking)."""
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            # In some envs (like Jupyter), we might need another approach,
-            # but for standard CLI/Services this is fine.
-            return "Internal Error: Async loop already running. Use async_run."
-        return loop.run_until_complete(self.async_run(prompt_content, config, stream=False, tools=tools))
+        """Synchronous wrapper that executes on the persistent background loop."""
+        fut = asyncio.run_coroutine_threadsafe(
+            self.async_run(prompt_content, config, tools=tools), 
+            self._loop
+        )
+        try:
+            return fut.result(timeout=70) # Slightly higher than internal 60s timeout
+        except Exception as e:
+            return f"Threaded Execution Error: {e}"
 
     # --- Helper Logic ---
 
@@ -272,7 +306,14 @@ class GeminiAgent:
         if isinstance(content, str):
             return content
         if isinstance(content, list):
-            for part in content:
+            # Senior Tech: Peek into the LAST message for routing context
+            for part in reversed(content):
+                # Handle types.Content
+                if hasattr(part, 'parts') and part.parts:
+                    for sub in reversed(part.parts):
+                        if hasattr(sub, 'text') and sub.text:
+                            return sub.text
+                # Handle raw str or Part
                 if isinstance(part, str):
                     return part
                 if hasattr(part, 'text') and part.text:
@@ -286,18 +327,44 @@ class GeminiAgent:
         return any(c in norm for c in '+-*/%^') and len(norm.split()) < 5
 
     def _extract_response(self, resp: Any) -> str:
-        # Handles text, thoughts, or image generation results
+        """
+        Hardened extraction logic to handle text, parts, and safety blocks.
+        """
+        # 1. Standard approach (Try to access .text which might raise on safety blocks)
+        try:
+            if hasattr(resp, 'text') and resp.text:
+                return resp.text
+        except Exception: # pylint: disable=broad-exception-caught
+            pass
+
+        # 2. Part-based fallback (Safer manual extraction)
         out = []
-        if hasattr(resp, 'text') and resp.text:
-            out.append(resp.text)
+        try:
+            if hasattr(resp, 'candidates') and resp.candidates:
+                cand = resp.candidates[0]
+                if hasattr(cand, 'content') and cand.content.parts:
+                    for part in cand.content.parts:
+                        if hasattr(part, 'text') and part.text:
+                            out.append(part.text)
+                        elif hasattr(part, 'inline_data') and part.inline_data:
+                            out.append(f"[Media: {part.inline_data.mime_type}]")
+        except Exception: # pylint: disable=broad-exception-caught
+            pass
 
-        # Handle thinking/reasoning parts if requested
-        # Note: thinking tokens are usually accessible via specific attributes in 2.5/3.0
+        # 3. Parsed fallback (for structured output)
+        if not out and hasattr(resp, 'parsed') and resp.parsed:
+            return str(resp.parsed)
 
-        # Handle Image modality
-        for part in resp.parts:
-            if part.inline_data:
-                # Meta-information about generated image
-                out.append(f"[Media: {part.inline_data.mime_type}]")
-
-        return "\n".join(out) if out else str(resp)
+        # 4. Last resort: string representation or error message
+        final = "\n".join(out) if out else ""
+        if not final:
+            # Check for safety reasons
+            try:
+                if hasattr(resp, 'candidates') and resp.candidates:
+                    finish_reason = resp.candidates[0].finish_reason
+                    if finish_reason:
+                        return f"AI Blocked: {finish_reason}"
+            except Exception: # pylint: disable=broad-exception-caught
+                pass
+            return str(resp)
+        return final

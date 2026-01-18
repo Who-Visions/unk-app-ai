@@ -65,9 +65,95 @@ threads_db/
 venv_backup/
 requirements.txt.bak
 *.bak
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.venv
+env/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Secrets
+secrets.json
+service_account.json
+*.pem
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs and Reports
+*.log
+pylint_report*.txt
+pylint_report*.json
+report*.txt
+report*.json
+verification.txt
+inspection.log
+debug_run.log
+error.log
+refactor_log.txt
+refactor_err.txt
+
+# Data and State
+id_map.json
+id_map.txt
+databases.txt
+databases_v2.txt
+metrics_schema.txt
+notion_hierarchy.txt
+schema_dump.json
+schema_report.md
+schemas.txt
+canary.txt
+test_output.txt
+data/transcripts/
+threads_db/
+
+# Backups
+venv_backup/
+requirements.txt.bak
+*.bak
 
 # Node (if any)
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# User Secrets & Configs
+keys.txt
+healing_config.json
+raw_holding.json
+market_sentiment.json
+trading_state.json
+opportunities.csv
+
+# Logs (Detailed)
+bot_output.log
+trader_activity.log
+tool_errors.log
+ui_debug.log
+crash.log
+stress_*.log
+scan_results.txt
+scan_report.md
+
+# Windows Artifacts
+run_trader.bat

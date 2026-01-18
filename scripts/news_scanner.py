@@ -99,9 +99,9 @@ def run_scanner():
         else:
             print(f"[{timestamp}] No new articles found or API limit.")
             
-        # Wait 15 minutes (free tier limits)
-        print("\nWaiting 15 minutes for next scan...")
-        time.sleep(900)
+        # Wait 30 minutes (safety limit)
+        print("\nWaiting 30 minutes for next scan...")
+        time.sleep(1800)
 
 if __name__ == "__main__":
     run_scanner()

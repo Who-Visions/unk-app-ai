@@ -11,7 +11,7 @@ from services.brokers.robinhood_crypto import RobinhoodCryptoAPI
 logging.basicConfig(level=logging.INFO)
 
 def reconcile_state():
-    print("🔄 RECONCILING BOT STATE WITH BROKER...")
+    print("RECONCILING BOT STATE WITH BROKER...")
     
     # INJECT CREDENTIALS
     os.environ["ROBINHOOD_API_KEY"] = "rh-api-1dc5a886-11e5-459f-84ad-7f00b97f7814"
@@ -84,7 +84,7 @@ def reconcile_state():
         with open("trading_state.json", "w") as f:
             json.dump(state, f)
             
-        print("✅ STATE RECONCILED.")
+        print("STATE RECONCILED.")
         print(f"Active Managed Positions: {list(updated_positions.keys())}")
         
     except Exception as e:
