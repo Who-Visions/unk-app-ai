@@ -49,20 +49,20 @@ IMAGE_PRICING = {
     "gemini_2_5_flash_image": {
         "price_per_image": 0.0387,  # 1290 tokens * $30/1M tokens for 1024x1024
         "description": "Gemini 2.5 Flash Image",
-        "model_id": "gemini-2.5-flash-image",
+        "model_id": "gemini-3.1-flash-image",
         "tokens_per_image_1k": 1290,
         "capabilities": "Image generation + understanding, multimodal (text+image input)"
     },
     "gemini3_pro_1k": {
         "price_per_image": 0.134,  # 1120 tokens * $120/1M tokens
         "description": "Gemini 3 Pro (1K/2K)",
-        "model_id": "gemini-3-pro",
+        "model_id": "gemini-3.1-pro",
         "capabilities": "Advanced multimodal, highest quality"
     },
     "gemini3_pro_4k": {
         "price_per_image": 0.24,  # 2000 tokens * $120/1M tokens
         "description": "Gemini 3 Pro (4K)",
-        "model_id": "gemini-3-pro",
+        "model_id": "gemini-3.1-pro",
         "capabilities": "Advanced multimodal, 4K resolution"
     }
 }

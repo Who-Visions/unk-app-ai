@@ -16,7 +16,7 @@ if ! pip freeze | grep -q "google-genai"; then
     pip install -r requirements.txt
 fi
 
-export GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-unk-app-480102}
+export GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-mineral-subject-487519-v6}
 
 # Run the CLI
 python cli.py

@@ -27,7 +27,7 @@ class SlangBatch(BaseModel):
 
 async def generate_dictionary(
     base_terms: List[str], 
-    project_id: str = "unk-app-480102"
+    project_id: str = "mineral-subject-487519-v6"
 ):
     agent = UnkAgent(
         mode="unk_mode",  # Use Unk Mode for the wisdom

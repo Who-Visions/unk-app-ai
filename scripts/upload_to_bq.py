@@ -10,7 +10,7 @@ from google.cloud import bigquery
 from google.api_core.exceptions import NotFound
 
 # Configuration
-PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT", "unk-app-480102")
+PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT", "mineral-subject-487519-v6")
 DATASET_ID = "unk_knowledge_base"
 TABLE_ID = "slang_dictionary"
 JSON_FILE = "unk_dictionary_seed.json"

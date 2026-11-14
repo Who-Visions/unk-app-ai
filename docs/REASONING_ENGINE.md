@@ -8,7 +8,7 @@ Deploy Unk Agent as a Vertex AI Reasoning Engine for agent-to-agent coordination
 
 ## Prerequisites
 
-1. **GCP Project**: `unk-app-480102`
+1. **GCP Project**: `mineral-subject-487519-v6`
 2. **Location**: `us-central1`
 3. **APIs Enabled**:
    - Vertex AI API
@@ -27,14 +27,14 @@ git clone https://github.com/Who-Visions/unk-app-ai.git
 cd unk-app-ai
 
 # 2. Set project
-gcloud config set project unk-app-480102
+gcloud config set project mineral-subject-487519-v6
 
 # 3. Enable APIs
 gcloud services enable aiplatform.googleapis.com
 gcloud services enable storage.googleapis.com
 
 # 4. Create staging bucket
-gsutil mb -l us-central1 gs://unk-app-480102-reasoning-engine
+gsutil mb -l us-central1 gs://mineral-subject-487519-v6-reasoning-engine
 
 # 5. Install dependencies
 pip install -r reasoning_engine_requirements.txt
@@ -52,9 +52,9 @@ Expected output:
 ======================================================================
 UNK AGENT - REASONING ENGINE DEPLOYMENT
 ======================================================================
-Project: unk-app-480102
+Project: mineral-subject-487519-v6
 Location: us-central1
-Staging Bucket: gs://unk-app-480102-reasoning-engine
+Staging Bucket: gs://mineral-subject-487519-v6-reasoning-engine
 ======================================================================
 
 🚀 Creating Reasoning Engine...
@@ -92,7 +92,7 @@ from google.cloud import aiplatform
 
 # Initialize
 aiplatform.init(
-    project="unk-app-480102",
+    project="mineral-subject-487519-v6",
     location="us-central1"
 )
 
@@ -218,7 +218,7 @@ result = unk_agent.query(
 
 ```bash
 gcloud ai reasoning-engines list \
-  --project=unk-app-480102 \
+  --project=mineral-subject-487519-v6 \
   --location=us-central1
 ```
 
@@ -226,7 +226,7 @@ gcloud ai reasoning-engines list \
 
 ```bash
 gcloud ai reasoning-engines describe <ENGINE_ID> \
-  --project=unk-app-480102 \
+  --project=mineral-subject-487519-v6 \
   --location=us-central1
 ```
 
@@ -250,7 +250,7 @@ This creates a new version. Update references to the new resource name.
 ### Issue: Staging bucket doesn't exist
 
 ```bash
-gsutil mb -l us-central1 gs://unk-app-480102-reasoning-engine
+gsutil mb -l us-central1 gs://mineral-subject-487519-v6-reasoning-engine
 ```
 
 ### Issue: API not enabled

@@ -23,7 +23,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: FLASH - High-throughput, cost-efficient operations
     # ═══════════════════════════════════════════════════════════════
     "default": {
-        "model_id": "gemini-2.5-flash",
+        "model_id": "gemini-3.1-flash",
         "tier": "flash",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,
@@ -45,7 +45,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
     
     "flash_thinking": {
-        "model_id": "gemini-2.0-flash-thinking-exp",
+        "model_id": "gemini-3.1-flash-thinking-exp",
         "tier": "flash",
         "release_date": "2025-01-21",
         "context_window": 1_000_000,
@@ -66,7 +66,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: PRO - Deep reasoning, complex problem solving
     # ═══════════════════════════════════════════════════════════════
     "unk_mode": {
-        "model_id": "gemini-2.5-pro-001",
+        "model_id": "gemini-3.1-pro-001",
         "tier": "pro",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,
@@ -89,7 +89,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
     
     "ultrathink": {
-        "model_id": "gemini-2.5-pro-001",
+        "model_id": "gemini-3.1-pro-001",
         "tier": "ultra",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,
@@ -116,7 +116,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: SPECIALIST - Domain-specific optimizations
     # ═══════════════════════════════════════════════════════════════
     "agentic_flash": {
-        "model_id": "gemini-2.0-flash-001",
+        "model_id": "gemini-3.1-flash",
         "tier": "flash",
         "release_date": "2025-02-05",
         "context_window": 1_048_576,
@@ -135,7 +135,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
     
     "code_specialist": {
-        "model_id": "gemini-2.5-pro-001",
+        "model_id": "gemini-3.1-pro-001",
         "tier": "pro",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,
@@ -160,7 +160,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: NEXT - Future capabilities
     # ═══════════════════════════════════════════════════════════════
     "yn_mode": {
-        "model_id": "gemini-3-pro-preview",
+        "model_id": "gemini-3.1-pro",
         "tier": "ultra",
         "location": "global",
         "release_date": "2025-11-18",
@@ -188,7 +188,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: LITE - Maximum cost efficiency
     # ═══════════════════════════════════════════════════════════════
     "cost_saver": {
-        "model_id": "gemini-2.5-flash-lite",
+        "model_id": "gemini-3.1-flash-lite",
         "tier": "lite",
         "release_date": "2025-07-22",
         "context_window": 1_048_576,
@@ -287,10 +287,10 @@ def get_routing_recommendation(task_complexity: str) -> str:
     Recommend a mode based on task complexity.
     
     Escalation path:
-    1. Trivial/Simple -> gemini-2.5-flash-lite (cost_saver)
-    2. Moderate -> gemini-2.5-flash (default)
-    3. Complex -> gemini-2.5-pro (unk_mode)
-    4. Extreme -> gemini-3-pro-preview (next_gen)
+    1. Trivial/Simple -> gemini-3.1-flash-lite (cost_saver)
+    2. Moderate -> gemini-3.1-flash (default)
+    3. Complex -> gemini-3.1-pro (unk_mode)
+    4. Extreme -> gemini-3.1-pro (next_gen)
     
     Args:
         task_complexity: One of 'trivial', 'simple', 'moderate', 'complex', 'extreme'

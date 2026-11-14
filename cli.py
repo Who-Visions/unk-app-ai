@@ -25,8 +25,8 @@ async def chat_session():
 
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
     if not project_id:
-        print(f"{YELLOW}⚠ GOOGLE_CLOUD_PROJECT not set. Using: unk-app-480102{RESET}")
-        project_id = "unk-app-480102"
+        print(f"{YELLOW}⚠ GOOGLE_CLOUD_PROJECT not set. Using: mineral-subject-487519-v6{RESET}")
+        project_id = "mineral-subject-487519-v6"
     else:
         print(f"{GREEN}✓ Project:{RESET} {project_id}")
 

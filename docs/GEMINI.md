@@ -23,10 +23,10 @@ Comprehensive guide for working with the Gemini model ecosystem in the Unk Agent
 
 | Model ID | Release | Context | Specialty |
 |----------|---------|---------|-----------|
-| `gemini-2.0-flash-001` | 2025-02 | 1M | Speed, tools |
-| `gemini-2.0-flash-thinking-exp` | 2025-01 | 1M | Reasoning + speed |
-| `gemini-2.5-pro-preview-06-05` | 2025-06 | 2M | Deep reasoning |
-| `gemini-2.0-flash-lite-001` | 2025-02 | 1M | Cost efficiency |
+| `gemini-3.1-flash` | 2025-02 | 1M | Speed, tools |
+| `gemini-3.1-flash-thinking-exp` | 2025-01 | 1M | Reasoning + speed |
+| `gemini-3.1-pro-preview-06-05` | 2025-06 | 2M | Deep reasoning |
+| `gemini-3.1-flash-lite` | 2025-02 | 1M | Cost efficiency |
 | `text-embedding-004` | 2024-05 | N/A | Vector embeddings |
 
 ---
@@ -62,7 +62,7 @@ client = genai.Client(
 ```python
 # Async chat session
 chat = client.aio.chats.create(
-    model="gemini-2.0-flash-001",
+    model="gemini-3.1-flash",
     history=[],
     config=generation_config
 )
@@ -80,22 +80,22 @@ response = await chat.send_message("Hello")
 ```python
 COGNITIVE_TIERS = {
     "lite": {
-        "models": ["gemini-2.0-flash-lite-001"],
+        "models": ["gemini-3.1-flash-lite"],
         "use_cases": ["classification", "extraction"],
         "max_complexity": 1
     },
     "flash": {
-        "models": ["gemini-2.0-flash-001"],
+        "models": ["gemini-3.1-flash"],
         "use_cases": ["conversation", "simple_reasoning"],
         "max_complexity": 3
     },
     "pro": {
-        "models": ["gemini-2.5-pro-preview-06-05"],
+        "models": ["gemini-3.1-pro-preview-06-05"],
         "use_cases": ["complex_reasoning", "code_generation"],
         "max_complexity": 8
     },
     "ultra": {
-        "models": ["gemini-2.5-pro-preview-06-05"],
+        "models": ["gemini-3.1-pro-preview-06-05"],
         "use_cases": ["system_design", "research"],
         "max_complexity": 10,
         "thinking_budget": 32768
@@ -227,7 +227,7 @@ The SDK handles the loop automatically when tools are registered in a chat sessi
 
 ```python
 chat = client.aio.chats.create(
-    model="gemini-2.0-flash-001",
+    model="gemini-3.1-flash",
     config=types.GenerateContentConfig(
         tools=[my_tool]
     )
@@ -293,7 +293,7 @@ with open("image.png", "rb") as f:
     image_data = base64.b64encode(f.read()).decode()
 
 response = await client.aio.models.generate_content(
-    model="gemini-2.0-flash-001",
+    model="gemini-3.1-flash",
     contents=[
         types.Part.from_image(
             image=types.Image(
@@ -313,7 +313,7 @@ response = await client.aio.models.generate_content(
 video_uri = "gs://bucket/video.mp4"
 
 response = await client.aio.models.generate_content(
-    model="gemini-2.0-flash-001",
+    model="gemini-3.1-flash",
     contents=[
         types.Part.from_uri(
             file_uri=video_uri,
@@ -371,7 +371,7 @@ For repeated queries with the same large context (system prompts, documents), yo
 ```python
 # Create a cached context
 cache = await client.caches.create(
-    model="gemini-2.0-flash-001",
+    model="gemini-3.1-flash",
     contents=[
         types.Content(
             role="user",
@@ -383,7 +383,7 @@ cache = await client.caches.create(
 
 # Use cached context
 response = await client.aio.models.generate_content(
-    model="gemini-2.0-flash-001",
+    model="gemini-3.1-flash",
     cached_content=cache.name,
     contents=[types.Part.from_text("User query")]
 )
@@ -546,8 +546,8 @@ def estimate_cost(mode: str, input_tokens: int, output_tokens: int) -> float:
 | Model | Deprecation | End of Life |
 |-------|-------------|-------------|
 | gemini-1.0-* | 2024-02 | 2024-08 |
-| gemini-1.5-flash-001 | 2025-09 | 2026-03 |
-| gemini-1.5-pro-001 | 2025-09 | 2026-03 |
+| gemini-3.1-flash | 2025-09 | 2026-03 |
+| gemini-3.1-pro | 2025-09 | 2026-03 |
 
 ---
 

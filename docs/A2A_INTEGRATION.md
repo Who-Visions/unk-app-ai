@@ -53,7 +53,7 @@ Unk Agent implements the **Agent-to-Agent (A2A) Identity Card** standard to part
       "ultrathink",
       "code_specialist"
     ],
-    "primary": "gemini-2.5-pro",
+    "primary": "gemini-3.1-pro",
     "routing": "automatic"
   },
   "extensions": {
@@ -132,7 +132,7 @@ projects/574321322006/locations/us-central1/reasoningEngines/5608320741238898688
 from vertexai.preview import reasoning_engines
 from google.cloud import aiplatform
 
-aiplatform.init(project="unk-app-480102", location="us-central1")
+aiplatform.init(project="mineral-subject-487519-v6", location="us-central1")
 
 # Load Unk Agent Reasoning Engine
 unk = reasoning_engines.ReasoningEngine(

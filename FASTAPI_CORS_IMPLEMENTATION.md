@@ -345,7 +345,7 @@ python deploy.py
 # Set environment
 export ENV=production
 export PORT=8080
-export GOOGLE_CLOUD_PROJECT=unk-app-480102
+export GOOGLE_CLOUD_PROJECT=mineral-subject-487519-v6
 export GCP_LOCATION=us-central1
 
 # Run

@@ -17,7 +17,7 @@ from vertexai.preview import reasoning_engines
 # CONFIGURATION
 # ═══════════════════════════════════════════════════════════════════════════
 
-PROJECT_ID = "unk-app-480102"
+PROJECT_ID = "mineral-subject-487519-v6"
 LOCATION = "us-central1"
 STAGING_BUCKET = f"gs://{PROJECT_ID}-reasoning-engine"
 ENGINE_DISPLAY_NAME = "unk-agent-reasoning-engine"
@@ -44,7 +44,7 @@ class UnkReasoningEngine:
     
     def __init__(
         self,
-        model_name: str = "gemini-2.5-pro-preview-06-05",
+        model_name: str = "gemini-3.1-pro-preview-06-05",
         project: str = PROJECT_ID,
         location: str = LOCATION
     ):
@@ -66,12 +66,12 @@ class UnkReasoningEngine:
         
         # Cognitive tiers
         self.tiers = {
-            "cost_saver": "gemini-2.0-flash-lite-001",
-            "default": "gemini-2.0-flash-001",
-            "flash_thinking": "gemini-2.0-flash-thinking-exp",
-            "unk_mode": "gemini-2.5-pro-preview-06-05",
-            "ultrathink": "gemini-2.5-pro-preview-06-05",
-            "code_specialist": "gemini-2.5-pro-preview-06-05"
+            "cost_saver": "gemini-3.1-flash-lite",
+            "default": "gemini-3.1-flash",
+            "flash_thinking": "gemini-3.1-flash-thinking-exp",
+            "unk_mode": "gemini-3.1-pro-preview-06-05",
+            "ultrathink": "gemini-3.1-pro-preview-06-05",
+            "code_specialist": "gemini-3.1-pro-preview-06-05"
         }
     
     def query(

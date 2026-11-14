@@ -53,7 +53,7 @@ from gemini_agent.price_tracker import get_tracker
 
 # Environment
 ENV = os.environ.get("ENV", "development")
-GCP_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "who-visions-llc")
+GCP_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "mineral-subject-487519-v6")
 GCP_LOCATION = os.environ.get("GCP_LOCATION", "us-central1")
 PORT = int(os.environ.get("PORT", 8080))
 
@@ -365,7 +365,7 @@ async def agent_identity_card():
                 "ultrathink",
                 "code_specialist"
             ],
-            "primary": "gemini-2.5-pro",
+            "primary": "gemini-3.1-pro",
             "routing": "automatic"
         },
         "extensions": {
@@ -385,7 +385,7 @@ async def agent_identity_card():
                 "enabled": True,
                 "resource_name": "projects/574321322006/locations/us-central1/reasoningEngines/5608320741238898688",
                 "location": "us-central1",
-                "project_id": "unk-app-480102",
+                "project_id": "mineral-subject-487519-v6",
                 "project_number": "574321322006",
                 "display_name": "unk-agent",
                 "description": "Unk Agent - Cognitive Orchestrator (Who Visions Fleet)"

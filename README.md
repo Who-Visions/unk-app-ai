@@ -116,7 +116,7 @@ source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 pip install -r requirements.txt
 
 # Set environment variables
-export GOOGLE_CLOUD_PROJECT="your-gcp-project"
+export GOOGLE_CLOUD_PROJECT="mineral-subject-487519-v6"
 export ENV="development"
 ```
 
@@ -232,7 +232,7 @@ unk-agent/
       }
     ],
     "final_answer": "The analysis shows...",
-    "model_version": "gemini-2.5-pro-preview-06-05",
+    "model_version": "gemini-3.1-pro-preview-06-05",
     "mode": "unk_mode",
     "token_usage": {
       "input": 150,
