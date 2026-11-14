@@ -44,7 +44,7 @@ class UnkReasoningEngine:
     
     def __init__(
         self,
-        model_name: str = "gemini-3.1-pro-preview-06-05",
+        model_name: str = "gemini-3.1-pro-preview",
         project: str = PROJECT_ID,
         location: str = LOCATION
     ):
@@ -69,9 +69,9 @@ class UnkReasoningEngine:
             "cost_saver": "gemini-3.1-flash-lite",
             "default": "gemini-3.1-flash",
             "flash_thinking": "gemini-3.1-flash-thinking-exp",
-            "unk_mode": "gemini-3.1-pro-preview-06-05",
-            "ultrathink": "gemini-3.1-pro-preview-06-05",
-            "code_specialist": "gemini-3.1-pro-preview-06-05"
+            "unk_mode": "gemini-3.1-pro-preview",
+            "ultrathink": "gemini-3.1-pro-preview",
+            "code_specialist": "gemini-3.1-pro-preview"
         }
     
     def query(

@@ -66,7 +66,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     # TIER: PRO - Deep reasoning, complex problem solving
     # ═══════════════════════════════════════════════════════════════
     "unk_mode": {
-        "model_id": "gemini-3.1-pro-001",
+        "model_id": "gemini-3.1-pro-preview",
         "tier": "pro",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,
@@ -89,7 +89,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
     
     "ultrathink": {
-        "model_id": "gemini-3.1-pro-001",
+        "model_id": "gemini-3.1-pro-preview",
         "tier": "ultra",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,
@@ -135,7 +135,7 @@ GEMINI_MODELS: Dict[str, Dict[str, Any]] = {
     },
     
     "code_specialist": {
-        "model_id": "gemini-3.1-pro-001",
+        "model_id": "gemini-3.1-pro-preview",
         "tier": "pro",
         "release_date": "2025-06-17",
         "context_window": 1_048_576,

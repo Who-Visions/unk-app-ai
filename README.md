@@ -232,7 +232,7 @@ unk-agent/
       }
     ],
     "final_answer": "The analysis shows...",
-    "model_version": "gemini-3.1-pro-preview-06-05",
+    "model_version": "gemini-3.1-pro-preview",
     "mode": "unk_mode",
     "token_usage": {
       "input": 150,

@@ -25,7 +25,7 @@ Comprehensive guide for working with the Gemini model ecosystem in the Unk Agent
 |----------|---------|---------|-----------|
 | `gemini-3.1-flash` | 2025-02 | 1M | Speed, tools |
 | `gemini-3.1-flash-thinking-exp` | 2025-01 | 1M | Reasoning + speed |
-| `gemini-3.1-pro-preview-06-05` | 2025-06 | 2M | Deep reasoning |
+| `gemini-3.1-pro-preview` | 2025-06 | 2M | Deep reasoning |
 | `gemini-3.1-flash-lite` | 2025-02 | 1M | Cost efficiency |
 | `text-embedding-004` | 2024-05 | N/A | Vector embeddings |
 
@@ -90,12 +90,12 @@ COGNITIVE_TIERS = {
         "max_complexity": 3
     },
     "pro": {
-        "models": ["gemini-3.1-pro-preview-06-05"],
+        "models": ["gemini-3.1-pro-preview"],
         "use_cases": ["complex_reasoning", "code_generation"],
         "max_complexity": 8
     },
     "ultra": {
-        "models": ["gemini-3.1-pro-preview-06-05"],
+        "models": ["gemini-3.1-pro-preview"],
         "use_cases": ["system_design", "research"],
         "max_complexity": 10,
         "thinking_budget": 32768

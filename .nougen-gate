@@ -1,0 +1,2 @@
+# compile-check every Python file in this PR (no pytest suite exists yet)
+python3 -m py_compile cli.py deploy.py reasoning_engine_deploy.py test_cors.py gemini_agent/__init__.py gemini_agent/agent.py gemini_agent/memory.py gemini_agent/models_spec.py gemini_agent/price_tracker.py scripts/*.py
