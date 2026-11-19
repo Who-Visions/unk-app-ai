@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Who-Visions/NouGenShards/main/schemas/readme-manifest.schema.json",
+  "schema_version": 1,
+  "project": {
+    "title": "UNK AGENT",
+    "description": "AI-Powered Family Office for Who Visions LLC — strategic counsel, sports betting analysis, creative design, and trend analysis, powered by Gemini 3.",
+    "emoji": "🕰️"
+  },
+  "table_of_contents": true,
+  "badges": [
+    {
+      "label": "Python 3.12+",
+      "image": "https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white"
+    },
+    {
+      "label": "Gemini 3.0 Preview",
+      "image": "https://img.shields.io/badge/Gemini-3.0%20Preview-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"
+    },
+    {
+      "label": "Google Chirp 3 HD",
+      "image": "https://img.shields.io/badge/Google%20Chirp-3%20HD-EA4335?style=for-the-badge&logo=google&logoColor=white"
+    },
+    {
+      "label": "Rich Enterprise UI",
+      "image": "https://img.shields.io/badge/Rich-Enterprise%20UI-000000?style=for-the-badge&logo=console&logoColor=white"
+    },
+    {
+      "label": "Status Enterprise Production",
+      "image": "https://img.shields.io/badge/Status-Enterprise%20Production-success?style=for-the-badge"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Overview",
+      "content": "**Unk Agent** is not a chatbot. It's a dynasty.\n\nAn **AI-Powered Family Office** designed for **Who Visions LLC**, handling everything from strategic counsel and high-frequency sports betting to creative design and trend analysis.\n\nPowered by **Gemini 3 “Future Systems”**, this system breathes life into three distinct personalities who work together to help you win.\n\n```text\n$$\\   $$\\           $$\\              $$$$$$\\                                 $$\\     \n$$ |  $$ |          $$ |            $$  __$$\\                                $$ |    \n$$ |  $$ |$$$$$$$\\  $$ |  $$\\       $$ /  $$ | $$$$$$\\   $$$$$$\\  $$$$$$$\\ $$$$$$\\   \n$$ |  $$ |$$  __$$\\ $$ | $$  |      $$$$$$$$ |$$  __$$\\ $$  __$$\\ $$  __$$\\_$$  _|  \n$$ |  $$ |$$ |  $$ |$$$$$$  /       $$  __$$ |$$ /  $$ |$$$$$$$$ |$$ |  $$ | $$ |    \n$$ |  $$ |$$ |  $$ |$$  _$$<        $$ |  $$ |$$ |  $$ |$$   ____|$$ |  $$ | $$ |$$\\ \n\\$$$$$$  |$$ |  $$ |$$ | \\$$\\       $$ |  $$ |\\$$$$$$$ |\\$$$$$$$\\ $$ |  $$ | \\$$$$  |\n \\______/ \\__|  \\__|\\__|  \\__|      \\__|  \\__| \\____$$ | \\_______|\\__|  \\__|  \\____/ \n                                              $$\\   $$ |                             \n                                              \\$$$$$$  |                             \n                                               \\______/                              \n                                                 \n    Who Visions LLC | AI with Dav3 | @aiwithdav3\n```",
+      "emoji": "auto"
+    },
+    {
+      "title": "Meet the Family",
+      "content": "The system can switch personas instantly to match your vibe and needs.\n\n### 🕶️ Unk (The CEO / “The Robust Uncle”)\n\n> *“Yo, nephew! We in the building and everything is MOVING!”*\n\n- **Role**: Strategy, Operations, and Business Logic.\n- **Vibe**: 45yo, City-based, Street-Smart. He runs the show.\n- **Superpower**: **“The Hustle”**. Expert in market analysis and execution.\n\n### 🧢 YN (The R&D / “The Digital Skeptic”)\n\n> *“Unk, you cooked. That play is mid. Type s**t.”*\n\n- **Role**: Trend Analysis, Social Media, and Checking Unk's math.\n- **Vibe**: Gen Z, deeply online, skeptical of “Old Head” wisdom.\n- **Superpower**: **“Trend Spotting”**. Detects viral waves before they break (Tik Tok, Crypto).\n\n### 👒 Auntie (The HR / “The Wisdom Keeper”)\n\n> *“Y'all outside acting skantless again? Let me pray on it.”*\n\n- **Role**: Ethics, Human Resources, and Keeping the peace.\n- **Vibe**: Warm, spiritual, no-nonsense.\n- **Superpower**: **“Governance”**. Ensures the family stays safe and focused.",
+      "emoji": "auto"
+    },
+    {
+      "title": "The Hustle & Betting Skills",
+      "content": "We don't just talk; we execute. Unk Agent includes sophisticated strategies for high-stakes decision making.\n\n### 🏀 Sports Betting (The Hustler Strategy)\n\nUnk connects to real-time data to analyze:\n\n- **Spreads & Lines**: “Who's the favorite?”\n- **Smart Money**: “Where's the sharp cash going?”\n- **Prop Bets**: Player performance projections.\n- *Note: Provides analysis, not financial advice. Always bet responsibly.*\n\n### 🎨 Nano-Banana (Creative Studio)\n\nProprietary image generation engine (Gemini 3 Image).\n\n- **Character Consistency**: Keeps Unk looking like Unk across every image.\n- **Vibe Coding**: “Generate a cybernetic hustler in a neon city.”\n- **Visual Editing**: “Put a Yankees hat on him.”",
+      "emoji": "auto"
+    },
+    {
+      "title": "Key Features",
+      "content": "### 🎙️ Enterprise Voice (Chirp 3 HD)\n\n- **Zero Latency**: Conversations happen in real-time.\n- **Natural Speech**: Unk laughs, pauses, and emphasizes words just like a real person.\n- **Voice Switching**: Changes tone instantly when switching from Unk to Auntie to YN.\n\n### 🧠 Massive Intelligence\n\n- **LoreDB**: The family remembers *everything*. Every conversation, every bet, every idea is stored in Vector Memory.\n- **Web Intelligence**: Unk surfs the web in real-time to fact-check deals or spot opportunities.",
+      "emoji": "auto"
+    },
+    {
+      "title": "Quick Start",
+      "content": "1. **Clone the Dynasty**:\n\n   ```bash\n   git clone https://github.com/Who-Visions/unk-app-ai.git\n   ```\n\n2. **Wake Up Unk**:\n\n   ```bash\n   python chat_with_unk.py\n   ```\n\n3. **Switch Modes**:\n\n   - *“Let me talk to Auntie.”*\n   - *“Put YN on the phone.”*\n   - *“Unk, what's the play for the Super Bowl?”*\n\n[guess] No dependency-install step is stated in the previous README — verify what `chat_with_unk.py` needs before running it.",
+      "emoji": "auto"
+    },
+    {
+      "title": "License",
+      "content": "No license file was found in the repository. The previous README ends: “Private & Confidential | Who Visions LLC © 2026”.",
+      "emoji": "auto"
+    }
+  ],
+  "links": [
+    {
+      "label": "Website — WhoVisions.com",
+      "url": "https://whovisions.com"
+    },
+    {
+      "label": "Instagram — @aiwithdav3",
+      "url": "https://instagram.com/aiwithdav3"
+    },
+    {
+      "label": "YouTube — @aiwithdav3",
+      "url": "https://youtube.com/aiwithdav3"
+    },
+    {
+      "label": "unk-app-ai on GitHub",
+      "url": "https://github.com/Who-Visions/unk-app-ai"
+    }
+  ],
+  "footer": "*“Power to the Creators.”* — Unk Agent is a production of **Who Visions LLC**."
+}
