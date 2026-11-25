@@ -157,3 +157,7 @@ scan_report.md
 
 # Windows Artifacts
 run_trader.bat
+# Local databases can contain private memory or financial activity
+/*.sqlite
+/data/*.sqlite
+/trading/data/*.sqlite
